@@ -1,0 +1,1021 @@
+
+/*--------------------------------------------
+ ---------------  SYSNOMA -----------------
+ ------- Contact: www.sysnoma.com ------------
+ -------------------------------------------*/
+
+/*-----------------------------------------
+             HEADER SECTION: 01
+
+             HERO SECTION: 02
+
+             STEP SECTION: 03
+
+             SERVICE SECTION: 04
+
+             BOOKING SECTION: 05
+
+             FOOTER SECTION: 06
+
+             SLICKNAV CUSTOMIZE CSS: 07
+-------------------------------------------*/
+
+
+
+/*--------------------------------------------
+    External Font and load CSS Files
+--------------------------------------------*/
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap');
+
+/*-------------------------------------------
+    Basic Setting
+--------------------------------------------*/
+::selection {
+  background: #166E96;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+body, .body{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  background-color: #ffffff;
+}
+
+a:hover,a:focus{
+  text-decoration: none;
+  color: #6ec1e4;
+  outline: 0;
+}
+.btn{
+  transition: all .6s ease-in-out;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
+	margin: 0 0 20px;
+	color: #333;
+	line-height: 1.4;
+}
+
+/* p {
+    color: #000;
+} */
+
+/*-----------------------------------------
+  UI Elemnets
+-------------------------------------------*/
+/*
+.btn-green{
+  border-color: #166E96;
+  background-color: #166E96;
+  color: #ffffff;
+  opacity: 1;
+}
+.btn-green:focus,
+.btn-green:hover,
+.btn-green:active,
+.btn-green.active,
+.btn-green.disabled,
+.btn-green[disabled] {
+  opacity: 0.8;
+  color: #ffffff;
+  background-color: #166E96;
+  border-color: #166E96;
+}
+*/
+
+
+/*-----------------------------------------
+  Various fixes and overwrites
+-------------------------------------------*/
+/*
+.btn.active.focus,
+.btn.active:focus,
+.btn.focus,
+.btn.focus:active,
+.btn:active:focus,
+.btn:focus,a {outline: none;}
+*/
+
+.color-base {  color: #6ec1e4; }
+
+
+/*-----------------------------------------
+             HEADER SECTION: 01
+-------------------------------------------*/
+.header-section {
+    background: #fff;
+}
+
+/*.logo {
+    max-width: 285px;
+}
+*/
+/*-----------------------------------------
+         HERO SECTION: 02
+-------------------------------------------*/
+.hero-section {
+    background-position: top right;
+    background-size: contain;
+    background-repeat: no-repeat;
+    /*background-attachment: fixed;*/
+}
+
+.hero-inner {
+    padding: 30px 0px;
+    min-height: 200px;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+}
+
+.hero-content h1 {
+    color: #fff;
+}
+
+.hero-content h2 {
+    color: #1a2451;
+    font-weight: 700;
+}
+
+.hero-content h3 {
+    color: #162766;
+}
+
+.elementor a img {
+	width: 100%;
+	margin-bottom: 20px;
+	border-radius: 10px;
+    transition: transform .2s;
+    -webkit-transition: transform .2s;
+    -moz-transition: transform .2s;
+}
+
+.elementor a img:hover {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+}
+
+/*-----------------------------------------
+         STEP SECTION: 03
+-------------------------------------------*/
+.step-section {
+    background: #FFFBFB;
+    padding: 15px 0px;
+}
+
+.step1 img {
+	max-width: 80px;
+	margin-right: 15px;
+}
+
+.step1 h3 {
+    display: inline-block;
+}
+
+.step-content h4 {
+    margin-top: 35px;
+    font-weight: 700;
+}
+
+.step-content p {
+	line-height: 25px;
+	margin-bottom: 20px;
+}
+
+/*-----------------------------------------
+         SERVICE SECTION: 04
+-------------------------------------------*/
+.service-section {
+    background-position: center center;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.service-inner {
+    padding: 20px 0px 20px 0px;
+    background-color: rgba(255,249,249,0.49);
+    opacity: 1;
+    transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
+}
+
+.service-inner .container{
+    padding-top: 25px;
+    background-color: rgba(255,255,255,0.44);
+    transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
+}
+
+.service-content {
+    margin-bottom: 40px;
+}
+
+.service-content i {
+    font-size: 35px;
+    color: #2185f5;
+    vertical-align: middle;
+}
+
+.service-content h3 {
+	color: #000;
+	font-weight: 700;
+	margin-top: 25px;
+}
+
+.service-content p {
+    line-height: 25px;
+    margin-bottom: 20px;
+}
+
+/*-----------------------------------------
+         BOOKING SECTION: 05
+-------------------------------------------*/
+.booking-section {
+    background: #fff;
+    padding: 30px 0px;
+}
+
+.booking-step1 {
+    text-align: center;
+}
+
+.booking-step1 img {
+    max-width: 100px;
+    margin-bottom: 15px;
+    margin-top: 40px;
+}
+
+.booking-details .form-control {
+    margin-bottom: 20px;
+    min-height: 40px;
+}
+
+.booking-details .issue-box {
+    height: 130px;
+}
+
+.booking-details .btn {
+    margin-top: 20px;
+}
+
+.booking-step2-content {
+    margin-top: 40px;
+}
+
+.booking-step2-content h3 {
+    font-weight: 700;
+}
+
+.booking-step2-content p {
+    line-height: 25px;
+    color: #7a7a7a;
+}
+
+.social-icon {
+    float: right;
+}
+
+.social-icon ul {
+    padding: 0px;
+    margin-top: 30px;
+}
+
+.social-icon ul li {
+    display: inline-block;
+}
+
+.social-icon ul li a {
+	font-size: 25px;
+	background: #000;
+	color: #6ec1e4;
+	width: 55px;
+	display: block;
+	height: 55px;
+	padding: 10px;
+	text-align: center;
+	border-radius: 10px;
+}
+
+.social-icon ul li a:hover {
+    opacity: 0.8;
+}
+
+/*-----------------------------------------
+         FOOTER SECTION: 06
+-------------------------------------------*/
+.footer-section {
+    background: #1B1B1B;
+    padding: 20px 0px;
+}
+
+.footer-section p {
+    color: #eee;
+    margin-bottom: 0px;
+}
+
+.footer-section ul {
+    float: right;
+    margin-bottom: 0px;
+    padding: 0;
+}
+
+.footer-section ul li {
+    display: inline-block;
+}
+
+.footer-section ul li a {
+    color: #fff;
+    padding: 0px 10px;
+    border-right: 1px solid #eee;
+}
+
+.footer-section ul li:last-child a {
+    border: none;
+}
+
+.footer-section ul li a:hover {
+    color: #13aff0;
+}
+
+/*-----------------------------------------
+     SLICKNAV CUSTOMIZE CSS: 07
+-------------------------------------------*/
+
+.slicknav_menu {
+    display: none;
+}
+
+.slicknav_nav {
+  background: #fff;
+  float: left;
+  top: 45px;
+  padding: 0 30px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.1);
+ -webkit-box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.1);
+ -moz-box-shadow: 0px 10px 15px 0px rgba(0, 0, 0, 0.1);
+}
+
+.slicknav_nav ul {
+  margin: 0;
+  padding: 0 30px;
+}
+
+.slicknav_nav a {
+  border-bottom: 1px solid #eee;
+  color: #337ab7;
+  padding: 10px 0;
+}
+
+.slicknav_btn {
+    background: none;
+    float: right;
+}
+
+.slicknav_menu .slicknav_menutxt {
+	color: #337ab7;
+	font-weight: 400;
+	text-shadow: none;
+}
+
+.slicknav_menu .slicknav_icon-bar {
+    background: #337ab7;
+}
+
+.float-right{
+  float: right
+}
+
+.initiate_chat #connectivity_status_container p{
+    color: #fff;
+}
+
+.initiate_chat #connectivity_status_container img{
+    width: 15px;
+}
+
+.OT_audio-level-meter__audio-only-img, .OT_edge-bar-item.OT_mute.OT_mode-auto{
+  display: none;
+}
+
+.initiate_chat #publisher{
+  height: 300px;
+  position: relative;
+}
+
+.btn-toggle {
+  margin: 0 4rem;
+  padding: 0;
+  position: relative;
+  border: none;
+  height: 1.5rem;
+  width: 3rem;
+  border-radius: 1.5rem;
+  color: #6b7381;
+  background: #bdc1c8;
+}
+.btn-toggle.active {
+  background-color: #29b5a8;
+}
+.btn-toggle.btn-xs {
+  margin: 0 0;
+  padding: 0;
+  position: relative;
+  border: none;
+  height: 1rem;
+  width: 2rem;
+  border-radius: 1rem;
+}
+.btn-toggle.btn-xs:focus,
+.btn-toggle.btn-xs.focus,
+.btn-toggle.btn-xs:focus.active,
+.btn-toggle.btn-xs.focus.active {
+  outline: none;
+}
+.btn-toggle.btn-xs:before,
+.btn-toggle.btn-xs:after {
+  line-height: 1rem;
+  width: 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 14px;
+  position: absolute;
+  bottom: 0;
+  transition: opacity 0.25s;
+}
+.btn-toggle.btn-xs:before {
+  content: "Off";
+  left: -25px;
+  color: #fff;
+}
+.btn-toggle.btn-xs:after {
+  content: "On";
+  right: 43px;
+  opacity: 0;
+  color: #fff;
+}
+.btn-toggle.btn-xs > .handle {
+  position: absolute;
+  top: 0.125rem;
+  left: 0.125rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  transition: left 0.25s;
+}
+.btn-toggle.btn-xs.active {
+  transition: background-color 0.25s;
+}
+.btn-toggle.btn-xs.active > .handle {
+  left: 1.125rem;
+  transition: left 0.25s;
+}
+.btn-toggle.btn-xs.active:before {
+  opacity: 0;
+}
+.btn-toggle.btn-xs.active:after {
+  opacity: 1;
+}
+
+.receiver-name{
+  display: none;
+}
+
+.double_size{
+    font-size: 2em !important;
+}
+
+@media screen and (max-width: 767px) {
+    .hide_for_small {
+        visibility: hidden !important;
+        clear: both;
+        display: none !important;
+    }
+    .double_size{
+        font-size: 1em !important;
+    }
+
+    .slicknav_menu {
+      background: none;
+      display: block;
+      float: right;
+      position: absolute;
+      right: 0;
+      top: -3px;
+      z-index: 999;
+    }
+
+    .slicknav_nav .slicknav_item a, .slicknav_nav .slicknav_parent-link a {
+        border: none;
+    }
+
+    .slicknav_nav a:hover,.subs li a:hover {
+        background: none;
+        color:  #6ec1e4;
+    }
+
+    .slicknav_nav .slicknav_row:hover {
+        background: none;
+        color: #6ec1e4;
+    }
+}
+
+/* --------------------------------------------
+	   Top Section: 08
+-------------------------------------------- */
+.cd-top.cd-is-visible {
+  /* the button becomes visible */
+  visibility: visible;
+  opacity: 1;
+}
+.cd-top.cd-fade-out {
+  /* if the user keeps scrolling down, the button is out of focus and becomes less visible */
+  opacity: .5;
+}
+
+.cd-top {
+  display: inline-block;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  position: fixed;
+  border-radius: 5px;
+  bottom: 40px;
+  right: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  /* image replacement properties */
+  overflow: hidden;
+  white-space: nowrap;
+  background: #000;
+  visibility: hidden;
+  opacity: 1;
+  -webkit-transition: opacity .3s 0s, visibility 0s .3s;
+  -moz-transition: opacity .3s 0s, visibility 0s .3s;
+  transition: opacity .3s 0s, visibility 0s .3s;
+}
+.cd-top.cd-is-visible, .cd-top.cd-fade-out, .no-touch .cd-top:hover {
+  -webkit-transition: opacity .3s 0s, visibility 0s 0s;
+  -moz-transition: opacity .3s 0s, visibility 0s 0s;
+  transition: opacity .3s 0s, visibility 0s 0s;
+}
+.cd-top.cd-is-visible {
+  /* the button becomes visible */
+  visibility: visible;
+  opacity: 1;
+}
+.cd-top.cd-fade-out {
+  /* if the user keeps scrolling down, the button is out of focus and becomes less visible */
+  opacity: 1;
+  z-index:99;
+}
+
+a:focus {
+    outline:0;
+}
+
+.topicon {
+    text-align:center;
+    width:100%;
+    margin-top: 10px;
+    color: #fff;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------------------
+                                                            BLOG PAGE
+-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/*-----------------------------------------
+         BLOG SECTION: 09
+-------------------------------------------*/
+.blog-details {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 35px;
+    margin-bottom: 25px;
+}
+
+.blog-details a img {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.blog-details a img:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.blog-details a {
+    color: #333;
+    font-size: 24px;
+    font-weight: 700;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+.blog-details a {
+    margin-top: 20px;
+}
+
+.blog-details p, .blog-details p span a {
+    font-size: 19px;
+    color: #7a7a7a;
+    font-weight: 400;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.blog-details p span a {
+    color: #337ab7 !important;
+}
+
+.blog-details .h5 {
+    color: #7a7a7a;
+    font-weight: 400;
+}
+
+.blog-details a:hover {
+    color: #13aff0;
+}
+
+.blog-details .btn {
+    border: 1px solid #ddd;
+    color: #333;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.blog-details .btn:hover {
+    border: 1px solid #13aff0;
+    color: #13aff0;
+}
+
+.blog-post .search-input {
+    border: 1px solid #ddd;
+    width: 100%;
+    height: 40px;
+    padding: 0px 10px;
+    border-radius: 5px;
+    color: #000;
+    margin-top: 30px;
+}
+
+.blog-post h4 {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 17px;
+    letter-spacing: 1px;
+    margin-top: 30px;
+    border-left: 3px solid #13aff0;
+    line-height: 15px;
+    padding: 0px 10px;
+}
+
+.blog-post ul {
+    padding: 0;
+}
+
+.blog-post ul li {
+    list-style: none;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0px;
+}
+
+.blog-post ul li:first-child {
+    border-top: 1px solid #ddd;
+}
+
+.blog-post ul:last-child li {
+    border: none;
+    padding: 5px 0px;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------------------
+                                                            BLOG DETAILS PAGE
+-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/*-----------------------------------------
+         BLOG DETAILS SECTION: 10
+-------------------------------------------*/
+.like-trades {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 30px;
+}
+
+.like-trades ul li {
+    list-style: none;
+    color: #7a7a7a;
+    padding: 5px 0px;
+}
+
+.like-trades ul li a {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+.like-trades ul li a:hover {
+    color: #13aff0;
+}
+
+.comment-box h4 {
+    margin-top: 25px;
+}
+
+.comment-box .comment-here {
+    width: 100%;
+    min-height: 150px;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.comment-box .name-box {
+    border: 1px solid #ddd;
+    width: 100%;
+    height: 40px;
+    padding: 0px 10px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.comment-box .btn {
+    float: right;
+    background: #13aff0;
+    color: #fff;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    margin-top: 20px;
+}
+
+.comment-box .btn:hover {
+    background: #0b7cac;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------------------
+                                                            CAREERS PAGE
+-------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/*-----------------------------------------
+         CAREERS SECTION: 10
+-------------------------------------------*/
+.careers-section {
+    padding: 0px 0px 50px;
+}
+
+.careers-section header {
+    background: #f5f5f5;
+    padding: 35px 0px;
+    margin-bottom: 20px;
+}
+
+.careers-section header h3 {
+    margin-bottom: 0px;
+    font-weight: 400;
+}
+
+.careers-content img {
+    margin: 0 auto;
+    margin-top: 40px;
+    left: 0;
+    right: 0;
+    position: relative;
+    display: block;
+}
+
+.careers-content p {
+    color: #7a7a7a;
+    line-height: 25px;
+}
+
+.careers-content ul {
+    padding: 0px 15px;
+}
+
+.careers-content ul li {
+    color: #7a7a7a;
+    line-height: 25px;
+}
+
+.appliance-section {
+    margin-bottom: 20px;
+}
+
+.appliance-section img {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.appliance-section p {
+    color: #7a7a7a;
+    line-height: 25px;
+}
+
+.appliance-section .btn {
+    background: #61ce70;
+    color: #fff;
+    font-weight: 600;
+    margin-top: 30px;
+}
+
+
+/*------------------------------------------
+    Responsive Grid Media Queries Settings
+    1600+   -     Extra Large Screen
+    1600-1200   - Large Screen
+    1280-992   - desktop (default grid)
+    992-768    - tablet landscape
+    768-480     - tablet
+    480-less    - phone landscape & smaller
+--------------------------------------------*/
+
+/*-------------------------Extra large--------------------------------*/
+/*----- For very large+ ------*/
+@media all and (min-width: 1601px) { }
+/*--- below very large screen -----*/
+@media all and (max-width: 1600px) {
+}
+
+/*-------------------------Large-------------------------------------*/
+/*--- large screen + -----*/
+@media all and (min-width: 1201px) {
+}
+/*--- Large screen only -----*/
+@media all and (min-width: 1201px) and (max-width: 1600px) {  }
+/*--- below large screen -----*/
+@media all and (max-width: 1200px) {
+    .tc-md{text-align: center;}
+}
+
+/*------------------------Medium------------------------------------*/
+/*---   Medium screen+   -----*/
+@media all and (min-width: 992px) {
+  .mw190-md{
+    min-width: 190px;
+  }
+  .blok-md{
+    display: block;
+  }
+}
+/*--- Medium screen only -----*/
+@media all and (min-width: 992px) and (max-width: 1200px){
+    .tc-md-o{text-align: center;}
+
+    .step1 img {
+        max-width: 50px;
+        margin-right: 10px;
+    }
+
+    .step1 h3 {
+        font-size: 20px;
+    }
+}
+/*--- below medium screen -----*/
+@media all and (max-width: 991px) {
+    .show-md{
+      visibility: visible;
+    }
+    .tc-sm{text-align: center;}
+
+}
+
+/*-----------------------Small-------------------------------------*/
+/*---   Small screen+   -----*/
+@media all and (min-width: 768px) {
+  .mw190-sm{
+    min-width: 190px;
+  }
+  .blok-sm{
+    display: block;
+  }
+}
+/*--- Small screen only -----*/
+@media all and (min-width: 768px) and (max-width: 991px) {
+    .tc-sm-o{text-align: center;}
+
+    .step1 img {
+        max-width: 45px;
+        margin-right: 5px;
+    }
+
+    .step1 h3 {
+        font-size: 15px;
+    }
+}
+/*--- below small screen -----*/
+@media all and (max-width: 767px) {
+    .tc-xs{text-align: center;}
+    .w100-xs{width: 100%;}
+
+    .logo {
+        max-width: 170px;
+    }
+
+    .slicknav_nav .slicknav_row {
+        padding: 5px 0px;
+    }
+
+    .hero-section {
+        background-attachment: inherit;
+    }
+
+    .hero-inner {
+        padding-bottom: 20px;
+        padding-top: 30px;
+    }
+
+    .hero-content h1 {
+        font-size: 38px;
+    }
+
+    .hero-content h4 {
+        font-size: 16px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+
+    .step1 img {
+        max-width: 50px;
+        margin-right: 10px;
+    }
+
+    .step1 h3 {
+        font-size: 18px;
+    }
+
+    .service-section {
+        background-size: cover;
+    }
+
+    .booking-step1 img {
+        margin-top: 0px;
+    }
+
+    .service-content {
+        margin-bottom: 15px;
+    }
+
+    .social-icon {
+        float: none;
+        text-align: center;
+    }
+
+    .footer-section p, .footer-section ul {
+        text-align: center;
+        float: none;
+    }
+
+    .booking-details .btn {
+        margin-bottom: 30px;
+    }
+
+}
+
+/*-----------------------Very Small--------------------------------*/
+/*--- Extra Small screen only -----*/
+@media all and (min-width: 480px) and (max-width: 767px) { }
+/*--- Very Small screen -----*/
+@media all and (max-width: 479px) { }
+
+                              /*----------------------------- THE END ---------------------------*/
+
+.search_btn {
+    width: 350px;
+}
+.search_text_field {
+    height: 46px;
+}
+.pt-40{
+    padding-top: 40px;
+}
+
+
+ul.menu-panel {
+    list-style: none;
+}
+ul.menu-panel li{
+    padding-top: 10px;
+}
+.ml-10{
+    margin-left: 10px;
+}
+
+.grey {
+  color: #7a7a7a;
+}
+
+.reconnect_btn{
+    color: #ffffff;
+    background: #68AC1A;
+
+}
+.font_18{
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: black !important;
+  padding:0px 0px 20px 0px !important;
+}

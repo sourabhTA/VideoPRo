@@ -1,0 +1,10 @@
+[server]
+staging.videochatapro.com
+
+[server:vars]
+ansible_python_interpreter=/usr/bin/python3
+host=staging.videochatapro.com
+deploy_user=videochatapro
+database=videochatapro_production
+app_name=videochatapro
+puma_port=9292

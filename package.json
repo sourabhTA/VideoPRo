@@ -1,0 +1,7 @@
+{
+  "name": "videochatpro",
+  "private": true,
+  "dependencies": {
+    "purgecss": "^5.0.0"
+  }
+}

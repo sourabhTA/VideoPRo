@@ -1,0 +1,20 @@
+div do
+  div do
+    form_for(:sms, url: test_sms_admin_sms_settings_path) do |f|
+      div {
+        f.label :phone_number, "Phone number (with country code)"
+        f.input :phone_number, placeholder: "15552223434", name: "sms[to]", class: "form-control", required: true
+        f.label :message, class: "mt10"
+        f.input :message, name: "sms[message]", value: "Test", class: "form-control", required: true
+      }
+      div {
+        div {
+          f.button class: "mt10 btn btn-primary full-width" do
+            span "", class: "fa fa-phone"
+            span "Send Test SMS"
+          end
+        }
+      }
+    end
+  end
+end

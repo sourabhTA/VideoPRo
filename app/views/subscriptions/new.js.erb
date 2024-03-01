@@ -1,0 +1,12 @@
+hide_loader();
+<% if @error.present? %>
+	alert('<%= @error.html_safe %>');
+<% elsif @subscriber.present?  %>
+	$('.choose_plan_modal').append("<%= escape_javascript render(:partial => '/partials/signup_steps/add_subscription_modal', :locals => { :subscriber => @subscriber }) %>");
+	$('#add_subscription_modal').show();
+	$('.choose_plan_modal').find('.form-group').addClass('d-flex');
+	$('#subscription').attr('data-remote', true);
+	$( ".close" ).click(function() {
+		$('#add_subscription_modal').hide();
+	});
+<% end %>

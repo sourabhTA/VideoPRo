@@ -1,0 +1,21 @@
+%nav.navbar
+  %ul.nav.nav-pills
+    %li.nav-item
+      %a.nav-link{href: "/admin"}
+        Admin Site
+
+- unless current_admin_user.admin_permission.super_admin? || current_admin_user.admin_permission.cms_delete
+  :css
+    .btn.btn-danger {display:none}
+
+:css
+  .left-footer {display:none}
+
+- unless false || current_admin_user.admin_permission.super_admin? || current_admin_user.admin_permission.cms_delete
+  :javascript
+    document.addEventListener('DOMContentLoaded', function() {
+      var btns = document.querySelectorAll(".btn-danger");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].parentNode.removeChild(btns[i]);
+      }
+    });

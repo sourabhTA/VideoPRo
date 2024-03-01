@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="text-center h2">How It Works</div>
+  </div>
+  <div class="col-xs-12 col-md-5">
+    <div class="col-center m-auto">
+      <div id="hiwCarousel_<%= carousel_from %>" class="carousel slide" data-ride="carousel" data-interval="5000">
+        <!-- Wrapper for carousel items -->
+        <div class="carousel-inner">
+          <div class="item carousel-item active"><%= image_tag "hiw1.png", class: "img-responsive", alt: "Choose your repair category on an all experts questions and answers website", title: "Choose your repair category on an all experts questions and answers website" %></div>
+          <div class="item carousel-item"><%= image_tag "hiw2.png", class: "img-responsive", alt: "Choose DIY or search local company to ask for advice online", title: "Choose DIY or search local company to ask for advice online" %></div>
+          <div class="item carousel-item"><%= image_tag "hiw3.png", class: "img-responsive", alt: "Choose a trade pro or a local company on an  online question and answer site", title: "Choose a trade pro or a local company on an  online question and answer site" %></div>
+          <div class="item carousel-item"><%= image_tag "hiw4.png", class: "img-responsive", alt: "Perform video chat services and ask an expert for advice", title: "Perform video chat services and ask an expert for advice" %></div>
+          <div class="item carousel-item"><%= image_tag "hiw5.png", class: "img-responsive", alt: "Review your pro or company on an", title: "Review your pro or company on an" %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-7 font16-normal">
+    <ol class="">
+      <li data-target="#hiwCarousel_<%= carousel_from %>" data-slide-to="1" class="active">Choose your repair category.</li>
+      <li data-target="#hiwCarousel_<%= carousel_from %>" data-slide-to="2">Choose Do-it-yourself or Search Local Company</li>
+      <li data-target="#hiwCarousel_<%= carousel_from %>" data-slide-to="3">Choose the perfect fit. Read Verified reviews. Schedule the service that best fits your needs.</li>
+      <li data-target="#hiwCarousel_<%= carousel_from %>" data-slide-to="4">Perform video chat services. Click on the link that is emailed or texted. No downloads needed.</li>
+      <li data-target="#hiwCarousel_<%= carousel_from %>" data-slide-to="5">Review your pro or company.</li>
+    </ol>
+    <div class="text-center m-t-50">
+      <div class="col-xs-12 col-md-3"></div>
+      <div class="col-xs-12 col-md-7">
+        <% if carousel_from == 'modal' %>
+          <a href="javascript:;" data-dismiss="modal" aria-label="Close" class="btn btn-primary btn-block">
+            Close
+          </a>
+        <% end %>
+      </div>
+      <div class="col-xs-12 col-md-2"></div>
+    </div>
+  </div>
+</div>

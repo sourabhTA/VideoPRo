@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+	  <meta charset="utf-8" />
+	  <meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+	    name="viewport" />
+	  <title>User not found</title>
+	  <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+	  <base target="_parent" />
+		<meta name="robots" content="noindex" />
+	</head>
+
+	<body>
+	  <div class="spacer"></div>
+		  <div class="message">
+		  	<%= image_tag "logo.webp", alt: 'Videochatapro' %>
+
+		    <div class="message__title">The User is no longer on Video Chat A Pro.</div>
+		    <p>
+		      <b>Please choose a different</b>
+					<% if @role == "pro" %>
+						<a href="<%= search_diy_path(@trade) %>">pro user</a>
+					<% else %>
+						<a href="<%= search_company_path(@trade) %>">BUSINESS USER</a>
+					<% end %>
+		    </p>
+		  </div>
+	</body>
+
+	<style>
+	  html,
+	  body {
+	    font-family: sans-serif;
+	    -ms-text-size-adjust: 100%;
+	    -webkit-text-size-adjust: 100%;
+	    background-color: #fff;
+	    height: 100%;
+	    -webkit-font-smoothing: antialiased;
+	  }
+
+	  body {
+	    margin: 0;
+	    padding: 0;
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    justify-content: center;
+	  }
+
+	  .message {
+	    text-align: center;
+	    align-self: center;
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    padding: 0px 20px;
+	    max-width: 450px;
+	  }
+
+	  .message__title {
+	    font-size: 22px;
+	    font-weight: 100;
+	    margin-top: 15px;
+	    color: #47494e;
+	    margin-bottom: 8px;
+	  }
+
+	  p {
+	    -webkit-margin-after: 0px;
+	    -webkit-margin-before: 0px;
+	    font-size: 15px;
+	    color: #7f828b;
+	    line-height: 21px;
+	    margin-bottom: 4px;
+	  }
+
+	  .btn {
+	    text-decoration: none;
+	    padding: 8px 15px;
+	    border-radius: 4px;
+	    margin-top: 10px;
+	    font-size: 14px;
+	    color: #7f828b;
+	    border: 1px solid #7f828b;
+	  }
+
+	  .hk-logo,
+	  .app-icon {
+	    fill: #dbe1ec;
+	  }
+
+	  .info {
+	    fill: #9fabbc;
+	  }
+
+	  body.friendly {
+	    background: -webkit-linear-gradient(-45deg, #8363a1 0%, #74a8c3 100%);
+	    background: linear-gradient(135deg, #8363a1 0%, #74a8c3 100%);
+	  }
+
+	  body.friendly .message__title {
+	    color: #fff;
+	  }
+
+	  body.friendly p {
+	    color: rgba(255, 255, 255, 0.6);
+	  }
+
+	  body.friendly .hk-logo,
+	  body.friendly .app-icon {
+	    fill: rgba(255, 255, 255, 1);
+	  }
+
+	  body.friendly .info {
+	    fill: rgba(255, 255, 255, 1);
+	  }
+
+	  body.friendly .btn {
+	    color: #fff;
+	    border: 1px solid rgba(255, 255, 255, 0.9);
+	  }
+
+	  .info_area {
+	    position: fixed;
+	    right: 12px;
+	    bottom: 12px;
+	  }
+
+	  .logo {
+	    position: fixed;
+	    left: 12px;
+	    bottom: 12px;
+	  }
+	</style>
+</html>

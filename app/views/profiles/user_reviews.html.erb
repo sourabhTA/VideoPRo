@@ -1,0 +1,38 @@
+<div class="vcap-reviews">
+  <div class="container">
+    <div class="row review-heading" style="display: flex;">
+      <div class="col-sm-1"><%= link_to 'Back', :back, class: "btn btn-primary open-same-tab" %></div>
+      <div class="col-sm-10"><%= h1_review_tag(@user).html_safe %></div>
+    </div>
+    <h4 class="grey">Thank you for exploring the reviews of <%= @user %> that were provided by previous customers just like yourself. We hope this information helps guide your decision to hire <%= @user %> to help with your <%= @user&.categories&.pluck(:name)&.first&.chop %> needs.</h4>
+    <div class="text-center">
+      <% if @reviews.present? %>
+        <% @reviews.each do |r| %>
+          <div class="review">
+            <h4 class="grey">"<%= r.comment %>"</h4>
+            <div class="star-rating" data-score="<%= r.rating %>"></div>
+            <div><i>—<%= r.reviewer_name %></i></div>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="review">
+          <div class="h2">No Reviews</div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<style>
+  .darkgrey {
+    color: #5E6060;
+    font-size: 30px;
+  }
+  .open-same-tab{
+    margin: 4px;
+  }
+  @media screen and (max-width: 500px) {
+    .review-heading{
+      display: block !important;
+    }
+  }
+</style>

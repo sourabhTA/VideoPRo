@@ -1,0 +1,15 @@
+<ul class="review-list scroll_bar_left_shift overflow_css" >
+    <% if @user.reviews.blank? %>
+        <li>
+            <p class="m-b-0">No reviews just yet, would you like to add the first!</p>
+        </li>
+    <% else %>
+        <% @user.reviews.each do |review| %>
+            <li>
+                <h4 class="media-heading"><%= review.reviewer_name %></h4>
+                <div class="star-rating" data-score="<%= review.rating %>" ></div>
+                <p><%= review.comment %></p>
+            </li>
+        <% end %>
+    <% end %>
+</ul>

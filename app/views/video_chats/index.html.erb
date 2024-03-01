@@ -1,0 +1,54 @@
+<div class="white-cont clearfix">
+  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+    <h3 class="m-b-5">In House Chat</h3>
+    <% if current_user.minutes_available? %>
+      <%= link_to new_video_chat_path, class: 'btn btn-primary' do %>
+        Send Video Chat
+      <% end %>
+    <%end%>
+  </div>
+  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6" style="text-align: right">
+    <p>
+      <strong>Minutes Left:</strong> <%= current_user.minutes_left %>
+    </p>
+  </div>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <% if video_chats.present? %>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Email</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Timings</th>
+              <th>Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% video_chats.each do |video_chat| %>
+              <%= content_tag :tr, id: dom_id(video_chat), class: dom_class(video_chat) do %>
+                <td><%= video_chat.email_receivers.to_sentence %></td>
+                <td><%= video_chat.business %></td>
+                <td><%= video_chat.phone_number %></td>
+                <td><%= video_chat.recipient_time.strftime("%m-%d-%Y %I:%M %P %Z") %></td>
+                <% if video_chat.expired_link? %>
+                  <td>Expired</td>
+                <% else %>
+                  <td><%= link_to_if current_user.minutes_available?, "Initiate Video Chat", chat_path(video_chat.session_id), target: '_blank', class: "start_chat" %></td>
+                <% end %>
+              <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="m-b-0">No Chat Link added so far!</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

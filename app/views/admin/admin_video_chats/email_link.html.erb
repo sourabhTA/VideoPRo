@@ -1,0 +1,9 @@
+<%= form_tag email_link_admin_admin_video_chat_path(resource), autocomplete: "off" do %>
+  <%= text_field_tag :to, nil, placeholder: 'Please add email address/s separated with semicolon.', autocomplete: "nope" %>
+  <br/><br/>
+  <%= text_field_tag :subject, 'Video Chat Link', autocomplete: "nope" %>
+  <br/><br/>
+  <%= text_area_tag :body, "Click on the link below to join the Video Chat a Pro Session.", size: '6x10', autocomplete: "nope" %>
+  <br/><br/>
+  <%= submit_tag 'Send' %>
+<% end %>

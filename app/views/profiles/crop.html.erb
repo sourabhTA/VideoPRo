@@ -1,0 +1,24 @@
+<div class="white-cont clearfix">
+  <h3 class="m-0">Crop Picture</h3>
+</div>
+
+<div class="white-cont clearfix">
+  <%= image_tag @user.picture_url(:large), id: "cropbox", alt: "User large profile picture" %>
+  <br/>
+  <h4>Preview</h4>
+  <div style="width:100px; height:100px; overflow:hidden">
+    <%= image_tag @user.picture_url(:large), :id => "preview", alt: "User large profile picture" %>
+  </div>
+
+  <%= form_for @user, as: :user, url: profile_path, html: { multipart: true, autocomplete: 'off' }  do |f| %>
+    <% %w[x y w h].each do |attribute| %>
+      <%= f.hidden_field "crop_#{attribute}" %>
+    <% end %>
+    <div class="actions m-t-30">
+      <%= f.submit "Crop", class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
+
+

@@ -1,0 +1,56 @@
+---
+- hosts: server
+  remote_user: root
+  gather_facts: no
+  vars:
+    ubuntu_common_required_packages:
+      - unattended-upgrades
+      - git
+      - zlib1g
+      - zlib1g-dev
+      - libreadline8
+      - libpq-dev
+      - vim
+      - pptpd
+      - nginx
+      - imagemagick
+      - libmagickcore-6.q16-dev
+      - nodejs
+      - nginx-extras
+      - resolvconf
+      - unixodbc-dev
+      - make
+      - python3-psycopg2
+      - postgresql-13
+      - postgresql-contrib-13
+      - postgresql-client-13
+      - postgresql-server-dev-13
+  tasks:
+    - name: Add PostgreSQL repository key
+      apt_key:
+        url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+        state: present
+
+    - name: Add PostgreSQL repository
+      apt_repository:
+        repo: deb http://apt.postgresql.org/pub/repos/apt/ focal-pgdg main
+        state: present
+
+    - name: Update APT package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Upgrade APT to the latest packages
+      apt:
+        upgrade: safe
+
+    - name: Install required packages
+      apt:
+        state: present
+        pkg: "{{ item }}"
+      loop: "{{ ubuntu_common_required_packages }}"
+
+    - name: Set timezone to Chicago
+      timezone:
+        name: America/Chicago

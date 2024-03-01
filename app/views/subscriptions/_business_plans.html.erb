@@ -1,0 +1,63 @@
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <% @plans.each do |plan| %>
+    <div class="panel panel-default">
+      <div class="panel-heading <%= 'light-blue' if selected?(plan) %>" role="tab" id="heading<%= plan.name.gsub(' ','_') %>">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= plan.name.gsub(' ','_') %>" aria-expanded="true" aria-controls="collapse<%= plan.name.gsub(' ','_') %>">
+            <div style="display:flex;justify-content: space-between;">
+              <h4 class="m-b-5"><%= plan %></h4>
+              <% if plan.stripe_id == BASIC_PLAN %>
+                <h4 class="m-b-5 base-color"><small>First Month Deal</small> <%= number_to_currency(ninty_percent_off(plan)) %></h4>
+                <h4 class="m-b-5 base-color" style="text-decoration: line-through;"><small><%= number_to_currency(plan.display_price) %> per Month</small></h4>
+              <% else %>
+                <h4 class="m-b-5 base-color"><%= number_to_currency(plan.display_price) %> <small>per Month</small></h4>
+              <% end %>
+              <h4 class="m-b-5 base-color"><%= plan.minutes_allowed %> <small>minutes Allowed</small></h4>
+            </div>
+          </a>
+        </h4>
+      </div>
+      <div id="collapse<%= plan.name.gsub(' ','_') %>" class="panel-collapse collapse <%= 'in' if selected?(plan) %>" role="tabpanel" aria-labelledby="heading<%= plan.name.gsub(' ','_') %>">
+        <div class="panel-body">
+          <div class="col-xs-12 col-md-12">
+            <div class="clearfix">
+              <div class="subscription-holder">
+                <div class="subscription-features">
+                  <ul class="list-group">
+                    <% plan.features.each do |feature| %>
+                      <li class="list-group-item">
+                        <span class="fa fa-check base-color"></span>
+                        <%= feature.title %>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+                <% if selected?(plan) %>
+                  <h3 class="text-center plan-select">Selected</h3>
+                <% else %>
+                  <div>
+                    <%= form_tag new_subscription_path do %>
+                      <%= hidden_field_tag 'plan_id', plan.id %>
+                      <%= submit_tag 'Select', class: 'btn btn-primary', disabled: selected?(plan) %>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<style>
+  .light-blue{
+    background-color: #0bcbfa29 !important;
+  }
+  .plan-select:before {
+    font-family: FontAwesome;
+    content: "\f00c";
+    color: green;
+    font-size: 2.5rem;
+  }
+</style>

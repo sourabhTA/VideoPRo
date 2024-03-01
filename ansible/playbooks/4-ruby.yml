@@ -1,0 +1,12 @@
+--- 
+- 
+  remote_user: root
+  gather_facts: true
+  hosts: server
+  vars:
+    rvm1_rubies:
+      - 'ruby-2.7.2'
+    rvm1_user: "{{ deploy_user }}"
+
+  roles: 
+    - rvm.ruby

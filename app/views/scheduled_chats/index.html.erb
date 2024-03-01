@@ -1,0 +1,112 @@
+<div class="white-cont clearfix">
+  <h3 class="m-b-0">Scheduled Video Chats</h3>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <% if scheduled_chats.present? %>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Reciever/s</th>
+              <th>Created by</th>
+              <th>Type</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "scheduled_chat", collection: scheduled_chats %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="m-b-0 text-center">No Scheduled Chats</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="white-cont clearfix">
+  <h3 class="m-b-0">Monetized Video Chats</h3>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <% if monetized_bookings.present? %>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Reciever/s</th>
+              <th>Type</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "monetized_booking", collection: monetized_bookings %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="m-b-0 text-center">No Monetized Chats</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="white-cont clearfix">
+  <h3 class="m-b-0">Monetized Completed Chats</h3>
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <% if completed_bookings.present? %>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Call Duration</th>
+            <th>Earnings</th>
+            <th>Archive</th>
+          </tr>
+          </thead>
+          <tbody>
+            <%= render partial: "completed_booking", collection: completed_bookings %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="m-b-0 text-center">No Monetized Completed Chats</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+<div class="white-cont clearfix">
+  <h3 class="m-b-0">Completed Video Chats</h3>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <% if completed_chats.present? %>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Receiver/s</th>
+              <th>Time</th>
+              <th>Archive</th>
+            </tr>
+            </thead>
+            <tbody>
+              <%= render partial: "completed_chat", collection: completed_chats %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="m-b-0 text-center">No Completed Chats</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+.navbar-default .navbar-nav > li > a {
+  padding-top: 27px;
+  padding-bottom: 27px;
+
+  &, &:focus {
+    color: #337ab7;
+  }
+
+  &:hover {
+    color: #6ec1e4;
+  }
+
+}
+.navbar-right > li {
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: #337ab7;
+  background-color: #fff;
+}
+.navbar-nav > li > a.profile-dropdown {
+  padding-top: 18px;
+  padding-bottom: 18px;
+
+  .username {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 12ch;
+  }
+}
+.navbar-nav > li > .dropdown-menu {
+  border-top: 2px solid #6ec1e4;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  overflow: hidden;
+}
+.navbar-default .navbar-toggle {
+  border-color: #337ab7;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #337ab7;
+}
+.navbar-nav > li > .dropdown-menu a {
+  padding: 10px 15px;
+  color: #337ab7;
+  border-top: 1px solid #eee;
+}
+.navbar-nav > li > .dropdown-menu a:hover {
+  color: #6ec1e4;
+}
+.navbar-brand {
+  height: 74px;
+  padding: unset;
+}
+.navbar-brand > img {
+  height: 74px;
+  width: auto;
+}
+.navbar-toggle {
+  margin-top: 18px;
+  margin-bottom: 18px;
+}
+.navbar {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-color: #fff;
+  background-color: #fff;
+
+  .btn.btn-link {
+    color: #337ab7;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 15px;
+    text-decoration: none;
+    border-top: 1px solid #eee;
+    width: 100%;
+    text-align: left;
+    transition: none;
+
+    &:hover {
+      color: #6ec1e4;
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+@media all and (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    padding: 15px;
+    padding-left: 24px;
+
+    &, &:focus {
+      color: #337ab7;
+    }
+
+    &:hover {
+      color: #6ec1e4;
+    }
+  }
+}
+
+@media all and (min-width: 992px) {
+  .navbar-default {
+    .dropdown-menu {
+      display: unset;
+      z-index: -1;
+    }
+
+    .dropdown-toggle ~ .dropdown-menu, .dropdown-menu {
+      transition: all .5s ease;
+      opacity: 0;
+      top: 90%;
+      height: 0;
+      width: 0;
+      // z-index: inherit;
+    }
+    .dropdown-toggle:hover ~ .dropdown-menu {
+      display: block;
+      opacity: 1;
+      top: 100%;
+      height: auto;
+      width: auto;
+      z-index: 2;
+    }
+
+    .dropdown-menu:hover {
+      display: block;
+      opacity: 1;
+      top: 100%;
+      height: auto;
+      width: auto;
+      z-index: 2;
+    }
+  }
+}

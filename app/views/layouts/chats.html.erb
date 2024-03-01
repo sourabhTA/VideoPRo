@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html itemscope="" itemtype="https://schema.org/WebPage" lang="en-US">
+  <head>
+    <%= render 'google_tag_manager_head' if Rails.env.production? %>
+    <%= render 'meta_information' %>
+    <%= Gon::Base.render_data %>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+    <%= csrf_meta_tags %>
+    <%= trackers %>
+  </head>
+  <body class="chats">
+    <%= render 'body_top' %>
+    <%= render 'header' %>
+
+    <div>
+      <div class="container">
+        <%= render 'flash_messages' %>
+        <%= yield %>
+      </div>
+    </div>
+
+    <%= render 'js' %> 
+  </body>
+</html>

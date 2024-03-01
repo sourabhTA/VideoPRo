@@ -1,0 +1,42 @@
+<div class="nested-fields panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :category_id, "Type of #{@user.role}", class: 'ms-label' %><br />
+        <%= f.select :category_id, options_from_collection_for_select(Category.all, 'id', 'name', f.object.try(:category_id)), { :prompt => "Type of #{@user.role}"} , { class: 'license_category_id form-control input-sm', required: true } %>
+      </div>
+      <div class="col-md-6 closest_license_number">
+        <%= f.label :license_number, class: 'ms-label' %><br />
+        <%= f.text_field :license_number, class: 'form-control input-sm license_name', required: true %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :state_issued, class: 'ms-label' %><br />
+        <%= f.text_field :state_issued, class: 'form-control input-sm state_issued', required: true %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :expiration_date, class: 'ms-label' %><br />
+        <%= f.hidden_field :expiration_date, class: 'hidden_expiration_date' %>
+        <%= text_field_tag :expiration_date_temp, f.object.try(:expiration_date).try(:strftime, "%m-%d-%Y"), class: 'form-control input-sm datetimepicker' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <%= link_to_remove_association "Remove License", f, class: 'btn btn-danger btn-bh btn-sm m-t-5' %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js do %>
+<script>
+    $('.datetimepicker').datetimepicker({
+        format: 'MM-DD-YYYY'
+    }).on('dp.change', function (e) {
+        var date_param = $(this).val().split("-");
+        var new_date = date_param[2] +'-'+ date_param[0] +'-'+ date_param[1];
+        $(this).siblings('.hidden_expiration_date').val(new_date);
+    });
+</script>
+<% end %>

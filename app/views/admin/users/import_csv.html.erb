@@ -1,0 +1,64 @@
+<%= form_tag import_csv_admin_users_path, multipart: true do %>
+  <h3>Please Upload CSV file.</h3>
+  <%= file_field_tag "csv_file", required: true %>
+  <br/>
+  <div style="margin-top: 10px;">
+    <%= submit_tag "Submit", id: "import_csv_btn" %>
+  </div>
+<% end %>
+<div style="margin-top: 10px;" id="csv_diffrence" category_list="<%= Category.pluck(:name).join(',') %>">
+</div>
+
+<script>
+  const req_fields = ["Category","Business website","Name","Email","Business","Business number","Address"];
+  const non_req_fields = ["Category","Business website","Name","Email","Business","Phone number","Business number","Address","Description","Facebook","Twitter","Youtube","Instagram","Linkedin","Scrapped link","Specialties","Product knowledge","Picture","Video url","Map Reference","Logo","Street","City","State","Country","Postal Code","Latitude","Longitude"];
+
+  const dbCategoryList = document.getElementById('csv_diffrence').getAttribute("category_list").split(',');
+
+  function handleFileSelect(evt) {
+    jQuery('#csv_diffrence' ).html("");
+    let files = evt.target.files; // FileList object
+    // use the 1st file from the list
+    let f = files[0];
+    let reader = new FileReader();
+    // Closure to capture the file information.
+    reader.onload = (function(theFile) {
+        return function(e) {
+          CSV_col_list = e.target.result.split('\n')[0].replace('\r','').split(',');
+          // let csv_cat_list = [...new Set(e.target.result.split("\n").map(x => x.split(',')[0]||"Null Value").slice(1,-1))];
+          let csv_cat_list = [...new Set(e.target.result.split("\n").map(x => x.split(',')[0].trim() || "Null Value").filter(x => x !== '"').filter(x => x.trim() !== '').slice(1))];
+
+          const required = req_fields.filter(x => !CSV_col_list.includes(x));
+          const missingFields = CSV_col_list.filter(x => !non_req_fields.includes(x));
+          const invalidCategories = csv_cat_list.filter(x => !dbCategoryList.includes(x));
+
+          let message = "";
+          let requiredMessage;
+          let InvalidCategoryMessage;
+
+          if(required.length > 0) {
+            requiredMessage = "<br>- Required Missing Column(s): "+required
+          }
+          if(invalidCategories.length > 0) {
+            InvalidCategoryMessage = "<br>- File Contains Category which is not present in the system: "+invalidCategories
+          }
+
+          if (requiredMessage || InvalidCategoryMessage)
+          {
+            jQuery('#import_csv_btn').attr('disabled','');
+            message += `<strong style='color:#f44336;'>File can not be uploaded: ${requiredMessage ? requiredMessage : '' } ${InvalidCategoryMessage ? InvalidCategoryMessage : ''}</strong><br>`
+          }
+
+          if(missingFields.length > 0){
+            message += "<strong style='color:#ff9800;'>Warning: These columns would not be saved: "+missingFields+"</strong><br>"
+          }
+          jQuery( '#csv_diffrence' ).html(message);
+        };
+      })(f);
+
+    // Read in the image file as a data URL.
+    reader.readAsText(f);
+  }
+  document.getElementById('csv_file').addEventListener('change', handleFileSelect, false);
+
+</script>

@@ -1,0 +1,85 @@
+<div class="container">
+  <div class="row m-t-30">
+    <div class="col-md-4 col-xs-12">
+      <% if error.present? %>
+        <p class="alert alert-danger">
+          There was a problem with your payment, please contact Support.
+        </p>
+      <% else %>
+        <p class="alert alert-success">
+          Thank you for using Video Chat a Pro!
+        </p>
+        <p class="alert alert-info m-t-15">
+            <%= chat.expired_link? ? "Total time used " : "Time used till now " %><strong><%= chat.chat_timesheet.total_time_used %></strong><br/>
+            <% if chat.is_a?(Booking) && !chat.is_booking_fake && !current_user %> 
+              Your Charges will be sent to you via email.
+            <% end %> 
+        </p>
+      <% end %>
+
+      <% if !chat.expired_link? && !chat.is_a?(Booking) %>
+         <a class="btn reconnect_btn" href="<%= chat_path(chat.session_id) %>">Connect Again</a>
+      <% elsif !chat.expired_link?  %>
+        <a class="btn reconnect_btn" href="<%= current_user ? chat_path(chat.professional_token) : chat_path(chat.client_token) %>">Connect Again</a>
+      <% end %>
+      <% if !current_user && chat.expired_link? && chat.is_a?(Booking) && !chat.is_booking_fake%>
+        <a class="btn btn-primary" href="<%= new_booking_path(chat.user) %>">Book Again</a>
+      <% end %>
+    </div>
+    <div class="col-md-8 col-xs-12">
+      <div class="end-call-review-container">
+        <div class="comment-holder">
+          <%= form_with(url: review_chat_path(params[:id]), model: new_review, local: true, method: :post) do |f| %>
+            <h2 class="text-center">Give a review for</h2>
+            <div class="h3 text-center"><%= name_under_review %></div>
+            <%= render 'errors', object: new_review %>
+            <div class="form-group">
+              <%= f.label :rating %><br/>
+              <div id='review-star-rating' data-score="<%= new_review.rating %>"></div>
+            </div>
+            <div class="form-group">
+              <% if new_review.persisted? && Time.current > (chat.chat_timesheet.start_time + 24.hours) %>
+                <p><%= new_review.comment %></p>
+              <% else %>
+                <% if anonymous_user? %>
+                  <%= f.label :reviewer_name, "Name" %>
+                  <%= f.text_field :reviewer_name, required: true, class: 'form-control' %>
+                <% end %>
+                <%= f.label :comment %>
+                <%= f.text_area :comment, required: true, class: 'form-control resize-vertical' %>
+              <% end %>
+            </div>
+            <% if new_review.persisted? %>
+              <% unless Time.current > (chat.chat_timesheet.start_time + 24.hours) %>
+                <%= f.submit 'Update Review', class: 'btn btn-primary full-width' %>
+              <% end %>
+            <% else %>
+              <%= f.submit 'Submit Review', class: 'btn btn-primary full-width' %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js do %>
+  <script>
+    $('#review-star-rating').raty({ starType: 'i' });
+
+    $('.end-call-review-container').ready(function(){
+      setTimeout(function () {
+        $.ajax({
+          url: "<%= get_total_cost_chat_path(id: params[:id]) %>",
+          success: function (data) {
+            $('.charged_amount').text("$"+data.charged_amount);
+          },
+          error: function (error) {
+            $('.charged_amount').text("Error Occured");
+            console.log("Error --> ",error);
+          }
+        });
+      }, 3000);
+    });
+  </script>
+<% end %>

@@ -1,0 +1,15 @@
+<% if monetized_booking.is_booking_fake || ( monetized_booking.booking_time > (Time.current - monetized_booking.payment_transactions.pluck(:call_time_booked).sum) ) %>
+  <tr>
+    <td><%= monetized_booking.user_time.strftime("%m/%d/%Y") %></td>
+    <td><%= monetized_booking.user_time.strftime("%I:%M %p %Z") %></td>
+    <td><%= monetized_booking.client %></td>
+    <td><%= monetized_booking.is_booking_fake ? "Free Charge" : "Monetized" %></td>
+    <td>
+      <% if ( monetized_booking&.chat_timesheet&.last_time_used.to_i > 0 ) %>
+       <%= link_to 'Reconnect Chat', chat_path(monetized_booking.professional_token), target: '_blank' %>
+       <%else%>
+      <%= link_to 'Initiate Chat', chat_path(monetized_booking.professional_token), target: '_blank' %>
+        <% end %>
+      </td>
+  </tr>
+<%- end %>

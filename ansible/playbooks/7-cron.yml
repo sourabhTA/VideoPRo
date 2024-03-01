@@ -1,0 +1,50 @@
+---
+- hosts: server
+  remote_user: root
+  gather_facts: yes
+
+  tasks:
+    - name: Keep TLS certs up to date
+      cron:
+        name: "Certbot automatic renewal."
+        minute: "5"
+        hour: "3"
+        job: "/usr/sbin/service nginx stop && (/usr/bin/certbot renew --quiet --no-self-upgrade || /bin/true) && /usr/sbin/service nginx start"
+
+    - name: Refresh sitemap every morning
+      become: yes
+      become_user: "{{ deploy_user }}"
+      cron:
+        name: "Refresh sitemap"
+        minute: "0"
+        hour: "5"
+        job: "/bin/bash -lc 'cd /home/{{ deploy_user }}/{{ app_name }}/current && RAILS_ENV=production bundle exec rake --silent sitemap:refresh'"
+
+    - name: Weekly database backup
+      become: yes
+      become_user: "{{ deploy_user }}"
+      cron:
+        name: "pgdump"
+        weekday: "0"
+        minute: "0"
+        hour: "1"
+        job: "/bin/bash -lc 'cd /home/{{ deploy_user }}/{{ app_name }}/current && RAILS_ENV=production bundle exec rake --silent db_dump:take'"
+
+    - name: Daily email automations
+      become: yes
+      become_user: "{{ deploy_user }}"
+      cron:
+        name: "email automations"
+        minute: "0"
+        hour: "15"
+        job: "/bin/bash -lc 'cd /home/{{ deploy_user }}/{{ app_name }}/current && RAILS_ENV=production bundle exec rake --silent email_automation:start'"
+
+    - name: User reminders
+      become: yes
+      become_user: "{{ deploy_user }}"
+      cron:
+        name: "user reminders"
+        minute: "0"
+        day: "1,4,7,10,13,16,19,22,25,28"
+        hour: "10"
+        job: "/bin/bash -lc 'cd /home/{{ deploy_user }}/{{ app_name }}/current && RAILS_ENV=production bundle exec rake --silent reminders:emails_to_unconfirmed_users'"

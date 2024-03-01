@@ -1,0 +1,22 @@
+<section class="step-section">
+  <div class="container">
+    <div class="step-content">
+      <%= form_tag send_email_video_chat_path(video_chat) do %>
+        <%= label_tag :to, 'To' %>
+        <%= text_field_tag :to, nil, placeholder: 'Please add email address/s separated with semicolon.', class: 'form-control', required: true %>
+        <br/>
+        <%= label_tag :to, 'Name' %>
+        <%= text_field_tag :name, nil, placeholder: 'Name', class: 'form-control', required: true %>
+        <br/>
+        <%= label_tag :subject, 'Subject' %>
+        <%= text_field_tag :subject, 'Video Chat Link', class: 'form-control', required: true %>
+        <br/>
+        <%= label_tag :body, 'Body' %>
+        <%= text_area_tag :body, 'Please click the link below', class: 'form-control', required: true %>
+        <br/>
+        <%= submit_tag 'Send' %>
+      <% end %>
+    </div>
+  </div>
+</section>
+

@@ -1,0 +1,19 @@
+Hi <%= @reciever.name %>,
+<br/>
+<h3>Your minutes to video chat are about to end</h3>
+<br/>
+Minutes Left: <%= (@reciever.seconds_left / 60).round(2) %>
+<br/>
+
+<br/>
+<p>
+ 
+Thank you,
+<br/>
+Video Chat a Pro
+<br/>
+<%= link_to root_url, root_url %>
+
+</p>
+
+

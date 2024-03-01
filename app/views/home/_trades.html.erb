@@ -1,0 +1,24 @@
+<% if HomePageTrade.order(:id).count > 0 %>
+  <section class="bg-gray trade-section">
+    <div class="h1">Learn From Our Pros</div>
+    <div>
+      <% HomePageTrade.order(:id).each do |section| %>
+        <div class="flex-container">
+          <div class="flex-column flex-1 p10 justify-center align-center">
+            <video controls="controls" width="560" height="315" poster="<%= section.poster&.url %>">
+              <source src="<%= section.video %>" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="flex-column flex-1 p10">
+            <div class="h2"><%= section.title %></div>
+            <div class="section-body">
+              <%= simple_format section.body %>
+            </div>
+            <%= link_to "Click Here", section.link, class: "btn btn-primary btn-lg btn-round" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+<% end %>

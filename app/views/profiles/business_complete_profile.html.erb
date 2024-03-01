@@ -1,0 +1,108 @@
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-12 col-xl-5 text-center p-0 mt-3 mb-2">
+    <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+      <h2 id="heading">Complete Your Business Account</h2>
+      <p>Fill all form field to go to next step</p>
+      <div id="msform">
+        <!-- progressbar -->
+        <ul id="progressbar">
+          <li class="fa fa-unlock active" id="email_confirmation"><strong class="body">Email Confirmation</strong></li>
+          <li class="fa fa-id-badge" id="license_information"><strong class="body">License Information</strong></li>
+          <li class="fa fa-vcard" id="business_details"><strong class="body">Business Details</strong></li>
+          <li class="fa fa-bank" id="direct_deposit"><strong class="body">Direct Deposit</strong></li>
+          <li class="fa fa-calendar" id="availability"><strong class="body">Availability</strong></li>
+          <li class="fa fa-dollar" id="rate"><strong class="body">Rate</strong></li>
+          <li class="fa fa-image" id="profile_picture"><strong class="body">Profile Picture</strong></li>
+          <li class="fa fa-users" id="social_links"><strong class="body">Social Links</strong></li>
+          <li class="fa fa-info-circle" id="other_information"><strong class="body">Other Info</strong></li>
+          <li class="fa fa-credit-card" id="choose_plan"><strong class="body">Choose Plan</strong></li>
+          <li class="fa fa-user-plus" id="add_employees"><strong class="body">Add Employees</strong></li>
+          <li class="fa fa-map-marker" id="service_area"><strong class="body">Service Areas</strong></li>
+          <li class="fa fa-share-alt-square" id="share_and_download"><strong class="body">Share & Download</strong></li>
+          <li class="fa fa-check" id="confirm"><strong class="body">Finish</strong></li>
+        </ul>
+
+        <div class="mobile-title"></div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+
+        <!-- Email Confirmation fieldsets -->
+        <fieldset data-current="email_confirmation" data-next="license_information">
+          <%#= render partial: "partials/signup_steps/email_confirmation" %>
+        </fieldset>
+
+        <!-- License Information fieldsets -->
+        <fieldset data-current="license_information" data-prev="email_confirmation" data-next="business_details">
+          <%#= render partial: "partials/signup_steps/license_information" %>
+        </fieldset>
+
+        <!-- License Information fieldsets -->
+        <fieldset data-current="business_details" data-prev="license_information" data-next="direct_deposit">
+          <%#= render partial: "partials/signup_steps/license_information" %>
+        </fieldset>
+
+        <!-- Direct Deposit fieldsets -->
+        <fieldset data-current="direct_deposit" data-prev="business_details" data-next="availability">
+          <%#= render partial: "partials/signup_steps/direct_deposit" %>
+        </fieldset>
+
+        <!-- Availability fieldsets -->
+        <fieldset data-current="availability" data-prev="direct_deposit" data-next="rate">
+          <%#= render partial: "partials/signup_steps/availability" %>
+        </fieldset>
+
+        <!-- Rate fieldsets -->
+        <fieldset data-current="rate" data-prev="availability" data-next="profile_picture">
+          <%#= render partial: "partials/signup_steps/rate" %>
+        </fieldset>
+
+        <!-- Profile Picture fieldsets -->
+        <fieldset data-current="profile_picture" data-prev="rate" data-next="social_links">
+          <%#= render partial: "partials/signup_steps/profile_picture" %>
+        </fieldset>
+
+        <!-- Social Links fieldsets -->
+        <fieldset data-current="social_links" data-prev="profile_picture" data-next="other_information">
+          <%#= render partial: "partials/signup_steps/social_links" %>
+        </fieldset>
+
+        <!-- Other Information fieldsets -->
+        <fieldset data-current="other_information" data-prev="social_links" data-next="choose_plan">
+          <%#= render partial: "partials/signup_steps/other_information" %>
+        </fieldset>
+
+        <!-- Share and Download fieldsets -->
+        <fieldset data-current="choose_plan" data-prev="other_information" data-next="add_employees">
+          <%#= render partial: "partials/signup_steps/share_and_download" %>
+        </fieldset>
+
+        <!-- Availability fieldsets -->
+        <fieldset data-current="add_employees" data-prev="choose_plan" data-next="service_area">
+          <%#= render partial: "partials/signup_steps/availability" %>
+        </fieldset>
+
+        <!-- Share and Download fieldsets -->
+        <fieldset data-current="service_area" data-prev="add_employees" data-next="share_and_download">
+          <%#= render partial: "partials/signup_steps/share_and_download" %>
+        </fieldset>
+
+        <!-- Share and Download fieldsets -->
+        <fieldset data-current="share_and_download" data-prev="service_area" data-next="finish">
+          <%#= render partial: "partials/signup_steps/share_and_download" %>
+        </fieldset>
+
+        <fieldset data-current="finish" accesskey="finish">
+          <%#= render partial: "partials/signup_steps/share_and_download" %>
+        </fieldset>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+	#progressbar li {	
+    width: 7.142% !important;
+	}
+</style>
+

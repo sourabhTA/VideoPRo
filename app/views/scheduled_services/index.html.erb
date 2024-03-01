@@ -1,0 +1,38 @@
+<div class="white-cont clearfix">
+  <h3 class="m-b-0">Scheduled Services</h3>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive">
+        <% unless @scheduled_services.blank? %>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Client Name</th>
+              <th>Owner Name</th>
+              <th>Property Type</th>
+              <th>Home Type</th>
+              <th>Request Sent At</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @scheduled_services.each do |scheduled_service| %>
+              <%= content_tag :tr, id: dom_id(scheduled_service), class: dom_class(scheduled_service) do %>
+                <td><%= scheduled_service.your_name %></td>
+                <td><%= scheduled_service.owner_name %></td>
+                <td><%= scheduled_service.property_type %></td>
+                <td><%= scheduled_service.home_type %></td>
+                <td><%= scheduled_service.created_at.try(:strftime, "%m/%d/%Y") %></td>
+                <td><%= link_to 'Details', scheduled_service_path(scheduled_service), remote: true %></td>
+              <% end %>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="m-b-0">No Scheduled Service so far!</p>
+        <% end %>
+      </div>
+    </div>
+    <div id="schedule_service_div"></div>
+  </div>
+</div>

@@ -1,0 +1,66 @@
+<div class="modal" tabindex="-1" role="dialog" id="schedule_service_modal">
+  <div class="modal-dialog mt-30" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"><strong>Schedule Details</strong></h3>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Property Type</label>
+          <%= @scheduled_service.property_type %>
+        </div>
+        <div class="form-group">
+          <label>Home Type</label>
+          <%= @scheduled_service.home_type %>
+        </div>
+        <div class="form-group">
+          <label>Property Age</label>
+          <%= @scheduled_service.property_age %>
+        </div>
+        <div class="form-group">
+          <label>Property Address</label>
+          <%= @scheduled_service.property_address %>
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <%= @scheduled_service.city %>
+        </div>
+        <div class="form-group">
+          <label>State</label>
+          <%= @scheduled_service.state %>
+        </div>
+        <div class="form-group">
+          <label>Zip</label>
+          <%= @scheduled_service.zip %>
+        </div>
+        <div class="form-group">
+          <label>Owner Name</label>
+          <%= @scheduled_service.owner_name %>
+        </div>
+        <div class="form-group">
+          <label>Your Name</label>
+          <%= @scheduled_service.your_name %>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <%= @scheduled_service.phone_number %>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <%= @scheduled_service.email_address %>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <%= @scheduled_service.scheduled_time %>
+        </div>
+        <div class="form-group">
+          <label>Explaination</label>
+          <%= raw @scheduled_service.explaination %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

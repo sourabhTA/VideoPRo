@@ -1,0 +1,38 @@
+<p>Hello <%= @resource.email %>!</p>
+
+<p>
+	I am Jason and I believe today’s shopping customers are searching for the best of everything these days, and they are expecting your auto repair center to provide the best service at the most affordable rates.
+</p>
+
+<p>
+	I bet you spend a lot of time answering questions about repairs on the phone or justifying additional repairs or have experienced a customer that wants to see what was done to their vehicle. Let’s face it, in the local mechanic google search results finding an honest mechanic seems to be an ever-pressing search query.
+</p>
+
+<p>
+	One distinctive trust builder for customers is when you show them the work that was performed on their vehicle after the repair. The use of video chat to interact with customers has proven to work very well to show off the work that was performed to the customer's vehicle. Not to mention those repairs that require troubleshooting and diagnostics to find a problem. These are the toughest when the customer drops the vehicle off for repair and you have to call and explain the repair.
+</p>
+
+<p>
+	The best way to show a customer while keeping them out of the shop area is to use video chat. Video Chat a Pro provides your automotive shop the ability to bring the customer in the bay without the insurance safety concerns. When you use video chat to show off the work your technicians performed on the customer's vehicle, it changes the perspective of the repair and aids the client to trust in your automotive shop much easier.
+</p>
+
+<p>
+	Imagine a happier customer base and what that would do for your automotive service shop. In the automotive industry, technology plays a huge role in almost everything you do. There is a special tool for almost everything your shop repairs. There is customer management software, and many other software uses in the automotive industry and none that are designed to help maintain the integrity of your reputation before and after the repair. In many industries there is a saying, “not only must you repair the problem you must also heal the customer.” Well, there is much meaning to this statement because of the many experiences the customer has had prior to finding you. As a result, you must work harder to prove your good intentions with every customer.
+</p>
+
+<p>
+	Customers are hard to come by, and it is much easier when they know they can trust their vehicle with you. So, with the business listing that has been created for <%= @resource.business.name %> I encourage you to respond to the customers that pay to video chat with your auto shop and utilize this video chat platform to improve the service you provide to the customers you serve. The business listing will also generate new customers that see video chat as a faster path to build trust with your mechanic shop to contact you directly.
+</p>
+
+<p>
+	Please <b><%= link_to 'verify your password', edit_password_url(@resource, reset_password_token: @token) %></b> and complete your business listing on Video Chat a Pro today.
+</p>
+
+<p>
+  Go check out your current incomplete business profile <%= link_to 'here', show_profile_url(@resource) %>.
+</p>
+<br/>
+
+Video Chat a Pro, Inc.
+<br/>
+<%= link_to root_url, root_url %>

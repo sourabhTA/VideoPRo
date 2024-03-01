@@ -1,0 +1,38 @@
+<h3>
+  <%= raw @auto_email.pre_header %>
+</h3>
+<br/>
+<% unless @auto_email.image.url.blank? %>
+  <div>
+    <%= image_tag @auto_email.image.url, alt: "Auto email image" %>
+  </div>
+<% end %>
+<br/>
+<div>
+  <%= raw @auto_email.content %>
+</div>
+<br/>
+<p>
+  <% if !@auto_email.button_text.blank? && !@auto_email.button_url.blank? %>
+  <table width="100%" cellspacing="0" cellpadding="0">
+    <tr>
+      <td>
+        <table cellspacing="0" cellpadding="0">
+          <tr>
+            <td style="border-radius: 2px;" bgcolor="#ED2939">
+              <a href="<%= @auto_email.button_url %>" target="_blank" style="padding: 8px 12px; border: 1px solid #ED2939;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;">
+                <%= @auto_email.button_text %>
+              </a>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+<% end %>
+</p>
+
+
+<p>
+  Click here to <%= link_to 'Unsubscribe', get_unsubscribe_url(@user.token) %>
+</p>

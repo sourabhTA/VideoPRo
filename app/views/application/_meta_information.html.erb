@@ -1,0 +1,128 @@
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<link rel="profile" href="https://gmpg.org/xfn/11" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<% if Rails.env.production? %>
+  <meta name="google-site-verification" content="UIhKieA9RdzpifC9TqWQoSvL6bsdkDES75piG3edzXQ" />
+  <meta name="p:domain_verify" content="4ce570d0d315883c14ac67f6098eaebe" />
+  <script type="text/javascript">
+    adroll_adv_id = "KP2UW5GVPRDNJLNCXLQ5TV";
+    adroll_pix_id = "RNGX3TSXI5EVJM7SLPQYUU";
+    adroll_version = "2.0";
+    (function(w, d, e, o, a) {
+        w.__adroll_loaded = true;
+        w.adroll = w.adroll || [];
+        w.adroll.f = [ 'setProperties', 'identify', 'track' ];
+        var roundtripUrl = "https://s.adroll.com/j/" + adroll_adv_id
+                + "/roundtrip.js";
+        for (a = 0; a < w.adroll.f.length; a++) {
+            w.adroll[w.adroll.f[a]] = w.adroll[w.adroll.f[a]] || (function(n) {
+                return function() {
+                    w.adroll.push([ n, arguments ])
+                }
+            })(w.adroll.f[a])
+        }
+        e = d.createElement('script');
+        o = d.getElementsByTagName('script')[0];
+        e.async = 1;
+        e.src = roundtripUrl;
+        o.parentNode.insertBefore(e, o);
+    })(window, document);
+    adroll.track("pageView");
+  </script>
+<% else %>
+  <!-- staging site google-site-verification -->
+  <meta name="google-site-verification" content="zntkshbkM9R88xRYgQuEWTtfBdPWGTivB9jy5z8eJKo" />
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta name="p:domain_verify" content="4ce570d0d315883c14ac67f6098eaebe" />
+<% end %>
+
+<%= favicon_link_tag 'favicon.png', type: 'image/png' %>
+
+<% if @cms_page.blank? %>
+  <% if controller_name == 'profiles' && action_name == 'show' %>
+    <% user_title_tag( @user.categories&.first&.name&.downcase ) %>
+    <meta name="description" content="<%= truncate(user_profile_show_meta_description(@user), length: 155) %>" />
+    <meta property="og:description" content="<%= truncate(user_profile_show_meta_description(@user), length: 155) %>" />
+    <meta name="image" content="<%= profile_image_url(@user) %>" />
+    <meta name="og:image" content="<%= profile_image_url(@user) %>" />
+    <meta property="og:image" content="<%= profile_image_url(@user) %>" />
+    <meta property="og:title" content="<%= user_title( @user.categories&.first&.name&.downcase ) %>" />
+    <meta property="og:url" content="<%= profile_url(@user).gsub('/profiles/','/') %>" />
+    <meta property="og:site_name" content="Video Chat A Pro">
+    <meta name="twitter:image" content="<%= profile_image_url(@user) %>" />
+    <meta name="twitter:description" content="<%= truncate(user_profile_show_meta_description(@user), length: 155) %>" />
+    <meta name="twitter:site" content="<%= profile_url(@user) %>" />
+  <% elsif controller_name == 'blogs' && action_name == 'show' %>
+    <% title(@blog&.title || "Video Chat A Pro") %>
+    <meta name="description" content="<%= truncate(@blog.meta_description, length: 155) unless @blog.nil? %>" />
+    <meta name="keywords" content="<%= @blog.meta_keywords unless @blog.nil? %>" />
+    <meta name="image" content="<%= @blog.image.url unless @blog.nil? %>" />
+    <meta name="og:image" content="<%= @blog.image.url unless @blog.nil? %>" />
+    <meta property="og:image" content="<%= @blog.image.url unless @blog.nil? %>" />
+    <meta property="og:title" content="<%= @blog&.title || 'Video Chat A Pro' %>" />
+    <meta property="og:description" content="<%= truncate(@blog.meta_description, length: 155) unless @blog.nil? %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta name="twitter:image" content="<%= @blog.image.url unless @blog.nil? %>" />
+    <meta name="twitter:description" content="<%= truncate(@blog.meta_description, length: 155) unless @blog.nil? %>" />
+  <% elsif controller_name == 'blogs' && action_name == 'index' %>
+    <%= get_meta_tag(get_tag_type(request.path), params[:page], "title_blog") || cms_fragment_content("title") %>
+    <meta property="og:title" content="<%= get_meta_tag(get_tag_type(request.path), params[:page], "title") || cms_fragment_content("title") %>" />
+    <meta name="description" content="<%= truncate(
+          get_meta_tag(get_tag_type(request.path), params[:page], 'description') || cms_fragment_content("description"),length: 155) %>" >
+    <meta property="og:description" content="<%= truncate(
+          get_meta_tag(get_tag_type(request.path), params[:page], 'description') || cms_fragment_content("description"),length: 155) %>" >
+    <meta name="og:image" content= "<%= url_for(::Comfy::Cms::File.find_by(label: "videochataprologo.webp")&.attachment)%>"/>
+    <meta property="og:image" content= "<%= url_for(::Comfy::Cms::File.find_by(label: "videochataprologo.webp")&.attachment)%>"/>
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta name="twitter:image" content="<%= "" %>" />
+    <meta name="twitter:description" content="<%= truncate(
+          get_meta_tag(get_tag_type(request.path), params[:page], 'description') || cms_fragment_content("description"),length: 155) %>" >
+  <% elsif controller_name == 'bookings' && action_name == 'new' %>
+    <% title(booking_title(user) || "Video Chat A Pro") %>
+    <meta name="description" content="<%= truncate(booking_meta_description(user), length: 155) %>" />
+    <meta property="og:description" content="<%= truncate(booking_meta_description(user), length: 155) %>" />
+    <meta name="keywords" content="<%= @page.meta_keywords unless @page.nil? %>" />
+    <meta name="image" content="<%= user.picture.url(:small_thumb) %>" />
+    <meta name="og:image" content="<%= user.picture.url(:small_thumb) %>" />
+    <meta property="og:image" content="<%= user.picture.url(:small_thumb) %>" />
+    <meta property="og:title" content="<%= booking_title(user) || 'Video Chat A Pro' %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta name="twitter:image" content="<%= user.picture.url(:small_thumb) %>" />
+    <meta name="twitter:description" content="<%= truncate(booking_meta_description(user), length: 155) %>" />
+  <% elsif controller_name == 'profiles' && action_name == 'user_reviews' %>
+    <% title(review_title(@user)) %>
+    <meta name="description" content="<%= truncate(review_meta_description(@user), length: 155) %>" />
+    <meta name="keywords" content="<%= @page.meta_keywords unless @page.nil? %>" />
+    <meta name="image" content="<%= @page.header_logo.url unless @page.nil? %>" />
+    <meta name="og:image" content="<%= star_rating_reviews(@user) %>" />
+    <meta property="og:title" content="<%= review_title(@user) %>" />
+    <meta property="og:image" content="<%= star_rating_reviews(@user) %>" />
+    <meta property="og:description" content="<%= truncate(review_meta_description(@user), length: 155) %>" />
+    <meta name="twitter:image" content="<%= star_rating_reviews(@user) %>" />
+    <meta name="twitter:description" content="<%= truncate(review_meta_description(@user), length: 155) %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+  <% else %>
+    <% title(@page&.title || "Video Chat A Pro") %>
+    <meta name="description" content="<%= truncate(@page.meta_description, length: 155) unless @page.nil? %>" />
+    <meta name="keywords" content="<%= @page.meta_keywords unless @page.nil? %>" />
+    <meta name="image" content="<%= @page.header_logo.url unless @page.nil? %>" />
+    <meta name="og:image" content="<%= @page.header_logo.url unless @page.nil? %>" />
+    <meta property="og:title" content="<%= @page&.title || 'Video Chat A Pro' %>" />
+    <meta property="og:image" content="<%= @page.header_logo.url unless @page.nil? %>" />
+    <meta property="og:description" content="<%= truncate(@page.meta_description, length: 155) unless @page.nil? %>" />
+    <meta name="twitter:image" content="<%= @page.header_logo.url unless @page.nil? %>" />
+    <meta name="twitter:description" content="<%= truncate(@page.meta_description, length: 155) unless @page.nil? %>" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+  <% end %>
+
+  <title><%= yield :title %></title>
+  <meta name="twitter:title" content="<%= yield :title %>" />
+  <% unless controller_name == 'profiles' && action_name == 'show' %>
+    <meta name="twitter:site" content="<%= request.base_url %>" />
+  <% end %>
+  <meta name="twitter:card" content="summary" />
+  <meta property="og:type" content="<%= controller_name || 'Video Chat a Pro' %>" />
+  <meta property="og:image:type" content="image/jpeg" />
+<% end %>

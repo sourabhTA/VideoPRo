@@ -1,0 +1,7 @@
+<% flash.each do |name, msg| %>
+  <% type = {notice: "success", alert: "danger", error: "danger", warning: "warning", info: "info"}.fetch(name.to_sym, "success") %>
+  <%= content_tag :div, class: "alert alert-#{type} alert-dismissable", role: "alert" do %>
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <%= msg %>
+  <% end %>
+<% end %>

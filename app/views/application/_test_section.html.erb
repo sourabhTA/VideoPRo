@@ -1,0 +1,16 @@
+<% if controller_name == "home" && action_name == "index" %>
+<% elsif controller_name == "home" %>
+  <div class="test-connection">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 text-center">
+          <% if action_name == "tradesman_signup" || action_name == "business_signup" %>
+            <%= link_to "Sign Up For Free", '#sign_up', class: 'btn btn-lg round btn-white' %></li>
+          <% else %>
+            <%= link_to (@page.shop_button_text.blank? ? 'Shop' : @page.shop_button_text), (@page.shop_button_link.blank? ? root_path : @page.shop_button_link), class: 'btn btn-lg round btn-white' %></li>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

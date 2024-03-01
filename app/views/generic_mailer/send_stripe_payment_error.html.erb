@@ -1,0 +1,30 @@
+Hello Admin,
+<br/>
+<p>
+	Stripe payment error on payment paid to user.<br>
+	Error detail below :-
+</p>
+<p>
+	<%= @error.inspect %>
+</p>
+
+<p> <%= @user.role %> user details below:- </p>
+<p> Name 	:	 <%= @user.name %> </p>
+<p> Email	:	 <%= @user.email %> </p>
+<p> Rate	:	 <%= @user.rate_per_minute %> </p>
+
+<p> Client detail below:- </p>
+<p> Name 	:	 <%= @client.first_name %> </p>
+<p> Email	:	 <%= @client.email %> </p>
+<p>
+  Contact us at info@videochatapro.com if you have any questions.
+</p>
+<p>
+  Thanks,
+</p>
+<p>
+  Video Chat a Pro, Inc.
+</p>
+<p>
+  <%= link_to 'Videochatapro.com', root_url %>
+</p>

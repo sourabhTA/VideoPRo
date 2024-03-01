@@ -1,0 +1,66 @@
+<% home_page = current_page?('/') ? true : false %>
+  <footer class="footer-section-ms">
+  <!--<%# <div class="hide_for_small col-md-3">
+    <p style="font-size:16px; font-weight: bold; padding:0px 0px 10px 0px">Trades</p>
+    <ul class="footer-link"> %>
+      <li><%#= link_to 'Plumbing', "/plumbing-do-it-yourself" %></li>
+      <li><%#= link_to 'Electrical', "/electrical-do-it-yourself" %></li>
+      <li><%#= link_to 'Irrigation', "/irrigation-do-it-yourself" %></li>
+      <li><%#= link_to 'Automotive mechanic', "/automotive-do-it-yourself" %></li>
+      <li><%#= link_to 'HVAC', "/hvac-do-it-yourself" %></li>
+      <li><%#= link_to 'Appliance', "/appliance-do-it-yourself" %></li>
+    </ul>
+  </div>-->
+  <!--<div class="hide_for_small <%= home_page ? "col-md-2" : "col-md-3" %>">
+    <p style="font-size:16px; font-weight: bold; padding:0px 0px 10px 0px">Local Companies</p>
+    <ul class="footer-link">
+      <li><%#= link_to 'Plumbing Repair', "/plumbing-repair-contractors" %></li>
+      <li><%#= link_to 'Electrical Repair', "/electrical-repair-contractors" %></li>
+      <li><%#= link_to 'Irrigation Repair', "/landscape-irrigation-contractors" %></li>
+      <li><%#= link_to 'Automotive mechanic Repair', "/automotive-service-repair-shops" %></li>
+      <li><%#= link_to 'HVAC Repair', "/hvac-repair-contractors" %></li>
+      <li><%#= link_to 'Appliance Repair', "/appliance-repair-company" %></li>
+    </ul>
+  </div>-->
+  <div class="col-md-2">
+  </div>
+  <div class="col-xs-4 <%= home_page ? "col-md-2" : "col-md-3" %>">
+    <p style="font-size:16px; font-weight: bold; padding:0px 0px 10px 0px">Join Us</p>
+    <ul class="footer-link">
+      <li><a href="/tradesman_signup">Become a Pro</a></li>
+      <li><a href="/business_signup">Add Your Business</a></li>
+      <li><a href="/careers">Careers</a></li>
+      <li><%= link_to 'Terms of Use', terms_and_conditions_path %></li>
+    </ul>
+  </div>
+   <div class="col-md-1">
+   </div>
+  <div class="col-xs-4 col-md-2">
+    <p style="font-size:16px; font-weight: bold; padding:0px 0px 10px 0px">Learn</p>
+    <ul class="footer-link">
+      <li><a href="/faqs">FAQs</a></li>
+      <!-- <li><a href="/blogs">Blog</a></li>-->
+      <!-- <li><a href="javascript:;" id="how_it_works">How it works</a></li> -->
+      <li><a href="<%= contact_us_path %>">Contact</a></li>
+    </ul>
+  </div>
+  <% unless profile_path? %>
+      <div class="col-md-1">
+      </div>
+    <div class="col-xs-4 col-md-3">
+      <p style="font-size:16px; font-weight: bold; padding:0px 0px 10px 0px">Connect</p>
+      <% footer_social_links.each do |social_link| %>
+        <%= link_to raw("<i class='fa-brands fa-#{social_link.name.downcase} double_size'></i>"), social_link.url, rel: 'nofollow noopener' %>&nbsp;&nbsp;&nbsp;
+      <% end %>
+    </div>
+  <% end %>
+  
+  <div class="clearfix"></div>
+
+  <div class="col-xs-12 col-md-12 text-center m-t-30">
+    <p>Copyright © 2022 Video Chat a Pro, Inc.</p>
+  </div>
+
+  <div class="clearfix"></div>
+
+</footer>

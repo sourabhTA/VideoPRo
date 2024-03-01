@@ -1,0 +1,20 @@
+<div>
+	<h2><%= booking_h2_tag(user) %></h2>
+	<h3>
+		To Get Price Estimates and/or Project Consultation
+	</h3>
+	<ul style="list-style: inside;" >
+		<% unless user.free_of_charge %>
+			<li>Provide information requested below.</li>
+			<li>You will be charged <%= users_rate(user) %>.</li>
+			<li>Choose time block for your video chat</li>
+			<li>Extend the video chat time if needed.</li>
+			<li>You only pay when both parties join.</li>
+			<li>Unused time is refunded effortlessly.</li>
+			<li>No charge if <%= user.name %> does not join.</li>
+		<% else %>
+			<li>For best results provide information requested below to help you faster.</li>
+			<li>Choose an amount of time needed for the Video Chat. Time is Tracked.</li>
+		<% end %>
+	</ul>
+</div>

@@ -1,0 +1,100 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  <% if @user&.categories&.first&.name&.downcase == 'plumbers' %>
+    "@type": "Plumber",
+  <% elsif @user&.categories&.first&.name&.downcase == 'hvacs' %>
+    "@type": "HVACBusiness",
+  <% elsif @user&.categories&.first&.name&.downcase == 'handyman' %>
+    "@type": "HomeAndConstructionBusiness",
+  <% elsif @user&.categories&.first&.name&.downcase == 'electricians' %>
+    "@type": "Electrician",
+  <% elsif @user&.categories&.first&.name&.downcase == 'mechanics' %>
+    "@type": "AutoRepair",
+  <% else %>
+    "@type": "ProfessionalService",
+  <% end %>
+  "name": "<%= @user.name.titleize %>",
+  "image": "<%= @user.picture.blank? ? image_url('placeholder-profile-pic.png') : @user.picture.url(:small_thumb) %>",
+  "@id": "<%= @user.id %>",
+  "url": "<%= @user.business_website %>",
+  "telephone": "<%= @user.business_number %>",
+  "priceRange": "$$$$$",
+  <% if @user.business? %>
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "<%= @user.street %>",
+      "addressLocality": "<%= @user.city %>",
+      "addressRegion": "<%= @user.state %>",
+      "postalCode": "<%= @user.zip %>",
+      "addressCountry": "<%= @user.country %>"
+    },
+  <% end %>
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "<%= @user.latitude %>",
+    "longitude": "<%= @user.longitude %>"
+  },
+   "openingHoursSpecification": [
+    <% if @user.is_monday_on %>
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Monday",
+        "opens": "<%= @user.monday_start_time %>",
+        "closes": "<%= @user.monday_end_time %>"
+      }<%= ',' if @user.is_tuesday_on || @user.is_wednesday_on || @user.is_thursday_on || @user.is_friday_on || @user.is_saturday_on || @user.is_sunday_on %>
+    <% end %>
+    <% if @user.is_tuesday_on %>
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Tuesday",
+        "opens": "<%= @user.tuesday_start_time %>",
+        "closes": "<%= @user.tuesday_end_time %>"
+      }<%= ',' if @user.is_wednesday_on || @user.is_thursday_on || @user.is_friday_on || @user.is_saturday_on || @user.is_sunday_on %>
+    <% end %>
+    <% if @user.is_wednesday_on %>
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Wednesday",
+        "opens": "<%= @user.wednesday_start_time %>",
+        "closes": "<%= @user.wednesday_end_time %>"
+      }<%= ',' if @user.is_thursday_on || @user.is_friday_on || @user.is_saturday_on || @user.is_sunday_on %>
+    <% end %>
+    <% if @user.is_thursday_on %>
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Thursday",
+        "opens": "<%= @user.thursday_start_time %>",
+        "closes": "<%= @user.thursday_end_time %>"
+      }<%= ',' if @user.is_friday_on || @user.is_saturday_on || @user.is_sunday_on %>
+    <% end %>
+    <% if @user.is_friday_on %>
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Friday",
+        "opens": "<%= @user.friday_start_time %>",
+        "closes": "<%= @user.friday_end_time %>"
+      }<%= ',' if @user.is_saturday_on || @user.is_sunday_on %>
+    <% end %>
+    <% if @user.is_saturday_on %>
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "<%= @user.saturday_start_time %>",
+        "closes": "<%= @user.saturday_end_time %>"
+      }<%= ',' if @user.is_sunday_on %>
+    <% end %>
+    <% if @user.is_sunday_on %>
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Sunday",
+        "opens": "<%= @user.sunday_start_time %>",
+        "closes": "<%= @user.sunday_end_time %>"
+      }
+    <% end %>
+  ],
+  "sameAs": [
+    <% %w(facebook twitter instagram youtube linkedin).filter_map { |social| @user.public_send("#{social}_url") if @user.public_send("#{social}_url").present? } %>
+  ] 
+}
+</script>

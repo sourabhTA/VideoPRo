@@ -1,0 +1,196 @@
+<% @page_type = local_assigns["selected"] == "pro" ? true : false %>
+<form id="search-criteria-form">
+  <div class="overlay"></div>
+  <div class="search-section">
+    <div class="container">
+
+      <div class="search-container">
+        <div class="search-type-container">
+          <div>
+            <% if @page_type %>
+              <button class="btn search-type <%= @page_type || diy_path? ? "active" : "" %>" data-path="<%= search_diy_path %>" data-id="0" type="button">Video Chat</button>
+            <% else %>
+              <button class="btn search-type <%= @page_type || diy_path? ? "" : "active" %>" data-path="<%= search_company_path %>" type="button">Local Business</button>
+            <% end %>
+          </div>
+          <div class="search-type-text <%= @page_type || diy_path? ? "" : "hide" %>">
+            Video Chat with a licensed professional.
+          </div>
+          <div class="search-type-text <%= @page_type || diy_path? ? "hide" : "" %>">
+            <%= cms_fragment_content("title") %>
+          </div>
+
+          <div class="search-form">
+            <div>
+              <div class="input-group">
+                <div class="btn-group">
+                  <button type="button" class="search-dropdown btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <% if cms_fragment_content("search_for").present? %>
+                      <%= cms_fragment_content("search_for") %>
+                    <% elsif Category::SLUG_CATEGORY_MAPPING[ @page.slug ].present? %>
+                      <%= Category::SLUG_CATEGORY_MAPPING[ @page.slug ] %>
+                    <% else %>
+                      <span class="search-placeholder <%= home_page? || diy_path? ? "" : "hide" %>">What is your DIY project?</span>
+                      <span class="search-placeholder <%= home_page? || diy_path? ? "hide" : "" %>">What type of contractor do you need?</span>
+                    <% end %>
+                  </button>
+
+                  <ul class="dropdown-menu">
+                    <% search_categories.each do |category| %>
+                      <% url = diy_path? ? search_diy_path(trade: category.name.downcase) :  search_company_path(trade: category.name.downcase) %>
+                      <li><a href="<%= url %>"><%= category.name %></a></li>
+                    <% end %>
+                  </ul>
+                </div>
+
+                <span class="input-group-btn">
+                  <button id="submit-search" class="btn btn-primary btn-lg" type="submit">
+                    <span class="fa fa-search"></span>
+                    Search
+                  </button>
+                </span>
+              </div>
+
+              <div class="company-fields <%= @page_type || company_path? ? "hide" : "" %>">
+                <div class="form-group">
+                  <label class="sr-only" for="city">city or zip</label>
+                  <div class="input-group">
+                    <span class="input-group-addon"><span class="fa fa-location-arrow"></span></span>
+                    <%= text_field_tag :near, params[:near], class: "form-control input-lg", placeholder: "Search near City or Zip" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="search-callout">
+            Video Chat with a <span class="current-category-name"></span> pro now.
+          </div>
+        </div>
+        <div class="promo-video <%= company_path? ? "hide" : "" %>">
+          <video width="100%" height="100%" controls poster="<%= cms_fragment_content("video_poster").first ? url_for(cms_fragment_content("video_poster").first) : search_promo_video.poster&.url %>">
+            <source src="<%= cms_fragment_content("category_video").first ? url_for(cms_fragment_content("category_video").first) : search_promo_video.video %>">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="promo-video <%= company_path? ? "" : "hide" %>">
+          <video width="100%" height="100%" controls poster="<%= cms_fragment_content("video_poster").first ? url_for(cms_fragment_content("video_poster").first) : search_promo_video_business.poster&.url %>">
+            <source src="<%= cms_fragment_content("category_video").first ? url_for(cms_fragment_content("category_video").first) : search_promo_video_business.video %>">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <%= hidden_field_tag 'sort_by', params[:sort_by] %>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<% content_for :js do %>
+  <script>
+    (function() {
+      function submitSearch() {
+        // Params
+        var params = {};
+
+        // Trade
+        var trades = <%= search_categories.map{|c| c.name.downcase}.to_json.html_safe %>;
+        var t = $(".search-dropdown").text().trim().toLowerCase();
+        var trade = "";
+        for (var i = 0; i < trades.length; i++) {
+          if (trades[i] === t) {
+            trade = t
+          }
+        }
+        // Trade
+        var role = $(".search-type.active").data("path");
+        if (role === "<%= search_company_path %>") {
+          var near = $("#near").val();
+          if (near.length > 0) {
+            params.near = near;
+          }
+        }
+
+        // Sort
+        var sort = $("#sort_by").val()
+        if (sort.length > 0) {
+          params.sort_by = sort;
+        }
+
+        // Build URI
+        var url = role;
+        if (trade.length > 0) {
+          url = [role, trade].join("/")
+        }
+        var search = $.param(params)
+        var uri = url
+        if (search.length > 0) {
+          uri = [url, search].join("?")
+        }
+
+        window.location = uri;
+      }
+
+      $(document).on("submit", "#search-criteria-form", function(e) {
+        e.preventDefault();
+        submitSearch();
+      });
+
+      $(document).on("click", ".search-type", function(e) {
+        e.preventDefault();
+        if ($(this).text() !== $(".search-type.active").text()) {
+          $(".search-type-text").toggleClass("hide");
+          $(".search-type").toggleClass("active");
+          $(".company-fields").toggleClass("hide");
+          $(".search-placeholder").toggleClass("hide");
+          $(".promo-video").toggleClass("hide");
+          $(".promo-video video").each(function(v) {
+            $(this)[0].pause();
+          });
+        }
+      });
+
+      $(document).on("click", "#search-criteria-form .dropdown-menu a", function(e) {
+        e.preventDefault();
+        var category = $(this).text();
+        $(".search-dropdown").css("color", "black");
+        $(".search-dropdown").text(category);
+        submitSearch();
+      });
+
+      $(document).on('change','#sorting_options', function(){
+        $('#sort_by').val($(this).val());
+        submitSearch();
+      });
+
+      var trades = <%= search_categories.map{|c| c.name.downcase.singularize}.to_json.html_safe %>;
+      $(".current-category-name").typer({
+        backspaceDelay: 3000,
+        strings: trades
+      });
+
+      var width = screen.width, height = screen.height;
+
+      if (screen.width <= 500 && height >= 500) {
+        $('.company-fields').insertBefore('.input-group-btn');
+      }
+
+      $(window).on("orientationchange",function(){
+        if (screen.width <= 500 && height >= 500) {
+          $('.company-fields').insertBefore('.input-group-btn');
+        }else{
+          $('.company-fields').insertAfter('.input-group');
+        }
+      });
+
+    })();
+
+    $('html, body').animate({
+      scrollTop: $(".main-details").offset().top
+    }, 1000);
+
+  </script>
+<% end %>
+

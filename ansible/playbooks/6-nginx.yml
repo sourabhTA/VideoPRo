@@ -1,0 +1,39 @@
+---
+- hosts: server
+  remote_user: root
+  gather_facts: yes
+
+  tasks:
+    - name: Remove the default nginx app's config
+      file:
+        path: /etc/nginx/sites-available/default
+        state: absent
+
+    - name: Remove the default nginx app's symlink if it exists
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+
+    - name: Configure nginx for the app
+      template:
+        src: "videochat.nginx"
+        dest: "/etc/nginx/sites-available/videochat"
+        force: yes
+
+    - name: Enable the app
+      file:
+        src: "/etc/nginx/sites-available/videochat"
+        dest: "/etc/nginx/sites-enabled/videochat"
+        state: link
+
+    - name: Copy nginx.conf
+      template:
+        src: nginx.conf
+        dest: /etc/nginx/nginx.conf
+
+    - name: Start nginx
+      service:
+        name: nginx
+        state: restarted
+      changed_when: >
+        "Will always run, don't show that it changed" == 1

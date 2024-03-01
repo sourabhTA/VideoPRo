@@ -1,0 +1,84 @@
+<div class="container" tabindex="-1" role="dialog" id="new_schedule_service">
+  <div class="dialog mt-30" role="document">
+    <div class="content pb-2">
+      <%= link_to 'Back', :back, class: "btn btn-primary open-same-tab" %>
+      <div class="header text-center">
+        <h1 class="title"><strong><%= lead_h1(@user) %></strong></h1>
+        <% if params[:service_type] == "instant" %>
+          <% unless @user.is_time_set? %>
+            <div class="text-center m-t-15">
+              <p><%= @user %> currently does not offer video chat services. </p>
+              <p>  Please fill out the form for In-Home Service.</p>
+              <p>Tell them how awesome it would be for them to offer video chat services.</p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="body">
+        <%= form_for @scheduled_service, html: {autocomplete: :off,role: 'form', id: 'scheduled_service_form'} do |f| %>
+          <%= render 'errors', { object: @scheduled_service } %>
+          <div>
+            <div class="form-group">
+              <%= f.hidden_field :user_id %>
+              <% if @user.role == 'business' && @user.user_category == 'Mechanics' %>
+                <%= f.text_field :property_type, placeholder: "Vehicle Model", class: 'form-control', required: true %>
+              <% else %>
+                <%= f.select :property_type, ScheduledService::PROPERTY_TYPES, {:prompt => "Select property type"} , { class: 'form-control', required: true } %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <% if @user.role == 'business' && @user.user_category == 'Mechanics' %>
+                <%= f.text_field :home_type, placeholder: "Vehicle Make", class: 'form-control', required: true %>
+              <% else %>
+                <%= f.select :home_type, ScheduledService::HOME_TYPES, {:prompt => "Select home type"} , { class: 'form-control', required: true } %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :property_age, placeholder: @user.role == 'business' && @user.user_category == 'Mechanics' ? 'Year' : 'Age of property', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :property_address, placeholder: @user.role == 'business' && @user.user_category == 'Mechanics' ? 'Address' : 'Address of property', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-4">
+                <%= f.text_field :city, placeholder: 'City', class: 'form-control', required: true %>
+              </div>
+              <div class="col-xs-4">
+                <%= f.text_field :state, placeholder: 'State', class: 'form-control', required: true %>
+              </div>
+              <div class="col-xs-4">
+                <%= f.text_field :zip, placeholder: 'Zip', class: 'form-control', required: true %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :owner_name, placeholder: 'Name of owner', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :your_name, placeholder: 'Your Name', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :phone_number, placeholder: 'Phone Number', class: 'form-control formated_phone', required: true %>
+              <p class="hint">format: x-xxx-xxx-xxxx.</p>
+            </div>
+            <div class="form-group">
+              <%= f.email_field :email_address, placeholder: 'Email Address', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.select :scheduled_time, ScheduledService::SCHEDULED_TIMES, {:prompt => "When is scheduled service needed?"} , { class: 'form-control', required: true } %>
+            </div>
+            <div class="form-group">
+              <%= f.text_area :explaination, class: 'form-control', required: true, placeholder: "Explain service needed" %>
+            </div>
+            <div class="form-group">
+              <%= recaptcha_tags %>
+            </div>
+            <button type="submit" id="submit-schedule" class="btn btn-primary">Schedule</button>
+            <br/>
+            <div class="alert alert-success m-t-15" style="display: none;" id="success_message">Thanks for scheduling.</div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <h2 style="text-align: center;"><%= lead_h2(@user) %></h2>
+  </div>
+</div>

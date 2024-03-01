@@ -1,0 +1,14 @@
+<input type="button" name="next" class="next action-button" value="<%= current_user.confirmed? ? "Next" : "Skip" %>" style="position: absolute; right: 0;" />
+<br><br><br>
+<div class="form-card">
+  <%- if !current_user.confirmed? && devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    <div class="row">
+      <div class="">
+        <h2 class="fs-title">Email Confirmation</h2>
+      </div>
+    </div>
+    <p class="text-center"><%= link_to "Resend confirmation email", new_user_confirmation_path(resource_name), class: "btn btn-primary" %></p>
+  <% else -%>
+    <h3 class="text-center emailConfirm">Your Email is confirmed</h3>
+  <% end -%>
+</div>

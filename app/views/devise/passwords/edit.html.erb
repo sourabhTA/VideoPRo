@@ -1,0 +1,14 @@
+<% @user = User.with_deleted.with_reset_password_token(params[:reset_password_token]) %>
+
+<% if @user.nil? %>
+  <% flash[:notice] = "Link has been Expired, Please resend password reset link." %>
+  <%= render :template => "devise/passwords/new" %>
+<% elsif @user.is_imported %>
+  <%= render partial: "devise/shared/edit_password_imported_user" %>
+<% else %>
+  <section class="login-section">
+    <div class="container">
+      <%= render partial: "devise/shared/edit_password" %>
+    </div>
+  </section>
+<% end %>

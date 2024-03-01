@@ -1,0 +1,140 @@
+--- 
+- 
+  remote_user: root
+  gather_facts: true
+  hosts: server
+  vars:
+    logrotate_applications:
+      - name: rails
+        definitions:
+          - logs:
+              - "/home/{{ deploy_user }}/{{ app_name }}/shared/log/*.log"
+            options:
+              - weekly
+              - size 25M
+              - missingok
+              - compress
+              - delaycompress
+              - rotate 7
+              - copytruncate
+  roles:
+    - arillso.logrotate
+
+  tasks: 
+    - name: "Make sure app folder exists"
+      file: 
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}"
+        state: directory
+
+    - name: "Ensures shared/config dir exists"
+      file: 
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/config"
+        state: directory
+
+    - name: "Ensures releases dir exists"
+      file: 
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/releases"
+        state: directory
+
+    - name: "Ensures vendor/bundle dir exists"
+      file:
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/vendor/bundle"
+        state: directory
+
+    - name: "Ensures log dir exists"
+      file:
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/log"
+        state: directory
+
+    - name: "Ensures pids dir exists"
+      file:
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/tmp/pids"
+        state: directory
+
+    - name: "Ensures cache dir exists"
+      file:
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/tmp/cache"
+        state: directory
+
+    - name: "Ensures uploads dir exists"
+      file:
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/public/uploads"
+        state: directory
+
+    - name: "Ensures assets dir exists"
+      file:
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/public/assets"
+        state: directory
+
+    - name: "Ensures db backups dir exists"
+      file:
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/db/backups"
+        state: directory
+
+    - name: "Configure rails env var file"
+      template: 
+        dest: "/home/{{ deploy_user }}/{{ app_name }}/shared/config/application.yml"
+        force: true
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        src: "{{ host }}-application.yml"
+
+    - name: Ensure sitemap exists
+      file:
+        path: "/home/{{ deploy_user }}/{{ app_name }}/shared/public/sitemap.xml.gz"
+        group: "{{ deploy_user }}"
+        owner: "{{ deploy_user }}"
+        state: touch
+
+    - name: "Install Puma Socket"
+      template:
+        src: puma.socket
+        dest: /etc/systemd/system/puma.socket
+
+    - name: Reload systemd unit configuration
+      command: systemctl daemon-reload
+
+    - name: Start puma on boot
+      command: systemctl enable puma.socket
+
+    - name: "Install Puma Service"
+      template:
+        src: puma.service
+        dest: /etc/systemd/system/puma.service
+
+    - name: Reload systemd unit configuration
+      command: systemctl daemon-reload
+
+    - name: Start puma on boot
+      command: systemctl enable puma.service
+
+    - name: "Install Delayed Job Service"
+      template:
+        src: delayed_job.service
+        dest: /etc/systemd/system/delayed_job.service
+
+    - name: Reload systemd unit configuration
+      command: systemctl daemon-reload
+
+    - name: Start puma on boot
+      command: systemctl enable delayed_job.service

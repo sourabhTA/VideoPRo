@@ -1,0 +1,21 @@
+<div class="form-group">
+  <%= select_tag 'client[booking_attributes][time_zone]',
+                 options_for_select([['Pacific Time (US & Canada)', 'Pacific Time (US & Canada)'],
+                                     ['Mountain Time (US & Canada)', 'Mountain Time (US & Canada)'],
+                                     ['Central Time (US & Canada)', 'Central Time (US & Canada)'],
+                                     ['Eastern Time (US & Canada)', 'Eastern Time (US & Canada)']], selected: 'Central Time (US & Canada)'),
+                 class: 'form-control' %>
+</div>
+<div class="form-group">
+  <div class='input-group date' id='datetimepicker'>
+    <%= text_field_tag 'client[booking_attributes][booking_date]', nil, class: 'form-control', style: 'margin-bottom: 0px !important;' %>
+    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+  </div>
+</div>
+<div class="form-group">
+  <div id="pro_time_slots" style="margin-top: 20px !important;">
+    <%= render '/bookings/pro_time_slots' %>
+  </div>
+</div>
+
+

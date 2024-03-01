@@ -1,0 +1,19 @@
+<section class="bg-gray">
+  <div class="review-section">
+    <div class="header">Customers reviews</div>
+    <h6 class="subheader">See Reviews of Video Chat A Pro for Home and Auto Repair</h6>
+    <div id="review-slick-container">
+      <% get_reviews.each do |c| %>
+        <div>
+          <div class="review-icon"><span class="fa fa-quote-left"></span></div>
+          <div class="review-content"><%= c.comment %></div>
+          <div class="review-name"><%= c.reviewer_name %></div>
+          <div class="review-trade">Video Chat <%= c&.user&.name %></div>
+        </div>
+      <% end %>
+    </div>
+    <div class="text-center mt-30">
+      <%= link_to "Read More Reviews", slug_reviews_path(slug: get_category&.downcase), class: "btn btn-primary btn-lg btn-round" %>
+    </div>
+  </div>
+</section>

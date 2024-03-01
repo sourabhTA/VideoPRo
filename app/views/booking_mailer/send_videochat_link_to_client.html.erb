@@ -1,0 +1,78 @@
+<div >
+  <% if booking.user.pro? %>
+    <%= render partial: "pro_chat_to_client" %>
+  <% elsif booking.user.business? %>
+    <%= render partial: "business_chat_to_client" %>
+  <% end %>
+
+  <h4><%= booking.user.role.capitalize %> Details: </h4>
+  <table border="0" cellpadding="0" cellspacing="0" align="center" width="100%" role="module" data-type="columns" style="padding:0px 0px 0px 0px;" bgcolor="#FFFFFF" data-distribution="1,1">
+    <tbody>
+      <tr role="module-content">
+        <td height="100%" valign="top">
+          <table width="290" style="width:290px; border-spacing:0; border-collapse:collapse; margin:0px 10px 0px 0px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-0">
+            <tbody>
+              <tr>
+                <td style="padding:0px;margin:0px;border-spacing:0;">
+                  <table class="wrapper" role="module" data-type="image" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="2NW1wEouHuUR5s6TAZRo2s">
+                    <tbody>
+                      <tr>
+                        <td style="font-size:6px; line-height:10px; padding:0px 0px 0px 0px;" valign="top" align="center">
+                         <% if booking.user.picture.present? %>
+                          <a href="<%= profile_url(booking.user) %>">
+                            <img class="max-width" border="0" style="display:block; color:#000000; text-decoration:none; font-family:Helvetica, arial, sans-serif; font-size:16px; max-width:100% !important; width:100%; height:auto !important;" width="290" alt="" data-proportionally-constrained="true" data-responsive="true" 
+                                  src="<%= booking.user.picture.url(:small_thumb)%>">
+                          </a>
+                          <% end %>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="ff258941-e2d4-4610-b2a1-3cf171be966a">
+                    <tbody>
+                      <tr>
+                        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
+                          <div>
+                            <div style="font-family: inherit; text-align: center">
+                              <%= booking.user %>
+                            </div>
+                            <div></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table width="290" style="width:290px; border-spacing:0; border-collapse:collapse; margin:0px 0px 0px 10px;" cellpadding="0" cellspacing="0" align="left" border="0" bgcolor="" class="column column-1">
+            <tbody>
+              <tr>
+                <td style="padding:0px;margin:0px;border-spacing:0;">
+                  <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="4MCu2Ja2uCuns22agCRdaz">
+                    <tbody>
+                      <tr>
+                        <td style="padding:0px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
+                          <div>
+                            <div style="font-family: inherit">
+                              <%= booking.user.description&.html_safe %>
+                            </div>
+                            <div></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Thank you,</p>
+  <p>Video Chat a Pro</p>
+</div>

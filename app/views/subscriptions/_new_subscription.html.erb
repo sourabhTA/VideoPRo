@@ -1,0 +1,102 @@
+<% unless request.xhr? == 0 %>
+  <div class="white-cont clearfix">
+    <h3 class="m-b-5">You can change your card on file at any time.
+      <%= button_to 'Change Card', edit_subscription_path(@subscriber), class: 'btn btn-primary' if current_user.stripe_customer_id %>
+    </h3>
+  </div>
+<% end %>
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <% if current_user.stripe_customer_id && current_user.plan %>
+        <h3>Subscribe To <small><%= @plan.name %></small></h3>
+
+        <%= form_for @subscriber, url: create_subscription_path, html: {id: 'update_subscription', method: :post} do |f| %>
+          <%= render 'errors', {object: @subscriber} %>
+          <p>
+            <%= label_tag "Amount" %>
+            <% if current_user.confirmed? && !current_user.claim_approved? && current_user.business? %>
+              <%= number_to_currency(ninty_percent_off(@plan)) %>
+            <% else %>
+              <%= number_to_currency(@plan.display_price) %>
+            <% end %>
+          </p>
+
+          <span class="payment-errors m-b-5" style="color: crimson;"></span>
+
+          <%= hidden_field_tag 'plan_id', @plan.id %>
+        <%= f.submit (current_user.plan.minutes_allowed > @plan.minutes_allowed) ? 'Downgrade Plan' : 'Upgrade Plan', class: 'btn btn-primary' %>
+
+          <div class="clearfix"></div>
+          <br/>
+
+        <% end %>
+
+      <% else %>
+        <h3>Subscribe To <small><%= @plan.name %></small></h3>
+        <%= form_for @subscriber, url: create_subscription_path, html: {id: 'subscription', method: :post} do |f| %>
+          <%= render 'errors', {object: @subscriber} %>
+
+          <div class="form-group">
+            <%= label_tag "Amount" %><br/>
+            <% if current_user.confirmed? && !current_user.claim_approved? && current_user.business? %>
+              <%= number_to_currency(ninty_percent_off(@plan)) %>
+            <% else %>
+              <%= number_to_currency(@plan.display_price) %>
+            <% end %>
+          </div>
+
+          <span class="payment-errors m-b-5" style="color: crimson;"></span>
+
+          <div class="form-group">
+            <%= label_tag "Card Number"%>
+            <%= text_field_tag nil, nil, data: { stripe: "number" }, class: 'form-control thirty_percent card_number' %>
+            <%= hidden_field_tag 'plan_id', @plan.id %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag "Expiration (MM/YY)" %>
+            <br/>
+            <%= text_field_tag nil, nil, data: { stripe: "exp_month" }, size: 4, class: 'form-control ten_percent pull-left' %>
+            <span class="m-8 pull-left">/</span>
+            <%= text_field_tag nil, nil, data: { stripe: "exp_year" }, size: 4, class: 'form-control ten_percent  pull-left' %>
+          </div>
+
+          <div class="clearfix"></div>
+          <br/>
+
+          <div class="form-group">
+            <%= label_tag "CVC"%>
+            <%= text_field_tag nil, nil, data: { stripe: "cvc" }, size: 4, class: 'form-control thirty_percent card-cvc' %>
+          </div>
+
+          <div class="clearfix"></div>
+          <br/>
+
+          <div class="form-group">
+            <%= label_tag "Billing Zip"%>
+            <%= text_field_tag nil, nil, data: { stripe: "address_zip" }, size: 6, class: 'form-control thirty_percent' %>
+          </div>
+
+          <div class="clearfix"></div>
+          <br/>
+
+          <div class="clearfix"></div>
+          <br/>
+
+          <%= f.submit 'Submit Payment', class: 'btn btn-primary', data: { disable_with: 'Processing...' } %>
+
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if request.xhr? == 0 %>
+  <%= render 'new_subscription_js'%>
+  <script>$('.edit_user').attr('data-remote',true);</script>
+<% else %>
+  <% content_for :js do %>
+    <%= render 'new_subscription_js'%>
+  <% end %>
+<% end %>

@@ -1,0 +1,55 @@
+<input type="button" name="next" class="next action-button" value="Finish" />
+<input type="button" name="previous" class="previous action-button-previous" value="Back" />
+<br><br><br>
+<div class="form-card">
+  <div class="row">
+    <div class="col-7">
+      <h2 class="fs-title">Share Profile & Download App</h2>
+    </div>
+  </div>
+  <br>
+  <div class="col-sm-12 text-center">
+    <strong>
+      <div class="col-sm-6 pb-2">
+      <p>Copy Your Profile link - Share on Social Media <br> Boost your visibility</p>
+        <a class="btn btn-primary share_profile" href="<%= request.base_url + profile_path(current_user) %>">Profile Link</a><br>
+      </div>
+      <div class="col-sm-6 pb-2">
+      <p>Get 24/7 Access at Your Finger Tips <br> Email/SMS Download Link</p>
+        <% if current_user.confirmed? %>
+          <%= link_to "Get App Now", email_download_link_path, class: "btn btn-primary", remote: true %>
+        <% else %>
+          <%= link_to "Get App Now", "javascript:void(0)", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </strong>
+  </div>
+</div>
+
+
+<div class="share-toast hide" aria-live="polite" aria-atomic="true" style="position: relative; min-height: 200px;">
+  <div class="toast" data-autohide="false">
+    <div class="toast-header">
+    </div>
+    <div class="toast-body"></div>
+  </div>
+</div>
+
+<script>
+  $('.share_profile').click(function (e) {
+    e.preventDefault();
+    var copyText = $(this).attr('href');
+    document.addEventListener('copy', function(e) {
+      e.clipboardData.setData('text/plain', copyText);
+      e.preventDefault();
+    }, true);
+    document.execCommand('copy');
+    $('.toast-body').text('Your Profile link has been Copied to clipboard.');
+    $('.share-toast').removeClass('hide');
+
+    setTimeout(function () {
+      $('.share-toast').addClass('hide');
+    }, 1500);
+
+  });
+</script>

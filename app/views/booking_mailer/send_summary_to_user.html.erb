@@ -1,0 +1,44 @@
+Hello <%= @booking.user %>
+
+<h3>Your successful Video Chat service summary is below.</h3>
+
+<h4> Booking Date: 
+  <%= booking.client_time.strftime("%B %d %Y") %>
+</h4>
+
+<table style = "border: 1px solid black; border-collapse: collapse;">
+  <thead>
+   
+    <tr style = "border: 1px solid black;">
+      <th style = "border: 1px solid black; padding:10px">S No.</th>
+      <th style = "border: 1px solid black; padding:10px">Start Time</th>
+      <th style = "border: 1px solid black; padding:10px">End Time</th>
+      <th style = "border: 1px solid black; padding:10px">Time Used</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @booking.chat_timesheet.chat_timeslots.order(id: :ASC).each_with_index do |ct,index| %>
+      <tr style = "border: 1px solid black";>
+        <td style = "border: 1px solid black; padding:10px"><%= index + 1 %></td>
+        <td style = "border: 1px solid black; padding:10px"><%= ct.start_time.in_time_zone(@booking.user.time_zone).strftime("%I:%M:%S %p") %></td>
+        <td style = "border: 1px solid black; padding:10px"><%= ct.end_time.in_time_zone(@booking.user.time_zone).strftime("%I:%M:%S %p") %></td>
+        <td style = "border: 1px solid black; padding:10px"><%= Time.at(ct.time_used).utc.strftime("%H:%M:%S")%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h4>Total Time:
+  <%= Time.at(@booking.time_used).utc.strftime('%H:%M:%S') %>
+</h4>
+<% unless @booking.is_booking_fake %>
+
+  <h4>Earned:
+  <%= number_to_currency( @booking&.payment_transactions.pluck(:customer_amount).compact.sum ) if @booking.payment_transactions.count > 0 %>
+  </h4>
+<% end %>
+<br/>
+
+<p>Thank you,</p>
+<p><%= link_to 'Video Chat a Pro', root_url %></p>

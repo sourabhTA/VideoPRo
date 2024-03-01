@@ -1,0 +1,18 @@
+<tr>
+  <td><%= completed_booking.user_time.strftime("%B %d, %Y") %></td>
+  <td><%= completed_booking.user_time.strftime("%l:%M %p %Z") %></td>
+  <td><%= "#{completed_booking.city} #{completed_booking.state}" %></td>
+  <% if completed_booking.payment_transactions.size > 0 %>
+    <% customer_amount = completed_booking.payment_transactions.pluck(:customer_amount).compact.sum %>
+    <td><%= Time.at(completed_booking.time_used).utc.strftime('%H:%M:%S') %> </td>
+    <td><%= number_to_currency(customer_amount.to_f) %> </td>
+  <%else%>
+    <td>N/A</td>
+    <td>N/A</td>
+  <%end%>
+  <% if completed_booking.archive_id.present? && completed_booking.time_used > 0 %>
+    <td><%= link_to_i 'download', "Download", download_chat_path(completed_booking.professional_token) %></td>
+  <% else %>
+    <td class="download-not-available" title="Not Available"><span class="fa fa-download"></span> Download</td>
+  <% end %>
+</tr>

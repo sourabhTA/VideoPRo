@@ -1,0 +1,7 @@
+home:
+  slug: home_page
+  title: Home
+  sub_header_background_image:
+    url: logo.jpg
+  header_logo:
+    url: logo.jpg

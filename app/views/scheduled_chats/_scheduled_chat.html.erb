@@ -1,0 +1,8 @@
+<tr>
+  <td><%= scheduled_chat.timings.try(:strftime, "%m/%d/%Y") %></td>
+  <td><%= scheduled_chat.timings.try(:strftime, "%l:%M %p %Z") %></td>
+  <td><%= scheduled_chat.email_receivers_without_sender.to_sentence %></td>
+  <td><%= scheduled_chat.sender.email %></td>
+  <td>In House</td>
+  <td><%= link_to 'Initiate Chat', chat_path(scheduled_chat.session_id), target: '_blank' %></td>
+</tr>

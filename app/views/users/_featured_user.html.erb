@@ -1,0 +1,63 @@
+<li>
+  <div class="media">
+    <div class="media-left result-img">
+      <div>
+        <a href="<%= show_profile_path(user) %>">
+          <span class="font-icon">
+            <%= image_tag availability_image(user), alt: profile_image_alt_text(user) %>
+          </span>
+          <% unless user.picture.blank? %>
+            <%= image_tag user.picture.url(:small_thumb), class: 'media-object', alt: profile_image_alt_text(user) %>
+          <% else %>
+            <%= image_tag 'placeholder-profile-pic.png', class: 'media-object', alt: profile_image_alt_text(user) %>
+          <% end %>
+          <% if user.available? %>
+            <div class="text-center">
+              <span style="color: #92D050;" class="fa fa-video-camera"></span> Available
+            </div>
+          <% end %>
+        </a>
+      </div>
+
+      <div class="user-name" style="display: none;">
+        <h3 class="media-heading">
+          <%= link_to user, show_profile_path(user) %><%= raw("&nbsp;*&nbsp;") if user.is_featured? %>
+          <%= image_tag 'verified.png', class: 'search_verified_image', alt: "Verified icon" if user.is_verified? %>
+        </h3>
+      </div>
+
+    </div>
+    <div class="media-body">
+      <div class="row">
+        <div class="col-xs-12">
+          <div id='userRating' class='star-rating d-inline' data-score="<%= user.reviews.size > 0 ? user.reviews.sum(&:rating).fdiv(user.reviews.size).try(:round, 2) : 0 %>"></div>
+          <a href="<%= user_reviews_path(user) %>">Read Reviews</a>
+          <p class="license_div_auto">
+            <strong>License:</strong>
+            <%# user.license_informations.each do |li| %>
+              <%#= [li.category.try(:name), li.license_number , li.state_issued].reject(&:blank?).compact.join(", ") %>
+              <%# <br/> %>
+            <%# end %>
+            <% user.license_informations.includes(:category).pluck(:name, :license_number, :state_issued).each do |li|%>
+            <%= li.reject(&:blank?).compact.join(", ") %><br>
+            <% end %>
+          </p>
+          <% if params[:help_with].present? && params[:help_with] == 'businesses' %>
+            <p>
+              <strong>Address:</strong>
+              <%= user.address %>
+            </p>
+          <% end %>
+          <% if user.description.present? %>
+            <p>
+              <strong>Description:</strong>
+              <%= truncate(user.description, length: 175, separator: ' ', omission: ' ... ')  {
+                link_to "Read more", show_profile_path(user)
+              } %>
+            </p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>

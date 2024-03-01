@@ -1,0 +1,531 @@
+<% if ENV["host_name"] == "https://videochatapro.com" %>
+    <%# if(window.location.host !== atob("dmlkZW9jaGF0YXByby5jb20=")){window.location=atob("aHR0cHM6Ly92aWRlb2NoYXRhcHJvLmNvbQ==")} %>
+  var _0x1be2=['1646333KIgIaJ','194914HVnhtc','4565969rhxIRr','1wpjktQ','887195yqdhbF','1593265HLAJQM','1684481KYruvo','dmlkZW9jaGF0YXByby5jb20=','899851YxlOMX','location','aHR0cHM6Ly92aWRlb2NoYXRhcHJvLmNvbQ==','1GbkMYl'];var _0x11ba=function(_0x541e2a,_0x5221ff){_0x541e2a=_0x541e2a-0x14a;var _0x1be2ff=_0x1be2[_0x541e2a];return _0x1be2ff;};var _0x591321=_0x11ba;(function(_0x19b899,_0xca97b8){var _0xa72d67=_0x11ba;while(!![]){try{var _0x4e8e76=-parseInt(_0xa72d67(0x14a))+-parseInt(_0xa72d67(0x14c))+-parseInt(_0xa72d67(0x14e))+parseInt(_0xa72d67(0x152))*-parseInt(_0xa72d67(0x151))+-parseInt(_0xa72d67(0x153))+-parseInt(_0xa72d67(0x14b))*-parseInt(_0xa72d67(0x155))+parseInt(_0xa72d67(0x154));if(_0x4e8e76===_0xca97b8)break;else _0x19b899['push'](_0x19b899['shift']());}catch(_0x505eb9){_0x19b899['push'](_0x19b899['shift']());}}}(_0x1be2,0xcea7c));window[_0x591321(0x14f)]['host']!==atob(_0x591321(0x14d))&&(window[_0x591321(0x14f)]=atob(_0x591321(0x150)));
+<% end %>
+
+  var check_license_validations = function(){
+    if($('.license_category_id').length > 0){
+      $('.license_category_id').each(function(){
+        if($(this).find('option:selected').text() == "Appliances" || $(this).find('option:selected').text() == "Mechanics" || $(this).find('option:selected').text() == "Landscapers"){
+          $(this).parent().siblings().find('.license_name').prop('required', false);
+          $(this).parent().parent().siblings().find('.state_issued').prop('required', false);
+        }else{
+          console.log('no change');
+          $(this).parent().siblings().find('.license_name').prop('required', true);
+          $(this).parent().parent().siblings().find('.state_issued').prop('required', true);
+        }
+      });
+    }
+
+  };
+
+//var fetch_pros = function(){
+//  $.ajax({
+//    data: { category_id: $('#category_id').val(), user_id: $('#user_id').val() },
+//    datatype: 'script',
+//    url: "/fetch_pros"
+//  });
+//}
+
+var fetch_time_slots = function(){
+  console.log("===================>>>>fetching for date"+ $('#client_booking_attributes_booking_date').val());
+  $.ajax({
+    data: { user_id: $('#client_booking_attributes_user_id').val(), booking_date: $('#client_booking_attributes_booking_date').val() },
+    datatype: 'script',
+    url: "/fetch_pro_time_slots"
+  });
+}
+
+var fetch_pro_datetime_slots = function(){
+  $.ajax({
+    data: { user_id: $('#client_booking_attributes_user_id').val() },
+    datatype: 'script',
+    url: "/fetch_pro_datetime_slots",
+    success: function(data){
+      fetch_time_slots();
+    }
+  });
+}
+
+var apply_rating = function(){
+  $('.star-rating').raty({
+    starType: "i",
+    readOnly: true,
+    score: function() {
+      return $(this).attr('data-score');
+    }
+  });
+  $( '.star-rating' ).raty( 'reload' )
+}
+
+
+var tour = new Tour({
+  backdrop: true,
+  backdropPadding: 10,
+  steps: [
+    {
+      element: "#trend-ulz",
+      title: "Step 1",
+      placement: "top",
+      content: "Choose your Repair Category"
+    },
+    {
+      element: "#service_needed",
+      title: "Step 2",
+      placement: "top",
+      content: "What service do you need?"
+    }
+  ]});
+
+// Profile Screen
+$(document).on('click', '.reviews_section_li', function() {
+  $("#reviews").click();
+  $('html, body').animate({
+    scrollTop: $("#"+$(this).data("scroll")).offset().top
+  }, 1000);
+});
+
+
+$(document).ready(function() {
+
+  $(document).on('click', '#reviews', function(e) {
+    e.preventDefault();
+    $('.review-list').show();
+  });
+
+  if(window.location.hash == "#reviews"){ $('.review-list').show(); }
+
+  function business_addresses() {
+    if ($('#business_addresses .nested-fields:visible').length == 5) {
+      $('#business_addresses .links a').hide();
+    } else {
+      $('#business_addresses .links a').show();
+    }
+  }
+
+  $('#business_addresses').on('cocoon:after-insert', function() {
+    business_addresses();
+  });
+
+  $('#business_addresses').on('cocoon:after-remove', function() {
+    business_addresses();
+  });
+
+  business_addresses();
+
+  function business_pictures() {
+    if ($('#business_pictures .nested-fields:visible').length == 10) {
+      $('#business_pictures .links a').hide();
+    } else {
+      $('#business_pictures .links a').show();
+    }
+  }
+
+  $('#business_pictures').on('cocoon:after-insert', function() {
+    business_pictures();
+  });
+
+  $('#business_addresses').on('cocoon:after-remove', function() {
+    business_pictures();
+  });
+
+  business_pictures();
+
+  function business_videos() {
+    if ($('#business_videos .nested-fields:visible').length == 10) {
+      $('#business_videos .links a').hide();
+    } else {
+      $('#business_videos .links a').show();
+    }
+  }
+
+  $('#business_videos').on('cocoon:after-insert', function() {
+    business_videos();
+  });
+
+  $('#business_videos').on('cocoon:after-remove', function() {
+    business_videos();
+  });
+
+  business_videos();
+
+  $(document).on('change', '.trend-ul input[type=radio]', function(e) {
+    if (window.location.pathname === "/") {
+      $(".next-step").removeClass('hide');
+      $(".next-step").addClass('fadeIn');
+    }
+  });
+
+  $(document).on('click', '#service_needed a', function(e) {
+    if (window.location.pathname === "/") {
+      e.preventDefault();
+      var action = $(this).attr("href");
+      var trade = $("#search_form")[0].trade.value;
+      var newAction = [action, trade].join("/");
+      window.location = newAction
+    }
+  });
+
+  $(document).on('click', '#how_it_works', function() {
+    $('#how_it_works_modal').modal('show');
+  });
+
+  $('[data-toggle="tooltip"]').tooltip({html: true});
+  $('.faq').beefup();
+
+  // browser window scroll (in pixels) after which the "back to top" link is shown
+  var offset = 300,
+    //browser window scroll (in pixels) after which the "back to top" link opacity is reduced
+    offset_opacity = 1200,
+    //duration of the top scrolling animation (in ms)
+    scroll_top_duration = 700,
+    //grab the "back to top" link
+    $back_to_top = $('div.cd-top');
+
+  //hide or show the "back to top" link
+  $(window).scroll(function(){
+    ( $(this).scrollTop() > offset ) ? $back_to_top.addClass('cd-is-visible') : $back_to_top.removeClass('cd-is-visible cd-fade-out');
+    if( $(this).scrollTop() > offset_opacity ) {
+      $back_to_top.addClass('cd-fade-out');
+    }
+  });
+
+  //smooth scroll to top
+  $back_to_top.on('click', function(event){
+    event.preventDefault();
+    $('body,html').animate({
+      scrollTop: 0 ,
+    }, scroll_top_duration
+    );
+  });
+
+  $('#timings_datetimepicker').datetimepicker({
+    format: 'MM-DD-YYYY hh:mm A'
+  });
+
+  $('#video_chat_form input').on('change', function() {
+    var radioValue = $('input[name=\'video_chat[is_internal]\']:checked', '#video_chat_form').val();
+    if(radioValue == 'true'){
+      $('#internal_div').show();
+      $('#external_div').hide();
+      $("#internal_div :input").prop('required', true);
+      $("#external_div :input").prop('required', false);
+    }else{
+      $('#internal_div').hide()
+      $('#external_div').show()
+      $("#internal_div :input").prop('required', false);
+      $("#external_div :input").prop('required', true);
+    }
+  });
+
+  $('.all_notification_checkbox').click(function(){
+    $.ajax({
+      url: '/employees/'+$(this).val(),
+      type: 'patch',
+      dataType: 'js'
+    });
+  });
+
+  if($('#pro_datetime_slots').length > 0){
+    fetch_pro_datetime_slots();
+  }
+
+  $(document).on('change','#category_id', function(){
+    $.ajax({
+      data: { category_id: $(this).val(), user_id: $('#user_id').val() },
+      datatype: 'script',
+      url: "/fetch_pros"
+    });
+  });
+
+  $(document).on('change','.license_category_id', function(){
+    if($(this).find('option:selected').text() == "Appliances" || $(this).find('option:selected').text() == "Mechanics" || $(this).find('option:selected').text() == "Landscapers"){
+      $(this).parent().siblings().find('.license_name').prop('required', false);
+      $(this).parent().parent().siblings().find('.state_issued').prop('required', false);
+    }else{
+      console.log('no change');
+      $(this).parent().siblings().find('.license_name').prop('required', true);
+      $(this).parent().parent().siblings().find('.state_issued').prop('required', true);
+    }
+  });
+
+  $(document).on("submit", '#search_form', function() {
+    var removeEmptyInputs = ["city", "zip", "sort_by"];
+    $.each(removeEmptyInputs, function(idx, id) {
+      var selector = "#"+id
+      if ($(selector).val() === undefined || $(selector).val().length === 0) {
+        $(selector).attr("disabled", true);
+      }
+    });
+  });
+
+  apply_rating();
+  check_license_validations();
+
+  if($('#star-rating').length > 0){
+    $('#star-rating').raty({
+      starHalf:     '<%= asset_path('star-half.png') %>',
+      starOff:      '<%= asset_path('star-off.png') %>',
+      starOn:       '<%= asset_path('star-on.png') %>',
+      scoreName: 'review[rating]'
+    });
+  }
+
+  $(document).on('change', 'input:radio[name="client[booking_attributes][user_id]"]', function() {
+    if(this.checked){
+      $.ajax({
+        data: { user_id: this.value },
+        datatype: 'script',
+        url: "/fetch_pro_datetime_slots"
+      });
+    }
+  });
+
+  $(document).on('change', '#client_booking_attributes_time_zone', function() {
+    $.ajax({
+      data: { time_zone: this.value, user_id: $('input[name="client[booking_attributes][user_id]"]').val(), booking_date: $('#client_booking_attributes_booking_date').val() },
+      datatype: 'script',
+      url: "/fetch_time_slots_only"
+    });
+  });
+
+  $(document).on('click', '.time_list li', function(e){
+    if (!$(this).data('disabled')) {
+      $('.time_list li').removeClass('active');
+      $(this).addClass('active');
+      $('#client_booking_attributes_booking_time').val(this.dataset.time);
+    }
+  });
+
+  $(document).on('click', '.date-circle', function(e){
+    $('.date-circle').removeClass('active-circle');
+    $(this).addClass('active-circle');
+    $('#client_booking_attributes_booking_date').val(this.dataset.formattedDate);
+    $('.selected-date .date').text(this.dataset.date);
+    $('.selected-date .day').html("<b>"+this.dataset.day+"</b>");
+    $('.slick-slide').removeClass('slick-active');
+
+    let timezone= $('input[name="client[booking_attributes][time_zone]"]').val()===''?'Central Time (US & Canada)':$('input[name="client[booking_attributes][time_zone]"]').val();
+    $('#client_booking_attributes_time_zone').val(timezone);
+
+    $.ajax({
+      data: {
+        time_zone: timezone,
+        user_id: $('input[name="client[booking_attributes][user_id]"]').val(),
+        booking_date: $('#client_booking_attributes_booking_date').val()
+      },
+      datatype: 'script',
+      url: "/fetch_time_slots_only"
+    });
+  });
+
+  $(document).on('click', '.timezone_list li', function(e){
+    $('.timezone_list li').removeClass('active');
+    $(this).addClass('active');
+    let timeZone = $.trim(this.textContent)===''?'Central Time (US & Canada)':($.trim(this.textContent)+($.trim(this.textContent).indexOf(' (US & Canada)')>=0?'':' (US & Canada)'));
+    $('#client_booking_attributes_time_zone').val(timeZone);
+
+    $.ajax({
+      data: {
+        time_zone: timeZone,
+        user_id: $('input[name="client[booking_attributes][user_id]"]').val(),
+        booking_date: $('#client_booking_attributes_booking_date').val()
+      },
+      datatype: 'script',
+      url: "/fetch_time_slots_only"
+    });
+  });
+
+  $('#review-slick-container').slick({
+    slidesToShow: 2,
+    slidesToScroll: 2,
+    responsive: [
+      {
+        breakpoint: 769,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ],
+  });
+
+  $('.date-pick-slider').slick({
+    speed: 300,
+    slidesToShow: 7,
+    slidesToScroll: 6,
+    centerMode: false,
+    variableWidth: true,
+    arrow: true,
+    infinite: false,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 7,
+          slidesToScroll: 6,
+        }
+      },
+      {
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  });
+
+  if($('.timezone_list div li.active').length > 0){
+    $('.timezone_list div li.active').trigger('click');
+  }
+
+
+  $('form#new_client').on('ajax:success', function(event, xhr) {
+    if (xhr.redirect_url) {
+      console.log(xhr.redirect_url);
+      location.href = xhr.redirect_url;
+    }
+  });
+
+  $('#load-more-users').on('ajax:beforeSend', function(event, xhr) {
+    $('.loading-gif').show();
+    $("#load-more-users").hide();
+  });
+
+  $('form#new_client').on('ajax:error', function(event, xhr) {
+    inputError([xhr.responseText]);
+  });
+
+
+  var inputError = function(messages) {
+    $("#donateButton").attr("disabled", false);
+    $("#fakeDonateButton").attr("disabled", false);
+    $("#donateButton").text("Continue");
+    $("#fakeDonateButton").text("Continue");
+
+    if (!messages) {
+      messages = ["Something went wrong"];
+    }
+
+    $errorLog = $("<div class='error-log well'></div>");
+    $errorLog.append('<h4 class="text-danger text-left">Oops, something went wrong while submitting the form</h4>');
+    $errorLog.append('<ul class="text-left"></ul>');
+
+    messages.forEach(function(message) {
+      var item = $("<li>" + message
+        .replace("Booking booking", "Booking")
+        .replace("Booking agree with terms and conditions can't be blank", "You must agree to the Terms and Conditions") + "</li>");
+
+      $errorLog.find("ul").append(item);
+    });
+
+    $("#booking-error").html($errorLog);
+    booking_loader_hide();
+  };
+
+  if($('#gmaps-input-address').length > 0){
+    $('#gmaps-input-address').geocomplete();
+  }
+
+  if($(".formated_phone").length > 0){
+    $('.formated_phone').mask('1-000-000-0000');
+  }
+
+
+});
+
+function booking_loader_hide(argument) {
+  $("#loader").removeClass( "show-loader" );
+  $("#loader-on").removeClass( "show-loader" );
+  $(".booking-new").removeClass( "hide-content" );
+}
+
+function tz() {
+  return /\(([^)]+)\)/.exec((new Date()).toString())[1].split(" ")[0] + " Time";
+}
+
+function autoSelectTZ() {
+  $(document).ready(function() {
+    var zone = tz();
+    if (zone) {
+      var li = $(".timezone_list li:contains('"+zone+"')");
+      if (li) { li.click(); }
+    }
+  })
+}
+
+function debounce(func, delay) {
+  var timer;
+  return function() {
+    var self = this;
+    var args = arguments;
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      func.apply(self, args)
+    }, delay)
+  }
+}
+
+function isOnScreen(element)
+{
+  var top = element.offset().top;
+  var screenHeight = $(window).height();
+
+  var min = $(window).scrollTop();
+  var max = min + screenHeight;
+
+  return top > min && top < max;
+}
+
+$(document).on("click", ".load-more-button", function() {
+  $(".lds-ring").removeClass("hide");
+  $(this).hide();
+});
+
+$(document).ready(function() {
+  var onScroll = debounce(function() {
+    var loadMoreButton = $('.search-result-section .load-more-button');
+    if(loadMoreButton.length > 0 && isOnScreen(loadMoreButton)) { 
+      loadMoreButton.click();
+    };
+  }, 100);
+  // $(window).scroll(onScroll);
+
+  $("#main-detail-content").on("click", "a", function (e) {
+    url = e.currentTarget.href;
+    if(!$(e.currentTarget).hasClass("open-same-tab")) {
+      e.preventDefault();
+      window.open(url, '_blank').focus();
+    }
+  });
+})
+
+// Replace Deafult Image with all Broken images
+var default_avatar = "<%= asset_path('placeholder-profile-pic.png') %>";
+window.addEventListener("load", event => {
+  $('img').each(function( index ) {
+    image = $( this )[0]
+    var isLoaded = image.complete && image.naturalHeight !== 0;
+    if (!isLoaded) {
+      image.src = default_avatar;
+    }
+  });
+});
+// To check validation to add video description of url present
+$(document).on("change", ".video-url-pesence", function() {
+  var video_url_Length = document.getElementById("video-url-pesence").value;
+  if (video_url_Length.length > 0){
+    $(".video-description-pesence").attr('required', true)
+  } else {
+    $(".video-description-pesence").removeAttr('required')
+  }
+});
+

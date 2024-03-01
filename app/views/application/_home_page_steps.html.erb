@@ -1,0 +1,64 @@
+<section class="step-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <ul class="steps-ul blue-br">
+          <li><span class="st-number">1</span></li>
+          <li><span class="st-number">2</span></li>
+          <li><span class="st-number">3</span></li>
+        </ul>
+        <ul class="steps-ul">
+          <li>
+            <%= image_tag 'search.png', title: "Step 1", alt: "Step 1", class: 'step-img' %>
+            <div class="step-cont">
+              <span class="step-title">Search</span>
+              <p>
+                <small>
+                  Read verified reviews and pick the <i class="break"></i>perfect Video Chat Pro.
+                </small>
+              </p>
+            </div>
+          </li>
+          <li>
+            <%= image_tag 'meeting-date.png', title: "Step 2", alt: "Step 2", class: 'step-img'  %>
+            <div class="step-cont">
+              <span class="step-title">Schedule</span>
+              <p>
+                <small>
+                  Now or Later. Book at your<i class="break"></i> convenience.
+                </small>
+              </p>
+            </div>
+          </li>
+          <li>
+            <%= image_tag 'Video_Chat.png', title: "Step 3", alt: "Step 3", class: 'step-img' %>
+            <div class="step-cont">
+              <span class="step-title">Video Chat</span>
+              <p>
+                <small>
+                  Meet with your Licensed Video Chat service <i class="break"></i> technician, learn, and repair.
+                </small>
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="step-content">
+      <%= raw @page.main_details %>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-md-12 m-t-15">
+        <div class="col-xs-12 col-md-5 text-center m-t-5">
+          <%= image_tag 'verified.png', class: 'check_section_image pull-right', alt: "Business verified icon" %>
+        </div>
+        <div class="col-xs-12 col-md-7 pt-7 pl-30">
+          <div class="font16">We verify our pros and businesses</div>
+          <div class="font14"><i class="fa fa-check m-r-15 check-color"></i>Identity check</div>
+          <div class="font14"><i class="fa fa-check m-r-15 check-color"></i>Valid trade license check</div>
+          <div class="font14"><i class="fa fa-check m-r-15 check-color"></i>Live Video Chat Interview</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

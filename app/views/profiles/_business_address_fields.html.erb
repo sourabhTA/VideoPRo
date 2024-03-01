@@ -1,0 +1,27 @@
+<div class="nested-fields panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :city, class: 'ms-label' %><br />
+        <%= f.text_field :city, class: 'form-control input-sm', required: true %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :zip, class: 'ms-label' %><br />
+        <%= f.text_field :zip, class: 'form-control input-sm', required: true %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :price, class: 'ms-label' %><br />
+        <%= f.number_field :price, class: 'form-control input-sm', required: true %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :url, class: 'ms-label' %><br />
+        <%= f.text_field :url, class: 'form-control input-sm' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <%= link_to_remove_association "Remove Business Address", f, class: 'btn btn-danger btn-bh btn-sm m-t-5' %>
+      </div>
+    </div>
+  </div>
+</div>

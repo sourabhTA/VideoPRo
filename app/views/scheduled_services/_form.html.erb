@@ -1,0 +1,86 @@
+<div class="modal" tabindex="-1" role="dialog" id="schedule_service_modal">
+  <div class="modal-dialog mt-30" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title"><strong><%= (params[:trade] && params[:trade] == 'Mechanics') ? "Schedule Shop Appointment" : "Schedule In Home Service" %></strong></h3>
+        <% if params[:service_type] == "instant" %>
+          <% unless @user.is_time_set? %>
+            <div class="text-center m-t-15">
+              <p><%= @user %> currently does not offer video chat services. </p>
+              <p>  Please fill out the form for In-Home Service.</p>
+              <p>Tell them how awesome it would be for them to offer video chat services.</p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+      <div class="modal-body">
+        <%= form_for @scheduled_service, html: { autocomplete: :off, role: 'form', id: 'scheduled_service_form', remote: true } do |f| %>
+          <%= render 'errors', { object: @scheduled_service } %>
+          <div>
+            <div class="form-group">
+              <%= f.hidden_field :user_id %>
+              <% if params[:trade] && params[:trade] == 'Mechanics' %>
+                <%= f.text_field :property_type, placeholder: "Vehicle Model", class: 'form-control', required: true %>
+              <% else %>
+                <%= f.select :property_type, ScheduledService::PROPERTY_TYPES, {:prompt => "Select property type"} , { class: 'form-control', required: true } %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <% if params[:trade] && params[:trade] == 'Mechanics' %>
+                <%= f.text_field :home_type, placeholder: "Vehicle Make", class: 'form-control', required: true %>
+              <% else %>
+                <%= f.select :home_type, ScheduledService::HOME_TYPES, {:prompt => "Select home type"} , { class: 'form-control', required: true } %>
+              <% end %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :property_age, placeholder: params[:trade] && params[:trade] == 'Mechanics' ? 'Year' : 'Age of property', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :property_address, placeholder: params[:trade] && params[:trade] == 'Mechanics' ? 'Address' : 'Address of property', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-4">
+                <%= f.text_field :city, placeholder: 'City', class: 'form-control', required: true %>
+              </div>
+              <div class="col-xs-4">
+                <%= f.text_field :state, placeholder: 'State', class: 'form-control', required: true %>
+              </div>
+              <div class="col-xs-4">
+                <%= f.text_field :zip, placeholder: 'Zip', class: 'form-control', required: true %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :owner_name, placeholder: 'Name of owner', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :your_name, placeholder: 'Your Name', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :phone_number, placeholder: 'Phone Number', class: 'form-control formated_phone', required: true %>
+              <p class="hint">format: x-xxx-xxx-xxxx.</p>
+            </div>
+            <div class="form-group">
+              <%= f.email_field :email_address, placeholder: 'Email Address', class: 'form-control', required: true %>
+            </div>
+            <div class="form-group">
+              <%= f.select :scheduled_time, ScheduledService::SCHEDULED_TIMES, {:prompt => "When is scheduled service needed?"} , { class: 'form-control', required: true } %>
+            </div>
+            <div class="form-group">
+              <%= f.text_area :explaination, class: 'form-control', required: true, placeholder: "Explain service needed" %>
+            </div>
+            <div class="form-group">
+              <%= recaptcha_tags %>
+            </div>
+            <button type="submit" id="submit-schedule" class="btn btn-primary">Schedule</button>
+            <br/>
+            <div class="alert alert-success m-t-15" style="display: none;" id="success_message">Thanks for scheduling.</div>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">$('.formated_phone').mask('1-000-000-0000');</script>

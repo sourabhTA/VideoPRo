@@ -1,0 +1,61 @@
+<div style="font-family: 'Open Sans', sans-serif">
+  <div style="color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid transparent;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-bottom-color: transparent;
+      border-left-color: transparent;
+      font-family: 'Open Sans', sans-serif;
+      border-radius: 4px;">
+    Note: If you have an iPhone and use a Gmail app the video Chat will not open. Please use the Mail by Apple app.
+    <%= link_to "Download here", "https://itunes.apple.com/us/app/mail/id1108187098?mt=8", target: '_blank' %>
+  </div>
+
+  <table border="0" cellpadding="0" cellspacing="0" class="module" data-role="module-button" data-type="button" role="module" style="table-layout:fixed;" width="100%" data-muid="1313a1d0-9ca7-4443-a8bb-b4b9ef73bb0d">
+    <tbody>
+      <tr>
+        <td align="center" bgcolor="" class="outer-td" style="padding:0px 0px 0px 0px;">
+          <table border="0" cellpadding="0" cellspacing="0" class="wrapper-mobile" style="text-align:center;">
+            <tbody>
+              <tr>
+              <td align="center" bgcolor="#ED2939" class="inner-td" style="border-radius:6px; font-size:16px; text-align:center; background-color:inherit;">
+                <a href="<%= chat_url(booking.professional_token) %>" style="background-color:#ED2939; border:1px solid #ED2939; border-color:#ED2939; border-radius:6px; border-width:1px; color:#ffffff; display:inline-block; font-size:14px; font-weight:normal; letter-spacing:0px; line-height:normal; padding:12px 18px 12px 18px; text-align:center; text-decoration:none; border-style:solid;" target="_blank">Video Chat Link</a>
+              </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <fieldset>
+    <legend>Booking Details</legend>
+    <dl style="font-family: 'Open Sans', sans-serif">
+      <dt style="font-weight: 600">Date:</dt>
+      <dd><%= booking.admin_time.strftime("%m-%d-%Y") %></dd>
+      <dt style="font-weight: 600">Time:</dt>
+      <dd><%= booking.admin_time.strftime("%I:%M %p %Z") %></dd>
+      <dt style="font-weight: 600">City:</dt>
+      <dd><%= booking.city %></dd>
+      <dt style="font-weight: 600">State:</dt>
+      <dd><%= booking.state %></dd>
+      <dt style="font-weight: 600">Issue:</dt>
+      <dd><%= booking.issue %></dd>
+    </dl>
+  </fieldset>
+
+  <fieldset>
+    <legend>Client Details</legend>
+    <dl style="font-family: 'Open Sans', sans-serif">
+      <dt style="font-weight: 600">Name:</dt>
+      <dd><%= booking.client %></dd>
+      <dt style="font-weight: 600">Email:</dt>
+      <dd><%= booking.client.email %></dd>
+    </dl>
+  </fieldset>
+</div>

@@ -1,0 +1,72 @@
+<div class="white-cont clearfix">
+  <h3 class="m-b-5">Add New Employee</h3>
+  <p class="m-b-0">This will allow your employee to login to the app to access incoming chats, video chat with other employees and send Video Chats.</p>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <%= form_for employee, url: employees_path, method: :post, html: { autocomplete: :off } do |f| %>
+        <%= render 'errors', {object: employee} %>
+        <div class="form-group">
+          <%= f.email_field :email, required: true, placeholder: 'Employee Email', class: 'form-control', autocomplete: 'new-password' %>
+        </div>
+        <div class="form-group">
+          <%= f.password_field :password , required: true, placeholder: 'Password', class: 'form-control', autocomplete: 'new-password' %>
+        </div>
+        <div class="form-group">
+          <%= f.text_field :name, required: true, placeholder: 'Employee Name', class: 'form-control', autocomplete: 'new-password' %>
+        </div>
+        <div class="form-group">
+          <%= f.text_field :phone_number, placeholder: 'Cell Phone', class: 'formated_phone form-control', autocomplete: 'phone-number' %>
+          <p class="hint">format: x-xxx-xxx-xxxx</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Employee</button>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <p class="m-b-0">
+        If notifications is checked the employee or employees will receive emails and app
+        notifications of Video Chats being booked. Check the employee that you would like
+        to receive Video Chats.
+      </p>
+      <div class="table-responsive">
+        <% if employees.present? %>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Remove</th>
+              <th>Notifications</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% employees.each do |employee| %>
+              <tr id="employee_<%= employee.id %>">
+                <td><%= employee.name %></td>
+                <td><%= employee.email %></td>
+                <td><%= employee.phone_number %></td>
+                <td><%= link_to raw('<span class="fa fa-close"></span>'), employee_path(employee), method: :delete, data: {confirm: 'Are you sure?'}, class: 'btn btn-danger btn-xs' %></td>
+                <td><%= check_box_tag "all_notification_#{employee.id}", employee.slug, employee.all_notifications, class: 'all_notification_checkbox' %></td>
+              </tr>
+            <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <p class="m-b-0">No Employee so far!</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="white-cont clearfix">
+  <a href="<%= availability_profiles_path %>" class="btn btn-primary">Update Availability</a>
+</div>

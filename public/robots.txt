@@ -1,0 +1,19 @@
+User-agent: *
+Disallow: /*/ajax/
+Disallow: /users/password/new
+Disallow: /users/sign_in
+Disallow: /users/confirmation/new.user
+Disallow: /upload/resume
+Disallow: /cdn-cgi/l/email-protection
+Disallow: /admin
+Disallow: /admin/users
+Disallow: /admin/users?scope=
+Disallow: /profiles/*/edit
+Disallow: /@ARCHIVED@
+Disallow: /profiles/*/claim_business
+Disallow: /302
+Disallow: /bookings/stripe-checkout
+Disallow: /user_avalibility/*
+
+HOST: https://www.videochatapro.com
+Sitemap: https://videochatapro.com/sitemap.xml.gz

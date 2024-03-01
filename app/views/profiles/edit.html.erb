@@ -1,0 +1,201 @@
+<div class="white-cont clearfix">
+  <h3 class="m-0">Settings</h3>
+</div>
+<%= form_for @user, as: :user, url: profile_path, html: { multipart: true, autocomplete: 'off' } do |f| %>
+  <div class="white-cont clearfix">
+    <h4><%= @user.employee? ? "Profile Settings" : "License Information" %></h4>
+    <%= render 'errors', {object: @user} %>
+    <div class="row">
+      <% unless current_user.employee? %>
+        <div class="col-xs-12 col-sm-6">
+          <div id='license_informations'>
+            <%= f.fields_for :license_informations, @user.license_informations.blank? ? @user.license_informations.build : @user.license_informations do |license_information| %>
+              <%= render 'license_information_fields', f: license_information %>
+            <% end %>
+            <div class='links text-right clearfix'>
+              <div style="clear: both;" class="text-left">
+                <p class="hint">License number not required for appliance, mechanic and landscaper but a certification number adds value to your profile.</p>
+              </div>
+              <%= link_to_add_association 'Add Another License', f, :license_informations, class: 'btn btn-primary btn-bh' %>
+            </div>
+          </div>
+          <hr/>
+          <% if @user.business? %>
+            <div id='business_addresses'>
+              <%= f.fields_for :business_addresses, @user.business_addresses do |business_address| %>
+                <%= render 'business_address_fields', f: business_address %>
+              <% end %>
+              <div class='links text-right clearfix'>
+                <%= link_to_add_association 'Add Service Area', f, :business_addresses, class: 'btn btn-primary btn-bh', id: 'add_business_address' %>
+              </div>
+            </div>
+          <% end %>
+          <hr/>
+          <div class="row">
+            <div class="col-md-12 m-b-5">
+              <%= f.label :rate, "Rate per minute", class: 'ms-label' %><br />
+              <%= f.select :rate, User::RATES, { :prompt => "Select Rate" } , { class: 'form-control', required: true } %>
+            </div>
+
+            <% if current_user.business? && current_user.is_paid_business? %>
+              <div class="col-md-12 m-b-5">
+                <%= f.label :free_of_charge, class: 'ms-label' %><br />
+                <%= f.check_box :free_of_charge %>
+              </div>
+            <% end %>
+
+            <div class="col-md-12 m-b-5">
+              <%= f.label :picture, class: 'ms-label' %><br/>
+              <%= image_tag @user.picture.url(:mini_thumb), class: 'img-thumbnail', style: 'width: 75px;', alt: "Profile edit picture mini thumbnail" unless @user.picture.blank? %>
+              <%= f.file_field :picture %>
+            </div>
+            <div class="col-md-12 m-b-5">
+              <%= f.label :facebook_url, class: 'ms-label' %><br/>
+              <%= f.text_field :facebook_url, class: 'form-control' %>
+            </div>
+            <% if current_user.business? %>
+              <div class="col-md-12 m-b-5">
+                <%= f.label :google_my_business, class: 'ms-label' %><br/>
+                <%= f.text_field :google_my_business, class: 'form-control' %>
+              </div>
+            <% end %>
+            <div class="col-md-12 m-b-5">
+              <%= f.label :twitter_url, class: 'ms-label' %><br/>
+              <%= f.text_field :twitter_url, class: 'form-control' %>
+            </div>
+            <div class="col-md-12 m-b-5">
+              <%= f.label :instagram_url, class: 'ms-label' %><br/>
+              <%= f.text_field :instagram_url, class: 'form-control' %>
+            </div>
+            <div class="col-md-12 m-b-5">
+              <%= f.label :youtube_url, class: 'ms-label' %><br/>
+              <%= f.text_field :youtube_url, class: 'form-control' %>
+            </div>
+            <div class="col-md-12 m-b-5">
+              <%= f.label :linkedin_url, class: 'ms-label' %><br/>
+              <%= f.text_field :linkedin_url, class: 'form-control' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      <div class="col-xs-12 col-sm-6">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <% unless current_user.employee? %>
+                <div class="col-md-12">
+                  <%= f.label :name, @user.pro? ? 'Name' : 'Business Name', class: 'ms-label' %><br />
+                  <%= f.text_field :name, class: 'form-control', required: true, autocomplete: 'new-password' %>
+                </div>
+                <div class="col-md-12">
+                  <%= f.label :address %><br />
+                  <%= f.text_field :address, class: 'form-control', required: true, id: 'gmaps-input-address', placeholder: 'Start typing a place...' , autocomplete: 'new-password'%>
+                </div>
+              <% else %>
+                <div class="col-md-12">
+                  <%= f.label :time_zone, class: 'ms-label' %><br />
+                  <%= f.select :time_zone, User::TIME_ZONES, {:prompt => "Select Time Zone"} , { class: 'form-control', required: true } %>
+                </div>
+              <% end %>
+              <div class="col-md-12">
+                <%= f.label :email, class: 'ms-label' %><br />
+                <%= f.email_field :email, autofocus: true, class: 'form-control', required: true, readonly: true, autocomplete: 'new-password' %>
+              </div>
+              <div class="col-md-12">
+                <%= f.label :password, class: 'ms-label' %> <i>(leave blank if you don't want to change it)</i><br />
+                <%= f.password_field :password, autocomplete: 'new-password', autocomplete: false,class: 'form-control'%>
+                <% if @minimum_password_length %>
+                  <br />
+                  <em><%= @minimum_password_length %> characters minimum</em>
+                <% end %>
+              </div>
+              <div class="col-md-12" >
+                <%= f.label :password_confirmation, class: 'ms-label' %><br/>
+                <%= f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control' %>
+              </div>
+              <div class="col-md-12">
+                <%= f.label :phone_number, 'Cell Phone', class: "ms-label" %><br />
+                <%= f.text_field :phone_number, class: 'form-control formated_phone', required: true %>
+                <p class="hint">format: x-xxx-xxx-xxxx<br/>Phone number to receive text notifications of appointment information for instant alerts.</p>
+              </div>
+              <% unless current_user.employee? %>
+                <div class="col-md-12">
+                  <%= f.label :business_number, 'Phone Number', class: "ms-label" %><br />
+                  <%= f.text_field :business_number, class: 'form-control', required: true %>
+                </div>
+                <% if @user.business? %>
+                  <div class="col-md-12">
+                    <%= f.label :business_website, class: "ms-label" %><br />
+                    <%= f.text_field :business_website, class: 'form-control' %>
+                    <!-- <p class="hint">ex: https://www.google.com<br>Should not contain domain: videochatapro.com</p> -->
+                  </div>
+                  <hr/>
+                  <div class="col-md-12 m-b-5">
+                    <%= f.label :business_pictures, class: "ms-label" %><br />
+                    <div id='business_pictures'>
+                      <%= f.fields_for :business_pictures, @user.business_pictures do |business_picture| %>
+                        <%= render 'business_picture_fields', f: business_picture %>
+                      <% end %>
+                      <div class='links text-right clearfix'>
+                        <%= link_to_add_association 'Add Business Picture', f, :business_pictures, class: 'btn btn-primary btn-bh' %>
+                      </div>
+                    </div>
+                  </div>
+                  <hr/>
+                  <div class="col-md-12 m-b-5">
+                    <%= f.label :business_videos, class: "ms-label" %><br />
+                    <div id='business_videos'>
+                      <%= f.fields_for :business_videos, @user.business_videos do |business_video| %>
+                        <%= render 'business_video_fields', f: business_video %>
+                      <% end %>
+                      <div class='links text-right clearfix'>
+                        <%= link_to_add_association 'Add Business Video', f, :business_videos, class: 'btn btn-primary btn-bh' %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+                <hr/>
+                <div class="col-md-12">
+                  <%= f.label :time_zone, class: 'ms-label' %><br />
+                  <%= f.select :time_zone, User::TIME_ZONES, {:prompt => "Select Time Zone"} , { class: 'form-control', required: true } %>
+                </div>
+                <div class="col-md-12 m-b-5">
+                  <%= f.label :specialties, class: 'ms-label' %><br />
+                  <%= f.text_area :specialties, class: 'form-control', rows: 6 ,placeholder: "Type 50 to 100 words to tell customers what types of #{Category::CATEGORY_MAPPING_REVIEWS[@user.categories.pluck(:name).first]} repairs and replacements you specialize in performing and why they should hire your company to perform them." %>
+                  <!--%= f.text_area :specialties, class: 'form-control', rows: 6 ,placeholder: "Please type 300-400 words to help customers learn more about the #{Category::CATEGORY_MAPPING_REVIEWS[@user.categories.pluck(:name).first]} repairs you specialize in performing and how you will use that knowledge to help them." %-->
+<!--                  <p class="hint">Maximum 40 words allowed</p>-->
+                </div>
+                <div class="col-md-12  m-b-5">
+                  <%= f.label :product_knowledge, class: 'ms-label' %><br />
+                  <%= f.text_area :product_knowledge, class: 'form-control',rows: 6 ,placeholder: "Type 50 to 100 words to tell customers what brand of products you repair, service and sell and why they should choose you to do these things." %>
+                  <!--%= f.text_area :product_knowledge, class: 'form-control',rows: 6 ,placeholder: "Please type 300-400 words to help Customers learn more about the #{Category::CATEGORY_MAPPING_REVIEWS[@user.categories.pluck(:name).first]} Products and Brands you are most familiar repairing or installing" %-->
+<!--                  <p class="hint">Maximum 40 words allowed</p>-->
+                </div>
+                <% if @user.pro? %>
+                  <div class="col-md-12 m-b-5">
+                    <%= f.label :video_url, class: 'ms-label' %><br/>
+                    <%= f.text_field :video_url, class: 'form-control video-url-pesence', id: 'video-url-pesence' %><br>
+                    <%= f.text_area :video_url_description, class: 'form-control video-description-pesence',rows: 6, maxlength: 60, placeholder: "Describe what video is of in a title form, limit characters to 60"%>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% unless current_user.employee? %>
+      <div class="row">
+        <div class="col-md-12 col-sm-6">
+          <%= f.label :description, class: 'ms-label' %><br/>
+          <%= f.text_area :description, class: 'form-control', rows: 10, placeholder: "Please type 50-100 words to help customers learn more about your business." %>
+          <!--%= f.text_area :description, class: 'form-control', rows: 10, placeholder: "Please type 50-100 words to help customers learn more about your #{Category::CATEGORY_MAPPING_REVIEWS[@user.categories.pluck(:name).first]} career and how you will use your earned knowledge to help them" %-->
+<!--          <p class="hint">Maximum 70 words allowed</p>-->
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="white-cont clearfix">
+    <%= f.submit "Update Profile", class: 'btn btn-primary'  %>
+  </div>
+<% end %>

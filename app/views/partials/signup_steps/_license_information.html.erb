@@ -1,0 +1,50 @@
+<input type="button" name="next" class="next action-button" value="Skip" />
+<input type="button" name="previous" class="previous action-button-previous" value="Back" />
+<br><br><br>
+<%= form_for @user, as: :user, url: "/profiles/#{@user.slug}", html: { multipart: true, autocomplete: 'off', id: "msform", remote: true } do |f| %>
+  <%= f.hidden_field :current_setting_step, value: "license_information", class: 'form-control' %>
+  <div class="form-card">
+    <div class="row">
+      <div class="">
+        <h2 class="fs-title">
+          <%= @user.pro? ? "License Information & Phone Number" : "License Information" %>
+        </h2>
+      </div>
+    </div>
+    <div id='license_informations'>
+      <% if current_user.pro? %>
+        <div class="col-md-12">
+          <%= f.label :phone_number, 'Cell Phone', class: "ms-label" %><br />
+          <%= f.text_field :phone_number, class: 'form-control formated_phone', required: true %>
+        </div>
+      <% end %>
+
+      <%= f.fields_for :license_informations, @user.license_informations.blank? ? @user.license_informations.build : @user.license_informations do |license_information| %>
+        <%= render 'license_information_fields', f: license_information %>
+      <% end %>
+      <div class='links text-right clearfix'>
+        <div style="clear: both;" class="text-left">
+          <p class="hint">License number not required for appliance, mechanic and landscaper but a certification number adds value to your profile.</p>
+        </div>
+        <%= link_to_add_association 'Add Another License', f, :license_informations, class: 'btn btn-primary btn-bh' %>
+      </div>
+    </div>
+  </div>
+  <div class="white-cont clearfix">
+    <%= f.submit "Submit & Next", class: 'btn btn-primary step_submit'  %>
+  </div>
+<% end %>
+
+<script>
+  $('.datetimepicker').datetimepicker({
+      format: 'MM-DD-YYYY'
+  }).on('dp.change', function (e) {
+      var date_param = $(this).val().split("-");
+      var new_date = date_param[2] +'-'+ date_param[0] +'-'+ date_param[1];
+      $(this).siblings('.hidden_expiration_date').val(new_date);
+  });
+
+  if($(".formated_phone").length > 0){
+    $('.formated_phone').mask('1-000-000-0000');
+  }
+</script>

@@ -1,0 +1,14 @@
+<div class="col-md-3 col-sm-4">
+  <div class="blog-post">
+    <h4>CATEGORIES</h4>
+    <ul>
+      <% BlogCategory.order(:name).each do |category| %>
+        <li>
+          <%= link_to category.name, blogs_path(category_id: category.slug) %>
+        </li>
+      <% end %>
+    </ul>
+    <ul>
+    </ul>
+  </div>
+</div>

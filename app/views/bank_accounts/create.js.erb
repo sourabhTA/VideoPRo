@@ -1,0 +1,6 @@
+hide_loader();
+<% if @error.present? %>
+	alert( '<%= @error.html_safe %>');
+<% else %>
+	$(".next").click();
+<% end %>

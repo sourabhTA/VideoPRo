@@ -1,0 +1,4 @@
+<p>New Error Encountered,</p>
+<%  @records.each do |record| %>
+  <p><b><%= record.keys.join(',') %>:</b> <%= record.values.join(',') %></p>
+<% end %>

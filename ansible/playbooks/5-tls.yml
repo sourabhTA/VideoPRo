@@ -1,0 +1,17 @@
+---
+- hosts: server
+  remote_user: root
+  gather_facts: yes
+
+  vars:
+    certbot_admin_email: info@videochatapro.com
+    certbot_create_if_missing: true
+    certbot_auto_renew_user: root
+    certbot_auto_renew_minute: "20"
+    certbot_auto_renew_hour: "5"
+    certbot_certs:
+      - domains:
+          - "{{ host }}"
+
+  roles:
+    - geerlingguy.certbot

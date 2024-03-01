@@ -1,0 +1,24 @@
+<div class="white-cont clearfix">
+  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+    <h3 class="m-b-0">Video Chat Plans</h3>
+    <%= link_to "Delete Profile", profile_path(current_user), :method => :delete, class: 'btn btn-primary', data: { confirm: "Are you sure to delete profile?" } %>
+  </div>
+
+  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6" style="text-align: right">
+    <% if current_user.role == "business" %>
+      <p>
+        <%= current_user.last4 %>
+        <%= button_to 'Change Card', edit_subscription_path(current_user), class: 'btn btn-primary' if current_user.stripe_customer_id %>
+      </p>
+    <% elsif current_user.role == "employee"%>
+      <p>
+        <%= current_user.last4 %>
+      </p>
+    <%end%>
+  </div>
+
+</div>
+<div class="row">
+  <%= render "#{current_user.role}_plans" %>
+</div>
+

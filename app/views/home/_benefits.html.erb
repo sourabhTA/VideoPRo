@@ -1,0 +1,9 @@
+<section class="benefits">
+  <div>
+    <% home_page.home_page_benefits.each do |thing| %>
+      <div class="flex-container">
+        <%= thing.html_safe %>
+      </div>
+    <% end %>
+  </div>
+</section>

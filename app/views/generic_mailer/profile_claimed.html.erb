@@ -1,0 +1,26 @@
+Hey,
+<br/>
+<p>
+  <b><%= @user.name %></b> has claimed their profile. Schedule a video chat or call to verify user and unlock their login.
+</p>
+
+<p>
+  <%= @user.email %>
+</p>
+
+<p>
+  <%= @user.phone_number %>
+</p>
+
+<p>
+  <%= link_to 'Profile Link', profile_url(@user), target: '_blank' %>
+</p>
+
+<p>
+  <%= link_to 'Link to user in admin panel', admin_user_url(@user), target: '_blank' %>
+</p>
+
+<br/>
+regards,
+<br/>
+Videochatapro.com

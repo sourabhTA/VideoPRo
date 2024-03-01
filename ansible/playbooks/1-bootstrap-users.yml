@@ -1,0 +1,64 @@
+---
+- hosts: server
+  remote_user: root
+  gather_facts: yes
+
+  tasks:
+    - name: Create deploy user
+      user:
+        name: "{{ deploy_user }}"
+        createhome: yes
+        state: present
+        shell: /bin/bash
+      register: deployuser
+
+    - name: Disable password for deploy on creation
+      shell: /usr/bin/passwd -l '{{ deploy_user }}'
+      when: deployuser.changed
+
+    - name: Hook for passwordless
+      lineinfile:
+        path: /etc/sudoers
+        regexp: "^# Passwordless app"
+        line: "# Passwordless app"
+        validate: "visudo -cf %s"
+
+    - name: Allow user to restart puma
+      lineinfile:
+        path: /etc/sudoers
+        insertafter: '^# Passwordless app'
+        line: "{{ deploy_user }} ALL=NOPASSWD: /usr/bin/systemctl restart puma.service"
+        validate: "visudo -cf %s"
+
+    - name: Allow user to stop delayed_job
+      lineinfile:
+        path: /etc/sudoers
+        insertafter: '^# Passwordless app'
+        line: "{{ deploy_user }} ALL=NOPASSWD: /usr/bin/systemctl stop delayed_job.service"
+        validate: "visudo -cf %s"
+
+    - name: Allow user to start delayed_job
+      lineinfile:
+        path: /etc/sudoers
+        insertafter: '^# Passwordless app'
+        line: "{{ deploy_user }} ALL=NOPASSWD: /usr/bin/systemctl start delayed_job.service"
+        validate: "visudo -cf %s"
+
+    - name: Upload ansible users public key
+      authorized_key:
+        user: '{{ deploy_user }}'
+        key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+    - name: Disallow password authentication
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication no"
+        state: present
+      notify: restart ssh
+
+  handlers:
+    - name: restart ssh
+      service:
+        name: ssh
+        state: restarted

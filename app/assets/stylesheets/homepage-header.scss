@@ -1,0 +1,44 @@
+.home_page_header {
+  background-color: #f7f9fb;
+
+  .search-type-container {
+    text-align: center;
+  }
+
+  .btn-orange {
+    color: #fff;
+    background-color: #e85b2c;
+    border-radius: 50px;
+    width: 170px;
+    font-weight: bold;
+    font-size: 17px;
+  }
+
+  .search-callout {
+    font-weight: normal;
+    color: #000;
+  }
+
+  .current-category-name {
+    font-weight: bold;
+  }
+
+  .home_layout_btn {
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .home-header1 {
+    font-size: 28px;
+    margin-bottom: 2px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .home_layout_btn {
+    display: grid !important;
+  }
+  .btn-orange {
+    margin-bottom: 15px !important;
+  }
+}

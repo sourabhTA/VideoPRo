@@ -1,0 +1,54 @@
+<input type="button" name="next" class="next action-button" value="Skip" />
+<input type="button" name="previous" class="previous action-button-previous" value="Back" />
+<br><br><br>
+<%= form_for @user, as: :user, url: "/profiles/#{@user.slug}", html: { multipart: true, autocomplete: 'off', id: "msform", remote: true } do |f| %>
+  <%= f.hidden_field :current_setting_step, value: "business_details", class: 'form-control' %>
+  <div class="form-card">
+    <div class="row">
+      <div class="">
+        <h2 class="fs-title">Business Details</h2>
+      </div>
+    </div>
+    <div id='license_informations'>
+      <% unless current_user.employee? %>
+        <div class="col-md-12">
+          <%= f.label :name, @user.pro? ? 'Name' : 'Business Name', class: 'ms-label' %><br />
+          <%= f.text_field :name, class: 'form-control', required: true, autocomplete: 'new-password' %>
+        </div>
+        <div class="col-md-12">
+          <%= f.label :address %><br />
+          <%= f.text_field :address, class: 'form-control', required: true, id: 'gmaps-input-address', placeholder: 'Start typing a place...' , autocomplete: 'new-password'%>
+        </div>
+      <% else %>
+        <div class="col-md-12">
+          <%= f.label :time_zone, class: 'ms-label' %><br />
+          <%= f.select :time_zone, User::TIME_ZONES, {:prompt => "Select Time Zone"} , { class: 'form-control', required: true } %>
+        </div>
+      <% end %>
+      <div class="col-md-12">
+        <%= f.label :email, class: 'ms-label' %><br />
+        <%= f.email_field :email, autofocus: true, class: 'form-control', required: true, readonly: true, autocomplete: 'email' %>
+      </div>
+
+      <div class="col-md-12">
+        <%= f.label :phone_number, 'Cell Phone', class: "ms-label" %><br />
+        <%= f.text_field :phone_number, class: 'form-control formated_phone', required: true, style: "margin-bottom: 1px" %>
+        <p class="hint">format: x-xxx-xxx-xxxx<br/>Phone number to receive text notifications of appointment information for instant alerts.</p>
+      </div>
+      <% unless current_user.employee? %>
+	      <div class="col-md-12">
+	        <%= f.label :business_number, 'Phone Number', class: "ms-label" %><br />
+	        <%= f.text_field :business_number, class: 'form-control', required: true %>
+	      </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="white-cont clearfix">
+    <%= f.submit "Submit & Next", class: 'btn btn-primary step_submit'  %>
+  </div>
+<% end %>
+<script type="text/javascript">
+  if($(".formated_phone").length > 0){
+    $('.formated_phone').mask('1-000-000-0000');
+  }
+</script>

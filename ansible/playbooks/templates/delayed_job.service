@@ -1,0 +1,15 @@
+[Unit]
+Description=Delayed Job Background Worker
+After=network.target
+
+[Service]
+Type=simple
+
+User={{ deploy_user }}
+WorkingDirectory=/home/{{ deploy_user }}/{{ app_name }}
+ExecStart=/bin/bash -lc 'cd current && QUEUES="mailers,default" RAILS_ENV=production bundle exec rake jobs:work'
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

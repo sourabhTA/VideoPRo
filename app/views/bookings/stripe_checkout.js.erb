@@ -1,0 +1,37 @@
+function checkout() {
+  var description = $("h1").text();
+  var estimate_time = $("#call_time_booked").val();
+  var amount =( <%= user.rate_per_minute / 60 %> * parseInt(estimate_time)) * 100;
+  if (amount > 0) {
+    var handler = StripeCheckout.configure({
+      key: '<%= ENV.fetch("stripe_publishable_key") %>',
+      currency: "USD",
+      billingAddress: true,
+      image: '<%= image_url('logo_for_stripe.png') %>',
+      locale: 'auto',
+      name: 'Video Chat A Pro',
+      description: description,
+      email: '',
+      panelLabel: 'Hold',
+      token: function (token) {
+        $('input#client_booking_attributes_stripeToken').val(token.id);
+        $('#new_client').submit();
+        booking_loader();
+      }
+    });
+
+    handler.open({
+      amount: amount,
+      closed: function () {
+        $("#donateButton").attr("disabled", false);
+      }
+    });
+  } else {
+    $('input#client_booking_attributes_stripeToken').val('');
+    $('#new_client').submit();
+    booking_loader();
+  }
+}
+
+$("#donateButton").attr("disabled", true);
+checkout();

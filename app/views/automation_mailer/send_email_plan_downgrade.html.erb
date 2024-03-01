@@ -1,0 +1,9 @@
+<h3>Video Chat a Pro Billing Problem</h3>
+<h4><%= @user %></h4>
+
+<p>We have encountered a problem when renewing your video chat membership or its paid options. On <b><%= Time.at(@event.created).strftime("%a, %d-%h-%y %H:%M %Z") %></b> our system attempted to charge the card on file for your Video Chat membership or paid options. Unfortunately, we encountered an issue that will require your attention to continue use of the membership services or its paid options.</p>
+<p>Please remember that your profile will remain active, and only the additional benefits of the paid membership and or options will be restricted to a free business listing.</p>
+
+<br/>
+<p>Thank you,</p>
+<p><%= link_to 'Video Chat a Pro', root_url %></p>

@@ -1,0 +1,38 @@
+<div class="vcap-reviews">
+  <div class="container">
+      <% if params.has_key?(:slug) %>
+      <% slug = params[:slug] %>
+      <% h1_tag= "Learn from Highly Rated #{slug} Repair Instructors" %>
+      <% if slug.downcase == "landscapers" %>
+      <h1 class="text-center">Learn from Highly Rated <%="#{slug}"%> Professionals</h1>
+      <h2 class="text-center">Trust Our List of <%="#{slug}"%> to Instruct You How to do it</h2>
+      <% elsif slug.downcase == "hvacs" %>
+      <h1 class="text-center">Learn Now from Highly Rated <%="#{slug}"%> Repair Technicians</h1>
+      <h2 class="text-center">Trust Our List of <%="#{slug}"%> Technicians to Instruct You How </h2>
+      <% elsif  slug.downcase == "appliances" %>
+      <h1 class="text-center"><%="#{h1_tag}" %></h1>
+      <h2 class="text-center">Trust Our List of <%="#{slug}"%> Technicians to Instruct You</h2>
+      <% elsif  slug.downcase == "electricians" %>
+      <h1 class="text-center"><%="#{h1_tag}"%></h1>
+      <h2 class="text-center">Trust Our List of <%="#{slug}"%> to Instruct You How to do it</h2>
+      <% else %>
+      <h1 class="text-center"><%="#{h1_tag}"%></h1>
+      <h2 class="text-center">Trust Our List of <%="#{slug}"%> to Instruct You How to Fix it</h2>
+      <% end %>
+      <% else %>
+      <h1 class="text-center">What pros are saying about Video Chat A Pro?</h1>
+      <% end %>
+
+    <div class="text-center">
+      <% reviews.each do |r| %>
+        <div class="review">
+          <div class="h2">"<%= r.comment %>"</div>
+          <div class="star-rating" data-score="<%= r.rating %>"></div>
+          <div><i>—<%= r.reviewer_name %></i></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%= render 'main' if page.present? %>
+</div>

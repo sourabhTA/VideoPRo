@@ -1,0 +1,13 @@
+$("#users-container").append("<%= j(render @users) %>");
+$(".load-more-button").remove();
+<% page_number = params[:page].present? ? ( params[:page].to_i + 1 ).to_s : '2' %>
+$(".nav-row").append("<%= j(link_to 'Load more', request.path + '?page=' + page_number  , class: 'load-more-button btn btn-primary', remote: true) %>");
+$(".lds-ring").addClass("hide");
+
+<% if @users.last_page? %>
+  $('.load-more-button').hide();
+<% else %>
+  $('.load-more-button').show();
+<% end %>
+
+apply_rating();

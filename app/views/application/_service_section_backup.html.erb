@@ -1,0 +1,36 @@
+<!-- SERVICE SECTION START -->
+<section class="service-section" style="background-image: url('<%= load_main_background_image(@page) %>') !important;">
+  <div class="service-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 col-md-offset-1 col-sm-6">
+          <div class="service-content">
+            <i class="fa fa-money"></i>
+            <%= raw @page.save_money %>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-6">
+          <div class="service-content">
+            <i class="fa fa-calendar"></i>
+            <%= raw @page.save_time %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 col-md-offset-1 col-sm-6">
+          <div class="service-content">
+            <i class="fa fa-lightbulb-o"></i>
+            <%= raw @page.new_skill %>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-6">
+          <div class="service-content">
+            <i class="fa fa-life-saver"></i>
+            <%= raw @page.no_stranger %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- SERVICE SECTION END -->

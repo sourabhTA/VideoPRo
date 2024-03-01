@@ -1,0 +1,7 @@
+hide_loader();
+<% if @error.present? %>
+	$('.modal_error').text("<%= @error.html_safe %>");
+<% else %>
+	$('#add_subscription_modal').hide();
+	$(".next").click();
+<% end %>

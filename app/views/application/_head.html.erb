@@ -1,0 +1,93 @@
+<head>
+  <% if cms_fragment_content("title").present? %>
+    <% if controller_name == 'search' && action_name == 'index' %>
+      <title><%= get_meta_tag(get_tag_type(request.path), params[:page], "title") || cms_fragment_content("title") %></title>
+      <meta name="description" content="<%=
+          truncate(
+            get_meta_tag(get_tag_type(request.path), params[:page], 'description') || cms_fragment_content("description"),length: 155)
+        %>" >
+      <meta property="og:description" content="<%=
+          truncate(
+            get_meta_tag(get_tag_type(request.path), params[:page], 'description') || cms_fragment_content("description"),length: 155)
+        %>" >
+      <meta name="twitter:title" content="<%= get_meta_tag(get_tag_type(request.path), params[:page], "title") || cms_fragment_content("title") %>">
+      <meta property="twitter:description" content="<%=
+          truncate(
+            get_meta_tag(get_tag_type(request.path), params[:page], 'description') || cms_fragment_content("description"),length: 155)
+        %>" >
+      <meta property="og:title" content="<%= get_meta_tag(get_tag_type(request.path), params[:page], "title") || cms_fragment_content("title") %>">
+    <% elsif controller_name == 'scheduled_services' && action_name == 'new' %>
+      <title><%= lead_title(@user) %></title>
+      <meta name="description" content="<%= truncate(lead_description(@user), length: 155) %>" >
+      <meta property="og:description" content="<%= truncate(lead_description(@user), length: 155) %>">
+      <meta property="og:title" content="<%= lead_title(@user) %>">
+      <meta name="twitter:title" content="<%= lead_title(@user) %>">
+      <meta name="twitter:description" content="<%= truncate(lead_description(@user), length: 155) %>">
+    <% elsif controller_name == 'reviews' && action_name == 'index' %>
+      <% if params.has_key?(:slug) %>
+        <% slug = params[:slug] %>
+        <% if slug.downcase == "appliances" %>
+          <title><%=" Reviews of #{params[:slug]} Repair Techs That Teach You How " %></title>
+        <% elsif  slug.downcase == "landscapers" %>
+          <title><%=" Reviews of #{params[:slug]} Professionals That Instruct You How" %></title>
+        <% elsif  slug.downcase == "hvacs" %>
+          <title><%=" Reviews of #{params[:slug]} Technicians That Teach You How to Fix it" %></title>
+        <% elsif  slug.downcase == "mechanics" %>
+          <title><%=" Reviews of Auto #{params[:slug]} That Teach You How to Fix it" %></title>
+        <%else%>
+          <title><%=" Reviews of #{params[:slug]} That Instruct You How to Fix it" %></title>  
+        <% end %>
+        <meta name="description" content="<%= "Reviews of our how-to #{params[:slug]} consultation services. Video chat with a pro, it is faster to learn how to fix or replace everything in your home or auto." %>" >
+      <% else %>
+        <title><%= cms_fragment_content("title") %></title>
+        <meta name="description" content="<%= truncate(cms_fragment_content("description"), length: 155) %>" >
+      <% end %>  
+      <meta property="og:description" content="<%= truncate(og_meta("description"), length: 155) %>">
+      <meta property="og:title" content="<%= og_meta("title") %>">
+      <meta name="twitter:title" content="<%= og_meta("title") %>" />
+      <meta name="twitter:description" content="<%= truncate(og_meta("description"), length: 155) %>">  
+    <% else %>
+      <title><%= cms_fragment_content("title") %></title>
+      <meta name="description" content="<%= truncate(cms_fragment_content("description"), length: 155) %>" >
+      <meta property="og:description" content="<%= truncate(og_meta("description"), length: 155) %>">
+      <meta property="og:title" content="<%= og_meta("title") %>">
+      <meta name="twitter:title" content="<%= og_meta("title") %>" />
+      <meta name="twitter:description" content="<%= truncate(og_meta("description"), length: 155) %>">
+    <% end %>
+    <meta name="keywords" content="<%= cms_fragment_content("keywords") %>">
+    <meta name="image" content="<%= request.base_url + og_image %>" />
+    <meta name="og:image" content="<%= request.base_url + og_image %>" />
+    <meta property="og:image" content="<%= request.base_url + og_image %>" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:url" content="<%= request.url %>" />
+    <meta property="og:type" content="<%= controller_name %>" />
+    <meta name="twitter:image" content="<%= request.base_url + og_image %>" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="<%= request.base_url %>" />
+  <% end %>
+
+  <!--% if @noindex || ( @user.present? && @user.is_hidden ) %-->
+  <%# if @no_index %>
+  <%# <meta name="robots" content="noindex,nofollow" /> %>
+  <%# end %>
+
+  <% if @user.present? && @user.is_hidden %>
+   <meta name="robots" content="noindex" />
+  <% elsif request.original_url.include?("page=") || current_page?(controller: 'blogs', action: 'index') && request.original_url.include?("page=1") || current_page?(controller: 'reviews', action: 'index') && request.original_url.include?("slug=")%>
+    <link href="<%= request.original_url.gsub('http:', 'https:') %>" rel="canonical">
+  <% elsif request.original_url.include?("sign_in")%>
+    <link href="<%= request.original_url.gsub('http:', 'https:') %>" rel="noindex">
+  <%else%>
+    <link href="<%= request.original_url.split('?').first.gsub('http:', 'https:') %>" rel="canonical">
+  <% end %>
+
+  <%= render 'meta_information'%>
+  <%= Gon::Base.render_data %>
+  <%= stylesheet_link_tag 'application' %>
+  <%= render 'schema'%>
+  <%= csrf_meta_tags %>
+  <%= trackers %>
+  <% if Rails.env.production? %>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6399984750539214" crossorigin="anonymous"></script>
+  <% end %>
+</head>

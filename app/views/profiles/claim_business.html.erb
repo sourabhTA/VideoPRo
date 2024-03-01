@@ -1,0 +1,38 @@
+<div class="container m-t-30 m-b-30">
+  <h3 class="modal-title"><strong>Create a free business profile <%= "for #{@user.name}" if @user.name.present? %></strong></h3>
+  <%= form_for @user, as: :user, url: claim_business_profile_path, html: { autocomplete: 'off', method: :post } do |f| %>
+    <div class="m-t-30">
+      <%= render 'errors', {object: @user} %>
+
+      <div class="form-group">
+        <%= f.text_field :name, placeholder: 'Business Name', class: 'form-control', required: true, disabled: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.text_field :email, value: nil, placeholder: 'Email Address', class: 'form-control', required: true %>
+        <%= f.hidden_field :is_claimed, value: true %>
+      </div>
+
+      <div class="form-group">
+        <%= f.text_field :phone_number, value: nil, placeholder: 'Phone Number', class: 'form-control formated_phone', required: true %>
+      </div>
+
+      <p class="m-t-15 m-b-15">
+        By continuing, you agree you have the authority to claim this account on behalf of this business.
+        You agree to <%= link_to 'Terms and Conditions', terms_and_conditions_path, target: '_blank' %>.
+        <br/>
+        You also understand that videochatapro may send marketing emails regarding Videochatapro's product, services
+        and events. You can unsubscribe anytime.
+      </p>
+      <p class="m-t-15 m-b-15">
+        Need Help? Email support@videochatapro.com
+      </p>
+      <div class="text-center mb-3">
+        <%= recaptcha_tags %>
+      </div>
+      <br/>
+      <div class="alert alert-success m-t-15" style="display: none;" id="success_message">Thanks for claiming.</div>
+      <button type="submit" id="submit-claim" class="btn btn-primary">Continue</button>
+    </div>
+  <% end %>
+</div>

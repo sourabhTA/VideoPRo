@@ -1,0 +1,30 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://videochatapro.com/blog/<%= @blog&.blog_category&.slug%>/<%= @blog.slug%>"
+  },
+  "headline": "<%= @blog.title%>",
+  "description": "<%=raw @blog.meta_description%>",
+  "image": "<%= @blog.image.url%>",
+  "author": {
+    "@type": "Organization",
+    "name": "Video Chat A Pro",
+    "url": "https://videochatapro.com"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Video Chat A Pro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://videochatapro.com/assets/logo-4a14c91b50116a88ed9283205447185530e88ca1fc19f52231252cfa671fd4f7.webp"
+    }
+  },
+  "datePublished": "<%= @blog.published_at.strftime("%m-%d-%Y") %>",
+  "dateModified": "<%= @blog.updated_at.strftime("%m-%d-%Y") %>"
+}
+</script>
+
+

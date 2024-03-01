@@ -1,0 +1,105 @@
+<div class="white-cont clearfix">
+  <h3 class="m-b-5">Add New Bank Accounts</h3>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <%= form_for @bank_account do |f| %>
+        <%= render 'errors', {object: @bank_account} %>
+
+        <div class="form-group">
+          <%= f.label :account_number %>
+          <%= f.text_field :account_number, class: 'form-control thirty_percent', required: true  %>
+          <%= f.hidden_field :country, value: 'US', class: 'form-control' %>
+          <%= f.hidden_field :currency, value: 'USD', class: 'form-control' %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :account_holder_name %>
+          <%= f.text_field :account_holder_name, class: 'form-control thirty_percent', required: true  %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :account_holder_type %>
+          <%= f.select :account_holder_type, [['Company', 'company'], ['Individual', 'individual']], { :prompt => "Select Type" } , { class: 'form-control thirty_percent', required: true } %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :routing_number %>
+          <%= f.text_field :routing_number, class: 'form-control thirty_percent', required: true %>
+        </div>
+        <% if current_user.stripe_custom_account_id.blank? %>
+          <div class="form-group">
+            <%= label_tag :country %>
+            <%= select_tag :country, options_for_select(["US"]), { class: 'form-control thirty_percent', required: true } %>
+          </div>
+          <div class="form-group">
+            <%= label_tag :first_name %>
+            <%= text_field_tag :first_name, nil, { class: 'form-control thirty_percent', required: true } %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag :last_name %>
+            <%= text_field_tag :last_name, nil, { class: 'form-control thirty_percent', required: true } %>
+          </div>
+
+          <div class="form-group">
+            <%= label_tag :business_url %>
+            <%= text_field_tag :business_url, Rails.env.development? ? 'http://www.google.com' : profile_url(current_user), { class: 'form-control thirty_percent', required: true } %>
+          </div>
+        <%end%>
+        <div class="form-group">
+          <%= label_tag :date_of_birth %>
+          <br/>
+          <div class='input-group'>
+            <%= date_select 'date', 'of_birth', {order: [:month, :day, :year], prompt: { day: 'Select day', month: 'Select month', year: 'Select year' }, start_year: Date.today.year - 100, end_year: Date.today.year - 13}, {required: true, class: 'form-control', style:'width: auto; margin-right: 10px;'} %>
+          </div>
+          <p class="hint">format: mm-dd-yyyy</p>
+        </div>
+        <div class="form-group">
+          <%= label_tag :address_line_1 %>
+          <br/>
+          <%= text_field_tag :address_line_1, nil, { class: 'form-control fifty_percent', required: true, id: '', placeholder: 'Address'}   %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :city %>
+          <br/>
+          <%= text_field_tag :city, nil, { class: 'form-control thirty_percent', required: true} %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :state %>
+          <br/>
+          <%= text_field_tag :state, nil, { class: 'form-control thirty_percent', required: true}   %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :postal_code %>
+          <br/>
+          <%= text_field_tag :postal_code, nil, { class: 'form-control thirty_percent', required: true } %>
+        </div>
+        <div class="form-group">
+          <%= label_tag :last_4_digits_of_ssn %>
+          <br/>
+          <%= text_field_tag :ssn, nil, { class: 'form-control thirty_percent', required: true, maxlength: 4 } %>
+          <br/>
+          <p class="hint">Please enter only last 4 characters</p>
+        </div>
+        <% if current_user.business? %>
+          <div class="form-group">
+            <%= label_tag :tax_id, "Taxpayer Identification Number (TIN)" %>
+            <br/>
+            <%= text_field_tag :tax_id, params[:tax_id], { class: 'form-control thirty_percent'} %>
+            <p class="hint">e.g. Employer Identification Number (EIN) for U.S. businesses</p>
+          </div>
+        <% end %>
+        <div class="form-group">
+          <%= label_tag :phone_number %>
+          <br/>
+          <%= text_field_tag :phone_number, nil, { class: 'form-control thirty_percent', required: true } %>
+          <p class="hint">format: +x-xxx-xxx-xxxx</p>
+        </div>
+        <%= f.submit 'Submit', class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

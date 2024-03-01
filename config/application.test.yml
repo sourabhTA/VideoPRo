@@ -1,0 +1,13 @@
+test:
+  host_name: http://localhost:3000
+  sentry_dsn: ""
+  sentry_rails_dsn: ""
+  opentok_api_key: ""
+  opentok_api_secret: ""
+  stripe_publishable_key: ""
+  stripe_secret_key: ""
+  stripe_event_secret: ""
+  google_maps_api_key: ""
+  zendesk_key: ""
+  recaptcha_site_key: ""
+  recaptcha_secret_key: ""

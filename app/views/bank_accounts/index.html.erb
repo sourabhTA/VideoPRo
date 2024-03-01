@@ -1,0 +1,152 @@
+<div class="white-cont clearfix">
+  <h3 class="m-b-5">Bank Account</h3>
+  All direct deposit accounts are secured through Stripe. Video Chat a Pro does not store any account information.
+  <%= link_to "Security at Stripe", "https://stripe.com/docs/security/stripe", target: "_blank", rel: "noreferrer noopener" %>,
+  <%= link_to "Stripe Privacy Policy", "https://stripe.com/privacy", target: "_blank", rel: "noreferrer noopener" %>
+  <hr/>
+  <%= link_to "Add New Bank Account", new_bank_account_path, class: 'btn btn-primary pull-right' %>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <% if @bank_accounts.blank? %>
+        <p>No Account Added so far! A bank account needs to be added in order to be paid.</p>
+      <% end %>
+      <% unless @bank_accounts.blank? %>
+        <% @bank_accounts.each do |bank_account| %>
+          <div class="row">
+            <div class="col-xs-12 col-md-12">
+              <div class="white-cont clearfix">
+                <p><strong>Account holder name:</strong> <%= bank_account.account_holder_name %></p>
+                <p><strong>Account holder type:</strong> <%= bank_account.account_holder_type %></p>
+                <p><strong>Routing number:</strong> <%= bank_account.routing_number %></p>
+                <% unless bank_account.default_for_currency? %>
+                  <div class="col-md-4 row">
+                    <%= button_to 'Make Bank Account Default', change_default_bank_accounts_path(bank_account.id), class: 'btn btn-primary pull-left' %>
+                  </div>
+                  <div class="col-md-4 row">
+                    <%= button_to 'Remove Bank Account', remove_bank_accounts_path(bank_account.id), { data: {confirm: 'Are you sure?'}, class: 'btn btn-danger pull-left' } %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="white-cont clearfix">
+  <h3 class="m-b-5">Bookings</h3>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <% if @bookings.blank? %>
+        <p>No Bookings Yet</p>
+      <% end %>
+
+      <% unless @bookings.blank? %>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Location</th>
+            <th>Call Duration</th>
+            <th>Earnings</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <% @bookings.each do |booking| %>
+            <tr>
+              <td><%= booking.booking_date.strftime("%B %d, %Y") %></td>
+              <td><%= "#{booking.booking_time.localtime.strftime("%I:%M %p")} (#{booking.time_zone})" %></td>
+              <td><%= "#{booking.city} #{booking.state}" %></td>
+              <% if booking.payment_transactions.size > 0 %>
+                <% transaction = booking.payment_transactions.first  %>
+                <td><%= Time.at(booking.time_used).utc.strftime('%H:%M:%S') %> </td>
+                <td><%= number_to_currency(transaction.customer_amount) %> </td>
+              <%else%>
+                <td>N/A</td>
+                <td>N/A</td>
+              <%end%>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
+    </div>
+  </div>
+  <div>
+    <hr/>
+
+    <strong>
+      <% available_balance = get_available_account_balance(current_user.stripe_custom_account_id) %>
+      Total Balance Available: $<%= available_balance %>
+      <br/>
+      Total Balance Pending: $<%= get_pending_account_balance(current_user.stripe_custom_account_id) %>
+    </strong>
+
+    <% if @bank_accounts.count > 0 and available_balance > 0 %>
+      <div class="md-col-12">
+        <%= link_to "Get Paid", withdraw_bookings_path, class: "start_chat btn btn-primary pull-right" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="white-cont clearfix">
+  <h3 class="m-b-5">Withdraws</h3>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <% if @payouts.blank? %>
+        <p>No Withdraws Yet</p>
+      <% end %>
+
+      <% unless @payouts.blank? %>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Bank Name</th>
+            <th>Bank Account Holder Name</th>
+            <th>Bank Account (Last 4)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @payouts.each do |payout| %>
+            <tr>
+              <td><%= Time.at(payout.created).strftime("%m-%d-%Y %I:%M %P") %></td>
+              <td>$<%= payout.amount.to_f / 100 %></td>
+              <% bank_account = get_bank_account(current_user.stripe_custom_account_id, payout.destination) %>
+              <td>
+                <%= bank_account.bank_name %>
+              </td>
+              <td>
+                <%= bank_account.account_holder_name %>
+              </td>
+              <td>
+                <%= bank_account.last4 %>
+              </td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
+    </div>
+  </div>
+</div>
+

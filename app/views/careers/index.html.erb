@@ -1,0 +1,35 @@
+<header>
+  <div class="container text-center">
+    <h1><%= @page.title %></h1>
+  </div>
+</header>
+
+<div class="container">
+  <div class="row">
+    <div class="careers-content">
+      <div class="col-md-12 col-sm-12">
+        <%= raw @page.main_details %>
+      </div>
+    </div>
+  </div>
+  <%= render partial: "careers_list" %>
+</div>
+
+
+<div class="trade-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-12"></div>
+      <div class="col-md-6 col-sm-12 text-center">
+        <h2 class="text-center"><%= @page.video_title %></h2>
+        <div class="video-container">
+          <% if @page.video_url.present? && @page.video_url.include?('iframe') %>
+            <%= raw @page.video_url %>
+          <% elsif @page.video_url.present? %>
+            <%= embed(@page.video_url, nil, nil, "Careers with website for local tradesmen", "Careers with website for local tradesmen") %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

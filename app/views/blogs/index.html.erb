@@ -1,0 +1,15 @@
+<div class="contact-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-12">
+        <div class="col-xs-12 col-md-9"><h1 style="font-size:20px;"><%= get_meta_tag(get_tag_type(blog_page_type(params)), params[:page], 'h1_tag') %></h1></div>
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+            <%= render 'blogs_list' %>
+            <%= render 'blogs_search' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

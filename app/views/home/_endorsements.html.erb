@@ -1,0 +1,43 @@
+<section>
+  <div class="review-section">
+    <div class="header">Endorsements</div>
+    <h6 class="subheader">Membership Affiliations</h6>
+    <div id="slider" class="flex-row-2">
+      <% Endorsement.all.each do |e| %>
+        <%= link_to e.link, target: "_blank", rel: "noopener noreferrer nofollow" do %>
+          <%= image_tag e.image_url, alt: e.alt %>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="text-center mt-30">
+      <%= link_to "Partner With Us", contact_us_path, class: "btn btn-primary btn-lg btn-round" %>
+    </div>
+  </div>
+</section>
+<style>
+  .slick-track {
+    display: flex !important;
+  }
+  .slick-track .slick-slide {
+    display: flex !important;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    $("#slider").slick({
+      slidesToShow: 4,
+      autoplay: true,
+      arrows: false,
+      autoplaySpeed: 1000,
+      responsive: [{
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 3
+        }
+      }]
+    });
+  });
+</script>

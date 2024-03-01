@@ -1,0 +1,163 @@
+<div id="precall" class="join-call-section">
+  <div class="f-row">
+    <div class="f-column">
+      <div class="f-video-container">
+        <div style="z-index: 1;color: white;display:flex;flex:1;position:absolute;top:0;left:0;bottom:0;right:0;align-items:center;justify-content:center">
+          <div style="text-align: center;width: 100%;" class="h2">Camera is off</div>
+        </div>
+
+        <video playsinline style="z-index:2" class="f-video-preview" id="video-preview" muted></video>
+
+        <div style="z-index:3" class="video-controls">
+          <div class="f-row f-1 justify-center">
+            <div class="f-column">
+              <div class="video-action" data-toggle="tooltip" data-placement="top" title="Turn off microphone">
+                <button data-toggle="audio" class="btn">
+                  <span class="icon-btm fa fa-microphone"></span>
+                </button>
+              </div>
+            </div>
+            <div class="f-column">
+              <div class="video-action" data-toggle="tooltip" data-placement="top" title="Turn off camera">
+                <button data-toggle="video" class="btn">
+                  <span class="icon-btm fa fa-video-camera"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="help-button-container">
+          <button id="help" class="btn">
+            <span class="fa fa-ellipsis-v"></span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <div class="f-column vertical-padding f-1 justify-center align-center ">
+      <div class="h3">Hi <%= my_name %>!</div>
+      <div class="h3">Ready to join?</div>
+      <button <%= chat.early_link? ? "disabled" : "" %> id="start_video" class="btn btn-info btn-lg">
+        <span class="fa fa-video-camera"></span>
+        Start Call
+      </button>
+      <% if chat.early_link? %>
+        <div id="time-until-call" data-time="<%= chat.chat_time.to_f * 1000 %>">
+          Call starts in <%= distance_of_time_in_words(chat.chat_time - Time.current) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div id="video" class="hide" style="z-index:1;position: absolute;top:0;left:0;right:0;bottom:0;">
+  <div class="video-cont">
+    <div class="chat-video-call-container" id="subscriber">
+      <div class="lds-ring "><div></div><div></div><div></div><div></div></div>
+      <h4 class="text-info">Waiting for <%= waiting_for_name %> to join...</h4>
+    </div>
+
+    <div id="publisher" class="video-call-thumb initial-right"></div>
+    <div class="watermark">
+      <%= image_tag chat.watermark %>
+    </div>
+
+    <div class="bottom-panel">
+      <div class="call-time">
+        <span id="videochat_clock" class="<%= "hide"  %>">00:00:00</span>
+        <span id="monetize_chat_clock">00:00:00</span>
+      </div>
+
+      <% if chat.is_a?(Booking) && !chat.is_booking_fake %>
+        <div class="total-booked-time">
+          Total Booked Time is <%= chat.total_captured_time.to_i/60.0 %> minutes
+        </div>
+      <% end %>
+
+      <div class="call-bottom-action-panel">
+        <div class="action-item">
+          <button data-toggle="audio" class="btn mic-btn">
+            <span class="icon-btm fa fa-microphone"></span>
+            <span class="icon-btm-txt">mute</span>
+          </button>
+        </div>
+        <div class="action-item">
+          <button data-toggle="video" class="btn cam-btn">
+            <span class="icon-btm fa fa-video-camera"></span>
+            <span class="icon-btm-txt">disable</span>
+          </button>
+        </div>
+        <div class="action-item">
+          <button class="btn" id="switch_camera">
+            <span class="icon-btm fa fa-refresh"></span>
+            <span class="icon-btm-txt">flip</span>
+          </button>
+        </div>
+
+        <% if chat.class.name == "Booking" && chat.client_token == params[:id] && !chat.is_booking_fake %>
+          <div class="action-item">
+            <button class="btn" id="extend_time">
+              <span class="icon-btm fa fa-clock-o"></span>
+              <span class="icon-btm-txt">Extend Time</span>
+            </button>
+          </div>
+        <% end %>
+
+        <div class="action-item">
+          <button class="btn" id="end_call">
+            <span class="icon-btm fa fa-times"></span>
+            <span class="icon-btm-txt">end</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="messageModal">
+  <div class="modal-dialog mt-30" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="height: 55px;">
+        <span class="modal-header-text">Error</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="line-height: 30px;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-30 text-center">
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="extendTimeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="height: 55px;">
+        <span class="modal-header-text">Add more time</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="line-height: 30px;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-30 text-center">
+        <h5 class="alert-5-min"></h5>
+        <%= form_with url: capture_payment_booking_path(id: chat.id), remote: true, method: :post, id: "extendTimeForm" do |f| %>
+          <div class="form-group">
+            <%= select_tag 'call_time_booked', options_for_select(Booking::CALL_DURATIONS), { :include_blank => 'Select Call Time', class: 'form-control', required: true} %>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add Time</button>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="hide">
+  <%= form_with url: end_chat_path(params[:id]), local: true, method: :patch do |f| %>
+    <%= f.hidden_field :time_spent %>
+    <%= f.hidden_field :endCall_type %>
+    <%= f.hidden_field :connection_id %>
+  <% end %>
+</div>

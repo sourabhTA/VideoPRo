@@ -1,0 +1,32 @@
+---
+- hosts: server
+  remote_user: root
+  gather_facts: yes
+
+  tasks:
+    - name: Add app database user
+      postgresql_user:
+        name: "{{ deploy_user }}"
+        role_attr_flags: SUPERUSER
+      become: yes
+      become_user: postgres
+
+    - name: Create application database
+      postgresql_db:
+        name: "{{ database }}"
+      become: yes
+      become_user: postgres
+
+    - name: Allow local socket logins
+      lineinfile:
+        dest: /etc/postgresql/13/main/pg_hba.conf
+        insertafter: "^# TYPE.*DATABASE.*USER"
+        line: "local all all trust"
+        state: present
+      notify: restart postgres
+
+  handlers:
+    - name: restart postgres
+      service:
+        name: postgresql
+        state: restarted

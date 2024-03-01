@@ -1,0 +1,60 @@
+<% if home_page? %>
+  <%= render 'search/search_criteria' %>
+<% end %>
+
+<% if !home_page? && !diy_page? && !company_page? %>
+  <%= render 'sub_header' %>
+<% end %>
+
+<% if home_page? || search_page? %>
+  <%= render 'home_page_steps' %>
+<% end %>
+
+<%= render 'test_section' %>
+
+<% unless home_page? %>
+  <section class="hero-section">
+    <div class="hero-inner">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 col-sm-12">
+            <div class="hero-content">
+              <%= raw @page.sub_header_text %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+<% end %>
+
+<% if controller_name == "home" && (action_name != "tradesman_signup" && action_name != "business_signup") %>
+  <%= render 'how_it_works' %>
+<% end %>
+<% if home_page? || search_page? %>
+  <%= render 'service_section' %>
+  <%= render 'trade_section' %>
+<% else %>
+
+  <% if controller_name == "home" && (action_name == "tradesman_signup" || action_name == "business_signup") %>
+    <%= render 'signup' %>
+  <% end %>
+
+  <div class="trade-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-12"></div>
+        <div class="col-md-6 col-sm-12 text-center">
+          <div class="text-center h2"><%= @page.video_title %></div>
+          <div class="video-container">
+            <% if @page.video_url.present? && @page.video_url.include?('iframe') %>
+              <%= raw @page.video_url %>
+            <% elsif @page.video_url.present? %>
+              <%= embed(@page.video_url, nil, nil, @page.alt_title, @page.alt_title) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

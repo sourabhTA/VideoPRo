@@ -1,0 +1,30 @@
+<input type="button" name="next" class="next action-button" value="Skip" />
+<input type="button" name="previous" class="previous action-button-previous" value="Back" />
+<br><br><br>
+<%= form_for @user, as: :user, url: profile_path(@user), html: { multipart: true, autocomplete: 'off', id: "msform", remote: true } do |f| %>
+  <%= f.hidden_field :current_setting_step, value: "service_area", class: 'form-control' %>
+  <div class="form-card">
+    <div class="row">
+      <div class="col-7">
+        <h2 class="fs-title">Service Areas</h2>
+      </div>
+    </div>
+
+    <div class="col-md-12 m-b-5">
+      <% if @user.business? %>
+	      <div id='business_addresses'>
+	        <%= f.fields_for :business_addresses, @user.business_addresses do |business_address| %>
+	          <%= render 'business_address_fields', f: business_address %>
+	        <% end %>
+	        <div class='links text-right clearfix'>
+	          <%= link_to_add_association 'Add Service Area', f, :business_addresses, class: 'btn btn-primary btn-bh', id: 'add_business_address' %>
+	        </div>
+	      </div>
+	    <% end %>
+	  </div>
+
+    <div class="white-cont clearfix text-center">
+      <%= f.submit "Submit & Next", class: 'btn btn-primary step_submit'  %>
+    </div>
+  </div>
+<% end %>

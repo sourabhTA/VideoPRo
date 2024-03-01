@@ -1,0 +1,5 @@
+one:
+  email: admin_email@example.com
+
+two:
+  email: not_super_admin@example.com

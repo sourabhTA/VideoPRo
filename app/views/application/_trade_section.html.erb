@@ -1,0 +1,85 @@
+<div class="trade-section testimonials">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <%= raw(@page.what_heading.blank? ? "What People are Saying" : @page.what_heading) %>
+      </div>
+      <div class="col-xs-12 col-md-2">
+      </div>
+      <div class="col-xs-12 col-md-8 col-center m-auto">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Carousel indicators -->
+          <ol class="carousel-indicators carousel-indicators-numbers">
+            <% search_categories.each_with_index do |category, index| %>
+              <li data-target="#myCarousel" data-slide-to="<%= index %>" class="<%= 'active' if index == 0 %>"></li>
+            <% end %>
+          </ol>
+          <!-- Wrapper for carousel items -->
+          <div class="carousel-inner">
+            <% search_categories.each_with_index do |category, index| %>
+              <% unless category.review.blank? %>
+                <div class="item carousel-item <%= 'active' if index == 0 %>">
+                  <p class="testimonial font16-normal"><%= category.review %></p>
+                  <p class="star-rating overview" data-score="<%= category.rating %>" ></p>
+                  <p class="overview"><b><%= category.display_name %></b></p>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+          <!-- Carousel controls -->
+          <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+          </a>
+          <a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-2">
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="service-section">
+  <div class="service-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-12"></div>
+        <div class="col-md-6 col-sm-12 text-center">
+          <div class="h2"><%= raw(@page.video_review_heading.blank? ? "Video Review" : @page.video_review_heading) %></div>
+          <div class="video-container">
+            <iframe alt="Get a video chat with an expert online" title="Get a video chat with an expert online" src="https://player.vimeo.com/video/381562503" width="640" height="360" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="service-section">
+  <div class="service-inner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-12"></div>
+        <div class="col-md-6 col-sm-12 text-center">
+          <div class="text-center h2"><%= @page.video_title %></div>
+          <div class="video-container">
+            <% if @page.video_url.present? && @page.video_url.include?('iframe') %>
+              <%= raw @page.video_url %>
+            <% elsif @page.video_url.present? %>
+              <% if @page.slug == "plumbing-repair-contractors" %>
+                <% alt_title = "Choose the best plumbing repair company" %>
+              <% else %>
+                <% alt_title = "Search local contractors and automotive shops to ask for advice online" %>
+              <% end %>
+
+              <%= embed(@page.video_url, nil, nil, alt_title, alt_title) %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

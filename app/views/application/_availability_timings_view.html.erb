@@ -1,0 +1,68 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th></th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+      <th>Saturday</th>
+      <th>Sunday</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><strong>ON/OFF</strong></td>
+      <td class="text-center"><%= @user.is_monday_on? ? 'ON' : 'OFF' %></td>
+      <td class="text-center"><%= @user.is_tuesday_on? ? 'ON' : 'OFF' %></td>
+      <td class="text-center"><%= @user.is_wednesday_on? ? 'ON' : 'OFF' %></td>
+      <td class="text-center"><%= @user.is_thursday_on? ? 'ON' : 'OFF' %></td>
+      <td class="text-center"><%= @user.is_friday_on? ? 'ON' : 'OFF' %></td>
+      <td class="text-center"><%= @user.is_saturday_on? ? 'ON' : 'OFF' %></td>
+      <td class="text-center"><%= @user.is_sunday_on? ? 'ON' : 'OFF' %></td>
+    </tr>
+    <tr>
+      <td><strong>START TIME</strong></td>
+      <td class="text-center"><%= @user.monday_start_time.strftime("%I:%M %p") if @user.is_monday_on? %></td>
+      <td class="text-center"><%= @user.tuesday_start_time.strftime("%I:%M %p") if @user.is_tuesday_on? %></td>
+      <td class="text-center"><%= @user.wednesday_start_time.strftime("%I:%M %p") if @user.is_wednesday_on? %></td>
+      <td class="text-center"><%= @user.thursday_start_time.strftime("%I:%M %p") if @user.is_thursday_on? %></td>
+      <td class="text-center"><%= @user.friday_start_time.strftime("%I:%M %p") if @user.is_friday_on? %></td>
+      <td class="text-center"><%= @user.saturday_start_time.strftime("%I:%M %p") if @user.is_saturday_on? %></td>
+      <td class="text-center"><%= @user.sunday_start_time.strftime("%I:%M %p") if @user.is_sunday_on? %></td>
+    </tr>
+    <tr>
+      <td><strong>END TIME</strong></td>
+      <td class="text-center"><%= @user.monday_end_time.strftime("%I:%M %p") if @user.is_monday_on? %></td>
+      <td class="text-center"><%= @user.tuesday_end_time.strftime("%I:%M %p") if @user.is_tuesday_on? %></td>
+      <td class="text-center"><%= @user.wednesday_end_time.strftime("%I:%M %p") if @user.is_wednesday_on? %></td>
+      <td class="text-center"><%= @user.thursday_end_time.strftime("%I:%M %p") if @user.is_thursday_on? %></td>
+      <td class="text-center"><%= @user.friday_end_time.strftime("%I:%M %p") if @user.is_friday_on? %></td>
+      <td class="text-center"><%= @user.saturday_end_time.strftime("%I:%M %p") if @user.is_saturday_on? %></td>
+      <td class="text-center"><%= @user.sunday_end_time.strftime("%I:%M %p") if @user.is_sunday_on? %></td>
+    </tr>
+    <tr>
+      <td><strong>BREAK START</strong></td>
+      <td class="text-center"><%= @user.monday_break_start_time.strftime("%I:%M %p") if @user.is_monday_on? %></td>
+      <td class="text-center"><%= @user.tuesday_break_start_time.strftime("%I:%M %p") if @user.is_tuesday_on? %></td>
+      <td class="text-center"><%= @user.wednesday_break_start_time.strftime("%I:%M %p") if @user.is_wednesday_on? %></td>
+      <td class="text-center"><%= @user.thursday_break_start_time.strftime("%I:%M %p") if @user.is_thursday_on? %></td>
+      <td class="text-center"><%= @user.friday_break_start_time.strftime("%I:%M %p") if @user.is_friday_on? %></td>
+      <td class="text-center"><%= @user.saturday_break_start_time.strftime("%I:%M %p") if @user.is_saturday_on? %></td>
+      <td class="text-center"><%= @user.sunday_break_start_time.strftime("%I:%M %p") if @user.is_sunday_on? %></td>
+    </tr>
+    <tr>
+      <td><strong>BREAK END</strong></td>
+      <td class="text-center"><%= @user.monday_break_end_time.strftime("%I:%M %p") if @user.is_monday_on? %></td>
+      <td class="text-center"><%= @user.tuesday_break_end_time.strftime("%I:%M %p") if @user.is_tuesday_on? %></td>
+      <td class="text-center"><%= @user.wednesday_break_end_time.strftime("%I:%M %p") if @user.is_wednesday_on? %></td>
+      <td class="text-center"><%= @user.thursday_break_end_time.strftime("%I:%M %p") if @user.is_thursday_on? %></td>
+      <td class="text-center"><%= @user.friday_break_end_time.strftime("%I:%M %p") if @user.is_friday_on? %></td>
+      <td class="text-center"><%= @user.saturday_break_end_time.strftime("%I:%M %p") if @user.is_saturday_on? %></td>
+      <td class="text-center"><%= @user.sunday_break_end_time.strftime("%I:%M %p") if @user.is_sunday_on? %></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

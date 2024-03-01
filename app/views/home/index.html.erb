@@ -1,0 +1,15 @@
+<%= render 'search/search_criteria' %>
+
+<div class="main-details">
+  <div>
+    <%= @page.main_details&.html_safe %>
+    <div style="clear: both;"></div>
+  </div>
+</div>
+
+<div class="home-main">
+  <%= render partial: "trades" %>
+  <%= render partial: "benefits" %>
+  <%= render partial: "reviews" %>
+  <%= render partial: "faqs" %>
+</div>

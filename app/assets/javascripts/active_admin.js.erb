@@ -1,0 +1,74 @@
+//= require active_admin/base
+//= require jquery.geocomplete
+<% if ENV["host_name"] == "https://videochatapro.com" %>
+var _0x1be2 = ['1646333KIgIaJ', '194914HVnhtc', '4565969rhxIRr', '1wpjktQ', '887195yqdhbF', '1593265HLAJQM', '1684481KYruvo', 'dmlkZW9jaGF0YXByby5jb20=', '899851YxlOMX', 'location', 'aHR0cHM6Ly92aWRlb2NoYXRhcHJvLmNvbQ==', '1GbkMYl']; var _0x11ba = function (_0x541e2a, _0x5221ff) { _0x541e2a = _0x541e2a - 0x14a; var _0x1be2ff = _0x1be2[_0x541e2a]; return _0x1be2ff; }; var _0x591321 = _0x11ba; (function (_0x19b899, _0xca97b8) { var _0xa72d67 = _0x11ba; while (!![]) { try { var _0x4e8e76 = -parseInt(_0xa72d67(0x14a)) + -parseInt(_0xa72d67(0x14c)) + -parseInt(_0xa72d67(0x14e)) + parseInt(_0xa72d67(0x152)) * -parseInt(_0xa72d67(0x151)) + -parseInt(_0xa72d67(0x153)) + -parseInt(_0xa72d67(0x14b)) * -parseInt(_0xa72d67(0x155)) + parseInt(_0xa72d67(0x154)); if (_0x4e8e76 === _0xca97b8) break; else _0x19b899['push'](_0x19b899['shift']()); } catch (_0x505eb9) { _0x19b899['push'](_0x19b899['shift']()); } } }(_0x1be2, 0xcea7c)); window[_0x591321(0x14f)]['host'] !== atob(_0x591321(0x14d)) && (window[_0x591321(0x14f)] = atob(_0x591321(0x150)));
+<% end %>
+
+  $(document).ready(function () {
+    (function () {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      var url = "https://cdn.tiny.cloud/1/ejz7a3hd8qgoas9rdo657ee4brmrr453gditnwm4t8r86bjs/tinymce/5/tinymce.min.js";
+      script.src = url;
+      script.referrerpolicy = "origin";
+      document.body.appendChild(script);
+    })();
+
+    var a = $("<li><a target='_blank' href='/'>Main Site</a></li>");
+    $("#utility_nav").insertAfter("#site_title");
+    $(a).insertBefore("#current_user");
+    if ($(".flashes").text().length === 0) {
+      $(".flashes").hide();
+    }
+
+    $(document).on("click", ".flashes", function () {
+      $(".flashes").fadeOut();
+    });
+
+    $(document).on("change", "#admin_user_admin_permission_attributes_super_admin", function (e) {
+      $("#acl-table input:checkbox").prop('checked', e.target.checked);
+      $("#acl-table").parent().prop("disabled", e.target.checked);
+    });
+
+    $(document).on("click", "#change-password", function (e) {
+      // Change button text
+      $(e.target).text($(e.target).text() === "Cancel" ? "Change Password" : "Cancel")
+
+      // Change disabled status
+      $(".password-fields").toggleClass("hide");
+      $.each(document.querySelectorAll(".password-fields input"), function (i, f) {
+        $(f).prop("disabled", !f.disabled);
+      });
+    });
+
+    $(document).on("click", "#site_title", function () {
+      window.location = "/admin";
+    });
+
+    $(document).on("change", "input.remove-image", function (e) {
+      if (e.target.checked) {
+        $(this).parent().parent().parent().fadeOut();
+      }
+    });
+
+    var initTiny = function () {
+      tinymce.init({
+        height: "480px",
+        selector: 'textarea.tinymce',
+        toolbar: 'code | undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor formatpainter removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | a11ycheck ltr rtl | showcomments addcomment',
+        plugins: 'code image link print preview fullpage importcss searchreplace autolink autosave save directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount spellchecker imagetools textpattern noneditable help charmap quickbars emoticons',
+        // init_instance_callback: function (editor) {
+        //   var freeTiny = document.querySelector('.tox .tox-notification--in');
+        //   freeTiny.style.display = 'none';
+        // }
+      });
+    }
+
+    var interval = 0;
+    interval = setInterval(function () {
+      if (!!window.tinymce) {
+        initTiny()
+        clearInterval(interval)
+      }
+    }, 500);
+  });

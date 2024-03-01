@@ -1,0 +1,428 @@
+<style>
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: #FFFFFF;
+  min-width: 160px;
+  z-index: 1;
+}
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  top: 0;
+}
+.dropdown-content a:hover {background-color: #ddd;}
+.list:hover .dropdown-content {display: block;}
+.submenu-main a {
+  padding: 0 !important;
+  border: none !important;
+}
+.trades-link {
+  padding: 0 !important;
+}
+.list-hover-clr:hover {
+  color: #6EC1E4;
+  text-decoration: none;
+  background-color: #F5F5F5;
+}
+
+.Trades-sub-menu {
+  max-width: 220px!important;
+  white-space: nowrap!important;
+}
+
+@media screen and (max-width: 767px) {
+  .sub-menu-link {
+    margin-left: 2rem;
+  }
+
+  .Trades-sub-menu {
+    overflow: visible;
+    max-width: unset !important;
+    white-space: unset !important;
+  }
+}
+
+
+</style>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <% is_menu_remove_page = (request.original_url.include?("booking/") || request.original_url.include?("reviews/") || request.original_url.include?("scheduled_services/")) && request.original_url.include?('/new') %>
+    <% is_menu_remove_page = is_menu_remove_page || request.original_url.include?("/reviews") %>
+    <% @hideMenu = is_menu_remove_page || @hideMenu %>
+    <div class="navbar-header">
+      <% unless is_menu_remove_page %>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#vcap-navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      <% end %>
+      <a class="navbar-brand" href="<%= root_path %>">
+        <%= image_tag "logo.webp", alt: 'Videochatapro', height: 173, width: 570 %>
+      </a>
+    </div>
+    <% if @hideMenu.blank? %>
+    <% if
+      !request.original_url.include?("sign_in") &&
+      !request.original_url.include?("tradesman_signup") &&
+      !request.original_url.include?("business_signup") &&
+      !request.original_url.include?("terms_and_conditions")
+    %>
+      <div class="collapse navbar-collapse" id="vcap-navbar-collapse">
+        <nav class="nav navbar-nav navbar-right">
+          <%# <li><a href="/careers">Careers</a></li> %>
+          <% unless @profile_page %>
+            <li id="trades-outer" >
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Remodeling/Mechanic <i class="fa fa-angle-down "></i>
+              </a>
+              <nav class="dropdown-menu Trades-sub-menu" style="overflow: visible;">
+                <li class="list"  style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee; border-top: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; white-space: initial;" >
+                      <a class="trades-link" href="/plumbing" >Plumbing</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/plumbing") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/plumbing").children_count > 0 %>
+                          <i onclick="openSubMenu('we')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="dropdown-content dropdown-plumbing" id="we">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/plumbing") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/plumbing").children.map do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"} %>
+                      <%end%>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; white-space: initial;" >
+                      <a class="trades-link" href="/electrical" >Electrical</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/electrical") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/electrical").children_count > 0 %>
+                          <i onclick="openSubMenu('electrical')" class="fa fa-angle-right"></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="dropdown-content" id="electrical" >
+                    <% if Comfy::Cms::Page.find_by(full_path:"/electrical") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/electrical").children.each do |c|%>
+                      <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"}%>
+                      <%end%>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; white-space: initial;" >
+                      <a class="trades-link" href="/landscaping" >Landscaping</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/landscaping") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/landscaping").children_count > 0 %>
+                          <i onclick="openSubMenu('landscaping')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="dropdown-content"  id="landscaping" >
+                    <% if Comfy::Cms::Page.find_by(full_path:"/landscaping") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/landscaping").children.each do |c|%>
+                      <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"}%>
+                      <%end%>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; white-space: initial;" >
+                    <a class="trades-link" href="/auto-repair" >Auto Repair</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/auto-repair") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/auto-repair").children_count > 0 %>
+                          <i onclick="openSubMenu('auto-repair')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="dropdown-content" id="auto-repair">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/auto-repair") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/auto-repair").children.each do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"}%>
+                      <%end%>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="list" style="position: relative" >
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; white-space: initial;" >
+                    <a class="trades-link" href="/hvac" >HVAC</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/hvac") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/hvac").children_count > 0 %>
+                          <i onclick="openSubMenu('hvac')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="dropdown-content" id="hvac" >
+                    <% if Comfy::Cms::Page.find_by(full_path:"/hvac") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/hvac").children.each do |c|%>
+                      <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"}%>
+                      <%end%>
+                    <% end %>
+                  </ul>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; white-space: initial;" >
+                      <a class="trades-link" href="/appliances" >Appliances</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/appliances") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/appliances").children_count > 0 %>
+                          <i onclick="openSubMenu('appliances')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="dropdown-content"  id="appliances" >
+                    <% if Comfy::Cms::Page.find_by(full_path:"/appliances") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/appliances").children.each do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"}%>
+                      <%end%>
+                    <%end%>
+                  </ul>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; white-space: initial;" >
+                      <a class="trades-link" href="/home-improvements" >Home Improvements</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/home-improvements") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/home-improvements").children_count > 0 %>
+                          <i onclick="openSubMenu('home-improvements')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <ul class="dropdown-content"  id="home-improvements" >
+                    <% if Comfy::Cms::Page.find_by(full_path:"/home-improvements") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/home-improvements").children.each do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"}%>
+                      <%end%>
+                    <%end%>
+                  </ul>
+                </li>
+              </nav>
+            </li>
+
+            <li id="trades-outer">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                Hire Repair Service <i class="fa fa-angle-down "></i>
+              </a>
+
+              <nav class="dropdown-menu dropdown Trades-sub-menu" style="overflow: visible;">
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee; border-top: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; " >
+                      <a class="trades-link" href="/plumbing-repair-contractors" > Plumbers</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/plumbing-repair-contractors") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/plumbing-repair-contractors")&.children_count > 0 %>
+                          <i onclick="openSubMenu('plc')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <nav class="dropdown-content dropdown-plumbing" id="plc">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/plumbing-repair-contractors") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/plumbing-repair-contractors")&.children&.map do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"} %>
+                      <%end%>
+                    <%end%>
+                  </nav>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee; border-top: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; " >
+                      <a class="trades-link" href="/electrical-repair-contractors" > Electricians</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/electrical-repair-contractors") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/electrical-repair-contractors").children_count > 0 %>
+                          <i onclick="openSubMenu('electrical-repair-contractors')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <nav class="dropdown-content dropdown-plumbing" id="electrical-repair-contractors">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/electrical-repair-contractors") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/electrical-repair-contractors").children.map do |c|%>
+                      <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"} %>
+                      <%end%>
+                    <%end%>
+                  </nav>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee; border-top: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; " >
+                      <a class="trades-link" href="/landscaper" > Landscaper</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/landscaper") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/landscaper").children_count > 0 %>
+                          <i onclick="openSubMenu('landscaper')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <nav class="dropdown-content dropdown-plumbing" id="landscaper">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/landscaper") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/landscaper").children.map do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"} %>
+                      <%end%>
+                    <%end%>
+                  </nav>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee; border-top: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; " >
+                      <a class="trades-link" href="/auto-repair-shops" > Mechanics</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/auto-repair-shops") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/auto-repair-shops").children_count > 0 %>
+                          <i onclick="openSubMenu('auto-repair-shops')" class="fa fa-angle-right " style="margin:-4px"></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <nav class="dropdown-content dropdown-plumbing" id="auto-repair-shops">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/auto-repair-shops") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/auto-repair-shops").children.map do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"} %>
+                      <%end%>
+                    <% end %>
+                  </nav>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee; border-top: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; " >
+                      <a class="trades-link" href="/hvac-repair-contractors" >  HVAC Repair</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/hvac-repair-contractors") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/hvac-repair-contractors").children_count > 0 %>
+                          <i onclick="openSubMenu('hvac-repair-contractors')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <nav class="dropdown-content dropdown-plumbing" id="hvac-repair-contractors">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/hvac-repair-contractors") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/hvac-repair-contractors").children.map do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"} %>
+                      <%end%>
+                    <% end %>
+                  </nav>
+                </li>
+                <li class="list" style="position: relative">
+                  <div class="row list-hover-clr" style="margin: 0; border-bottom: 1px solid #eee; border-top: 1px solid #eee;">
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8 submenu-main" style="padding: 10px 15px; " >
+                      <a class="trades-link" href="/appliance-repair-company" >  Appliance Repair</a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 text-right" style="padding: 10px 10px;" >
+                      <% if Comfy::Cms::Page.find_by(full_path:"/appliance-repair-company") %>
+                        <% if Comfy::Cms::Page.find_by(full_path:"/appliance-repair-company").children_count > 0 %>
+                          <i onclick="openSubMenu('appliance-repair-company')" class="fa fa-angle-right "></i>
+                        <% end %>
+                      <% end %>
+                    </div>
+                  </div>
+                  <nav class="dropdown-content dropdown-plumbing" id="appliance-repair-company">
+                    <% if Comfy::Cms::Page.find_by(full_path:"/appliance-repair-company") %>
+                      <% Comfy::Cms::Page.find_by(full_path:"/appliance-repair-company").children.map do |c|%>
+                        <%= link_to c.label, c.full_path, {class: "sub-menu-link", style: "color: #337AB7;"} %>
+                      <%end%>
+                    <%end%>
+                  </nav>
+                </li>
+              </nav>
+            </li>
+          <% end %>
+
+          <% if user_signed_in? %>
+            <li class="dropdown">
+            <%# <nav class="navbar" style= "padding:19px"> %>
+              <a href="#" class="dropdown-toggle profile-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="profile-link">
+                <% if current_user.picture.present? %>
+                  <%= image_tag current_user.picture.url(:small_thumb), alt: current_user.name, class: "profile-image" %>
+                <% else %>
+                  <div class="fa fa-user profile-image"></div>
+                <% end %>
+                  <span class="username">Account</span>
+                  &nbsp;
+                  <i class="fa fa-angle-down "></i>
+                </div>
+              </a>
+              <% if current_admin_user.present? %>
+                <li  style= "padding-left:20px"><%= link_to_i "wrench", "Admin Site", admin_root_path,  {class: "sub-menu-link", style: "color: #337AB7;"}%></li>
+              <% end %>
+              <% if current_user.business? %>
+                <li><%= link_to_i "home", "In-House Chats", video_chats_path,  {class: "sub-menu-link", style: "color: #337AB7;"}%></li>
+              <% end %>
+              <li><%= link_to_i "user", "View Profile", load_profile_url,  {class: "sub-menu-link", style: "color: #337AB7;"}%></li>
+              <li><%= link_to_i "gear", "Settings", edit_profile_path(current_user),  {class: "sub-menu-link", style: "color: #337AB7;"}%></li>
+              <li>
+                <%= button_to(destroy_user_session_path, method: :delete, class: "btn btn-link") do %>
+                  <i class="fa fa-sign-out"></i>
+                  Logout
+                <% end %>
+                </nav>
+              </li>
+            </li>
+          <% end %>
+          <% unless user_signed_in? %>
+            <li ><%= link_to 'Login', new_user_session_path  %></li>
+          <% end %>
+        </nav>
+      </div><!-- /.navbar-collapse -->
+    <% end %>
+    <% end %>
+  </div><!-- /.container-fluid -->
+</nav>
+
+<script>
+  function openSubMenu(cls) {
+    $(document).on('click', '.list', function (e) {
+     e.stopPropagation();
+    });
+    event.preventDefault();
+    if(document.getElementById(cls).style.display == "block"){
+      document.getElementById(cls).style.display = "none";
+      document.getElementById(cls).style.position = "absolute";
+    } else {
+      document.getElementById(cls).style.display = "block";
+      document.getElementById(cls).style.position = "unset";
+    }
+  }
+</script>

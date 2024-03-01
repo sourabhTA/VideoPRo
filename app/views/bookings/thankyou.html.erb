@@ -1,0 +1,47 @@
+<div class="search-result-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-md-10 col-md-offset-1 m-t-30">
+
+        <% if booking.user.pro? %>
+          <%= render partial: "pro_thankyou_page" %>
+        <% elsif booking.user.business? %>
+          <%= render partial: "business_thankyou_page" %>
+        <% end %>
+
+        <h4 class="m-t-30">Your Booking Details:</h4>
+        <div class="well">
+          <p>Date: <%= booking.client_time.strftime("%m/%d/%Y") %></p>
+          <p>Time: <%= booking.client_time.strftime("%I:%M %p") %></p>
+          <p>City: <%= booking.city %></p>
+          <p>State: <%= booking.state %></p>
+          <p>Issue: <%= booking.issue %></p>
+        </div>
+
+        <h4><%= booking.user.role.capitalize %> Details: </h4>
+        <div class="well col-xs-12">
+          <div class="col-xs-12 col-md-3">
+            <% unless booking.user.picture.blank? %>
+              <p><%= image_tag booking.user.picture.url(:small_thumb) , width: '200px;height: 100px;', alt: "User picture small thumbnail" %></p>
+            <% end %>
+          </div>
+          <p>Name: <%= booking.user %></p>
+          <div class="col-xs-12 col-md-9">
+            <p>Bio: <%= booking.user.description&.html_safe %></p>
+          </div>
+        </div>
+        <p>
+          Thank you,
+          <br/>
+          Video Chat a Pro
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  ul {
+    color: grey;
+    padding-left: revert;
+  }
+</style>

@@ -1,0 +1,8 @@
+$('#category_pros').html("<%= j render '/bookings/pros' %>");
+if($('input:radio[name="client[booking_attributes][user_id]"]').length > 0 && $('input:radio[name="client[booking_attributes][user_id]"]:checked', '#new_client').val() != ''){
+  $.ajax({
+    data: { user_id: $('input:radio[name="client[booking_attributes][user_id]"]:checked', '#new_client').val() },
+    datatype: 'script',
+    url: "/fetch_pro_datetime_slots"
+  });
+}

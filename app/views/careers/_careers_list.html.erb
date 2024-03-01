@@ -1,0 +1,11 @@
+<% Career.career_list.each do |career| %>
+  <div class="col-md-12 appliance-section m-b-15">
+    <%= image_tag career.image.url, alt: "Join Video Chat a Pro to search and apply for industrial jobs and skilled trade jobs", title: "Join Video Chat a Pro to search and apply for industrial jobs and skilled trade jobs" %>
+    <h3 class="color-base"><%= raw career.title %></h3>
+    <%= raw career.content %>
+    <div class="col-md-12 m-t-15">
+      <%= link_to career.button1_text, career.button1_link, target: '_blank', class: 'btn' unless career.button1_text.blank? %>
+      <%= link_to "Upload Resume", upload_resume_path, class: 'btn' %>
+    </div>
+  </div>
+<% end %>

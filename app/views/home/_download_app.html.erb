@@ -1,0 +1,31 @@
+<div class="container download-app">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="col-lg-6">
+				<div class="">
+					<%= image_tag asset_path("VCAP-iOS1.png"), class: "mobile_image" %>
+				</div>
+			</div>
+			<div class="col-lg-6 download-icons">
+        <div class="">
+          <h2 class="">Video Chat a Pro Client App</h2>
+        </div>
+        <div class="icon_text">
+        	<p>Connect instantly with your technician or a local contractor. Download the Video Chat a Pro Client app now.</p>
+        </div>
+        <div class="col-md-12">
+	        <div class="col-md-6">
+	        	<%= link_to ENV.fetch('ios-client'), target: "_blank", rel: "noopener noreferrer nofollow" do %>
+	        		<%= image_tag asset_path("app-store.png") %>
+	        	<% end %>
+	        </div>
+	        <div class="col-md-6">
+	        	<%= link_to ENV.fetch('android-client'), target: "_blank", rel: "noopener noreferrer nofollow" do %>
+		        	<%= image_tag asset_path("google-play.png") %>
+	        	<% end %>
+	        </div>
+        </div>
+	    </div>
+		</div>
+	</div>
+</div>

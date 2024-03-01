@@ -1,0 +1,18 @@
+<div class="contact-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-12">
+        <div class="row">
+          <div class="col-xs-12 col-md-12 m-b-30 m-t-30 text-center">
+            <%= form_tag post_unsubscribe_path do %>
+              <h3 class="m-t-30 m-b-30">Manage Email Subscriptions</h3>
+              <h4 class="m-t-30 m-b-30">You have elected to remove your email address from an email subscription.</h4>
+              <h5 class="m-t-30 m-b-30">Email: <%= @user.email %></h5>
+              <%= submit_tag "Unsubscribe", class: "btn btn-primary m-t-30 m-t-50" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

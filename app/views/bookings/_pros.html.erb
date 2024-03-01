@@ -1,0 +1,9 @@
+<div class="pros_select_area">
+  <h4>Please select</h4>
+  <%=
+      collection_radio_buttons('client[booking_attributes]', 'user_id', @users, :id, :name_with_bio, checked: @user.try(:id)) do |b|
+        content_tag :div, b.label { b.radio_button + raw("#{b.text}") }, class: 'well'
+      end
+  %>
+</div>
+<div id="pro_datetime_slots"></div>

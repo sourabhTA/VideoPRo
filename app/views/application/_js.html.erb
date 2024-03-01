@@ -1,0 +1,63 @@
+<script>
+!function(e){"function"==typeof define&&define.amd?define(e):e()}(function(){var e,t=["scroll","wheel","touchstart","touchmove","touchenter","touchend","touchleave","mouseout","mouseleave","mouseup","mousedown","mousemove","mouseenter","mousewheel","mouseover"];if(function(){var e=!1;try{var t=Object.defineProperty({},"passive",{get:function(){e=!0}});window.addEventListener("test",null,t),window.removeEventListener("test",null,t)}catch(e){}return e}()){var n=EventTarget.prototype.addEventListener;e=n,EventTarget.prototype.addEventListener=function(n,o,r){var i,s="object"==typeof r&&null!==r,u=s?r.capture:r;(r=s?function(e){var t=Object.getOwnPropertyDescriptor(e,"passive");return t&&!0!==t.writable&&void 0===t.set?Object.assign({},e):e}(r):{}).passive=void 0!==(i=r.passive)?i:-1!==t.indexOf(n)&&!0,r.capture=void 0!==u&&u,e.call(this,n,o,r)},EventTarget.prototype.addEventListener._original=e}});
+//# sourceMappingURL=index.umd.js.map
+</script>
+<% if Rails.env.production? %>
+  <%# Google TM %>
+  <%= render 'google_tag_manager_head' if Rails.env.production? %>
+  <% if @exclusive_assets.blank? || !@exclusive_assets.include?('map') %>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV.fetch("google_maps_api_key") %>&libraries=places&callback=Function.prototype"></script>
+    <% unless @map_json.blank? %>
+      <script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+      <script>
+        document.addEventListener("DOMContentLoaded", function(){
+          handler = Gmaps.build("Google");
+          handler.buildMap({ provider: {disableDefaultUI: true, maxZoom: 7}, internal: {id: "map"}}, function(){
+            markers = handler.addMarkers(<%= @map_json.to_json.html_safe %>);
+            handler.bounds.extendWith(markers);
+            handler.fitMapToBounds();
+          });
+        });
+      </script>
+    <% end %>
+  <% end %>
+  <script src="https://browser.sentry-cdn.com/5.20.1/bundle.min.js" integrity="sha384-O8HdAJg1h8RARFowXd2J/r5fIWuinSBtjhwQoPesfVILeXzGpJxvyY/77OaPPXUo" crossorigin="anonymous"></script>
+<% end %>
+
+<% if @exclusive_assets.blank? || !@exclusive_assets.include?('application') %>
+  <%= javascript_include_tag 'application' %>
+<% else %>
+  <%= javascript_include_tag 'application_custom' %>
+<% end %>
+
+<% if Rails.env.production? %>
+  <script>
+    $(document).ready(function() {
+      Sentry.init({ dsn: '<%= ENV.fetch("sentry_dsn") %>' });
+    });
+  </script>
+<%end%>
+
+<%# <script src="https://checkout.stripe.com/checkout.js"></script> %>
+<%# <script src="https://js.stripe.com/v2/"></script> %>
+<% if @exclusive_assets.blank? || !@exclusive_assets.include?('stripe') %>
+  <%= javascript_include_tag 'stripe'%>
+  <%= javascript_include_tag 'checkout'%>
+<% end %>
+<%= yield :js %>
+<%= stylesheet_link_tag 'library' %>
+<script>
+  $(document).ready(function() {
+    <%= yield :js_ready %>
+  });
+
+  var head = document.getElementsByTagName('head')[0];
+  var insertBefore = head.insertBefore;
+  head.insertBefore = function (newElement, referenceElement) {
+    if (newElement.href && newElement.href.indexOf('//fonts.googleapis.com/css?family=Roboto') > -1) {
+      console.info('Prevented Roboto from loading!');
+      return;
+    }
+    insertBefore.call(head, newElement, referenceElement);
+  };
+</script>

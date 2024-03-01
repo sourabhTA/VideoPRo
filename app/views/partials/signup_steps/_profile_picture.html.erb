@@ -1,0 +1,55 @@
+<input type="button" name="next" class="next action-button" value="Skip" style="<%= 'display: none;' unless @user.picture_url %>" />
+<input type="button" name="previous" class="previous action-button-previous" value="Back" />
+<br><br><br>
+<%= form_for @user, url: "/profiles/#{@user.slug}", :html => { :multipart => true, id: "msform" }, :remote => true do |f| %>
+	<input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>"/>
+  <%= f.hidden_field :current_setting_step, value: "profile_picture", class: 'form-control' %>
+
+  <div class="form-card">
+    <div class="row">
+      <div class="col-7">
+        <h2 class="fs-title">Profile Picture</h2>
+      </div>
+    </div>
+    <div class="col-md-12 m-b-5">
+      <%= f.label :picture, class: 'ms-label' %><br/>
+      <%= image_tag @user.picture.url(:mini_thumb),  accept:"image/*", class: 'img-thumbnail', style: 'width: 75px;', alt: "Profile edit picture mini thumbnail" unless @user.picture.blank? %>
+      <%= f.file_field :picture %>
+    </div>
+  </div>
+  <div class="white-cont clearfix">
+    <%= f.submit "Submit & Next", class: 'btn btn-primary step_submit'  %>
+  </div>
+<% end %>
+
+<script>
+
+	$('.step_submit').click((e) => {
+		e.preventDefault();
+
+		const file = $('input[name="user[picture]"]').prop("files")[0];
+    if(!file){
+      alert('You must select a proper profile picture');
+      return false;
+    }
+		const formData = new FormData();
+		formData.append("user[picture]", file);
+		formData.append("user[current_setting_step]", $('#user_current_setting_step').val());
+
+		$.ajax({
+			url: "/profiles/<%= @user.slug %>",
+      contentType: false,
+      processData: false,
+      method: "PATCH",
+      dataType: 'json',
+      data: formData,
+      success: function (data) {
+      	$(".next").click();
+      },
+      error: function (data) {
+      }
+    });
+
+	});
+
+</script>

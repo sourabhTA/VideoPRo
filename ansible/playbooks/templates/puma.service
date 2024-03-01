@@ -1,0 +1,21 @@
+[Unit]
+Description=Puma HTTP Server
+After=network.target
+
+# Uncomment for socket activation (see below)
+Requires=puma.socket
+
+[Service]
+# Puma supports systemd's `Type=notify` and watchdog service
+# monitoring, if the [sd_notify](https://github.com/agis/ruby-sdnotify) gem is installed,
+# as of Puma 5.1 or later.
+# On earlier versions of Puma or JRuby, change this to `Type=simple` and remove
+# the `WatchdogSec` line.
+Type=simple
+User={{ deploy_user }}
+WorkingDirectory=/home/{{ deploy_user }}/{{ app_name }}/current
+ExecStart=/bin/bash -lc 'bin/rails server -e production'
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

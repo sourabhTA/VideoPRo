@@ -1,0 +1,40 @@
+div do
+  if form_video.video.blank?
+    div "No video", class: "alert alert-danger"
+  else
+    video controls: true, poster: form_video.poster&.url do
+      source src: form_video.video
+    end
+  end
+
+  div do
+    form_for(:promo, url: upload_search_promo_admin_categories_path, html: {multipart: true}) do |f|
+      div {
+        f.hidden_field :id, value: form_video.name
+        f.label :poster
+        f.file_field :poster, class: "form-control"
+        f.label :video
+        f.file_field :video, required: form_video.video.blank?, class: "form-control"
+      }
+      div {
+        div {
+          f.button class: "btn btn-primary full-width" do
+            span "", class: "fa fa-video-camera"
+            span "Update Video"
+          end
+        }
+      }
+    end
+    if form_video.present?
+      div(class: "button-container pull-right") {
+        span {
+          link_to_i "download", "Download", form_video.video&.url, class: "btn btn-default full-width", download: "search-promo"
+        }
+        span {
+          button_to "Delete", delete_search_promo_admin_categories_path("promo[id]" => form_video.name), method: :delete, class: "btn btn-danger full-width", data: {confirm: "Are you sure?"}
+        }
+      }
+      div(class: "clearfix")
+    end
+  end
+end

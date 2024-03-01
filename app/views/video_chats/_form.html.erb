@@ -1,0 +1,68 @@
+<%= form_for video_chat, html: { autocomplete: :off, role: "form", id: "video_chat_form"} do |f| %>
+  <%= render "errors", {object: video_chat} %>
+  <div class="form-group">
+    <%= f.label :to_id, "Select Employee" %>
+    <%= f.select :to_id, options_for_select(employees.map{|u| [u.staff_name, u.id, {data: {tz: u.time_zone, email: u.email, name: u.name}}]}),
+                  { prompt: "Select Employee"} ,
+                  { class: "form-control" } %>
+  </div>
+
+  <div class="row no-gutters">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :timings, "In House Chat Time" %>
+        <div class="input-group date">
+          <%= f.text_field :timings, value: video_chat.form_time(current_user.time_zone).strftime("%m-%d-%Y %I:%M %p"), required: true, id: "timings_datetimepicker", class: "form-control" %>
+          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :time_zone, "Recipient Time Zone" %>
+        <%= f.select :time_zone, User::TIME_ZONES, {include_blank: true}, { class: "form-control", required: true } %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="form-group">
+      <%= f.label :email, "To Email" %>
+      <%= f.email_field :email, placeholder: "Email", class: "form-control" %>
+    </div>
+
+  <div class="row no-gutters">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, placeholder: "Name", class: "form-control", required: true %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :to, "Phone Number" %>
+        <%= f.text_field :phone_number, placeholder: "Phone Name", class: "form-control formated_phone" %>
+        <div style="clear: both;" class="text-left">
+          <p class="hint">If employee is selected a text will automatically send to their number. If you want more texts sent add cell number here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="form-group">
+      <%= f.label :subject %>
+      <%= f.text_field :subject, value: video_chat.subject || "Video Chat Link", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :body %>
+      <%= f.text_area :body, value: video_chat.body || "Please click the link below to join.", class: "form-control" %>
+    </div>
+  </div>
+  <%= f.submit "Send Chat Link", class: "btn btn-primary" %>
+<% end %>
+
+<% content_for :js_ready do %>
+  $(document).on("change", "#video_chat_to_id", function(e) {
+    var option = $(this).find("option:selected");
+    $("#video_chat_name").val(option.data("name"));
+  });
+<% end %>

@@ -1,0 +1,91 @@
+<div class="search-result-section">
+  <% unless @featured_users.blank? %>
+    <div class="container-fluid">
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-xs-12 col-md-10 col-md-offset-1">
+          <h2 class="text-center">Our Featured Pros</h2>
+          <ul class="search-result-ul" id="featured-users-container">
+            <%= render(partial: "users/featured_user", collection: @featured_users, as: :user) %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <div class="container">
+    <div class="row" style="margin-top: 20px;">
+      <div class="col-xs-12 col-md-10 col-md-offset-1">
+        <div class="row m-t-15">
+          <div class="col-xs-12 col-md-9"><h1 style="font-size:20px;"><%= get_meta_tag(get_tag_type(request.path), params[:page], 'h1_tag') %></h1></div>
+          <div class="col-xs-12 col-md-3">
+            <%= select_tag 'sorting_options', options_for_select(User::SORT_OPTIONS, selected: params[:sort_by]), prompt: 'Sort By', class: 'form-control btn-block' %>
+          </div>
+        </div>
+        <ul class="search-result-ul" id="users-container">
+          <%= render @users unless @users.blank? %>
+        </ul>
+        <div class="digg_pagination text-center">
+          <h2 style="font-size:18px;"> <%= get_meta_tag(get_tag_type(request.path), params[:page], 'h2_tag') %></h2>
+          <div class="page_info">
+            <%= page_entries_info @users %>
+          </div>
+          <%= will_paginate @users %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .load-more-button {
+    width: 50%;
+  }
+  /* the slides */
+  .slick-slide {
+    margin: 0 10px;
+  }
+  /* the parent */
+  .slick-list {
+    margin: 0 -10px !important;
+  }
+  #featured-users-container {
+    padding: 0 20px;
+  }
+  .slick-slide .search_verified_image {
+    display: unset !important;
+  }
+  .slick-prev {
+    z-index: 1;
+  }
+  #featured-users-container .media-left {
+    display: flex;
+  }
+  .star-rating i {
+    font-size: 16px;
+  }
+  .star-rating {
+    vertical-align: middle;
+  }
+  #featured-users-container .media-left .user-name {
+    margin: auto;
+    padding: 10px;
+    display: block !important;
+  }
+</style>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    $('#featured-users-container').slick({
+      slidesToShow: 3,
+      responsive: [{
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 2
+        }
+      },
+      {
+        breakpoint: 501,
+        settings: {
+          slidesToShow: 1
+        }
+      }]
+    });
+  });
+</script>

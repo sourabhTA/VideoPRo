@@ -1,0 +1,26 @@
+<p>
+  <%= booking.client %> your Video Chat with <%= booking.user %> has been Scheduled.
+  Thank you for choosing Video Chat a Pro to connect with <%= booking.user %>.
+  Please download the Mobile APP for the best experience.
+  Enter your email to log in and join your video chat with <%= booking.user %>.
+</p>
+
+<b>For best results:</b>
+<ul>
+  <li>Use your Mobile Device</li>
+  <li>Join on Time</li>
+  <li>Use APP to Turn on the Flashlight</li>
+  <li>Flip the Camera to Show <%= booking.user %> your Problem</li>
+  <li>Use Red Button to End Video Chat</li>
+</ul>
+<b>Note:</b>
+<ul>
+  <li>In case you are unable to call, your amount will be refunded in you account within 6-7 working days.</li>
+</ul>
+
+<div class="alert alert-danger">
+  For Best Results Please Download Our Mobile APP HERE – Link to Client
+  <%= link_to "Android APP", mobile_app_url('android-client'), target: '_blank' %> or
+  <%= link_to "IOS APP", mobile_app_url('ios-client'), target: '_blank' %>
+  Log In
+</div>

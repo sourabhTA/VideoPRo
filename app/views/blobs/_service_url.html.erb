@@ -1,0 +1,7 @@
+<%if Rails.env.production? || Rails.env.staging? %>
+    <% src = ::Comfy::Cms::File.find_by(label: local_assigns["img_label"])&.attachment&.service_url%>
+<% else %>
+    <% src = url_for(::Comfy::Cms::File.find_by(label: local_assigns["img_label"])&.attachment)%>
+<% end %>
+
+<img src="<%= src %>" alt="<%= local_assigns["img_label"] %>" style=" height:<%=local_assigns["img_height"] + "px" if local_assigns['img_height'].present? %>;width:<%=local_assigns['img_width'] + "px" if local_assigns['img_width'].present? %>">

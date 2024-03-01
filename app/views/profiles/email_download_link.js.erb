@@ -1,0 +1,10 @@
+<% if @error.present? %>
+  $('.toast-body').text("<%= @error %>");
+<% else %>
+  $('.toast-body').text("Download Link was sent successfully! Check Your Inbox to begin Download.");
+<% end %>
+
+$('.share-toast').removeClass('hide');
+setTimeout(function () {
+  $('.share-toast').addClass('hide');
+}, 1500);

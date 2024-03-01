@@ -1,0 +1,30 @@
+<% if controller_name == 'profiles' && action_name == 'show' %>
+  <%= render "schema/profiles" %>
+<% elsif controller_name == 'home' && action_name == 'pages' %>
+  <%= render "schema/pages" %>
+<% elsif controller_name == 'blogs' && action_name == 'index' %>
+  <%= render "schema/blogs" %>
+<% elsif controller_name == 'blogs' && action_name == 'show' %>
+  <%= render "schema/blog" %>
+<% elsif controller_name == 'careers' && action_name == 'index' %>
+  <%= render "schema/careers" %>
+<% elsif controller_name == 'home' && action_name == 'index' %>
+  <%= render "schema/home" %>
+<% elsif controller_name == 'sessions' && action_name == 'new' %>
+  <%= render "schema/login" %>
+<% elsif controller_name == 'home' && action_name == 'tradesman_signup' %>
+  <%= render "schema/tradesman_signup" %>
+<% elsif controller_name == 'home' && action_name == 'business_signup' %>
+  <%= render "schema/business_signup" %>
+<% elsif controller_name == 'contact_us' && action_name == 'do_contact' %>
+  <%= render "schema/do_contact" %>
+<% elsif controller_name == 'faqs' && action_name == 'index' %>
+  <%= render "schema/faqs" %>
+<% elsif controller_name == 'home' && action_name == 'terms_and_conditions' %>
+  <%= render "schema/legal" %>
+<% elsif action_name == 'categorization' %>
+  <%= render "schema/categorization" %>
+<% end %>
+<%#= controller_name %>
+<%#= action_name %>
+<%#= @page.slug %>

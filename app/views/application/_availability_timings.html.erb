@@ -1,0 +1,74 @@
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="table-responsive" id="availability_table">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th width="3%"></th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th width="3%">ON / OFF</th>
+            <th class="text-center"><%= f.check_box :is_monday_on %></th>
+            <th class="text-center"><%= f.check_box :is_tuesday_on %></th>
+            <th class="text-center"><%= f.check_box :is_wednesday_on %></th>
+            <th class="text-center"><%= f.check_box :is_thursday_on %></th>
+            <th class="text-center"><%= f.check_box :is_friday_on %></th>
+            <th class="text-center"><%= f.check_box :is_saturday_on %></th>
+            <th class="text-center"><%= f.check_box :is_sunday_on %></th>
+          </tr>
+          <tr>
+            <th>START TIME</th>
+            <th class='text-center'><%= f.select :monday_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :tuesday_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :wednesday_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :thursday_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :friday_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :saturday_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :sunday_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+          </tr>
+          <tr>
+            <th>END TIME</th>
+            <th class='text-center'><%= f.select :monday_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :tuesday_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :wednesday_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :thursday_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :friday_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :saturday_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :sunday_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+          </tr>
+          <tr>
+            <th>BREAK START</th>
+            <th class='text-center'><%= f.select :monday_break_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :tuesday_break_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :wednesday_break_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :thursday_break_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :friday_break_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :saturday_break_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :sunday_break_start_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+          </tr>
+          <tr>
+            <th>BREAK END</th>
+            <th class='text-center'><%= f.select :monday_break_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :tuesday_break_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :wednesday_break_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :thursday_break_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :friday_break_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :saturday_break_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+            <th class='text-center'><%= f.select :sunday_break_end_time, time_options_for_select, {}, { class: 'form-control input-sm'} %></th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

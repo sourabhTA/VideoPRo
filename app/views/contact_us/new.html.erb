@@ -1,0 +1,37 @@
+<div class="white-cont clearfix">
+  <h3 class="m-0">Contact Us</h3>
+</div>
+
+<div class="white-cont clearfix">
+  <div class="row">
+    <div class="col-xs-12">
+      <p class="text-center">
+        Do you have a question? We'd love to hear from you. Send us a message and we will respond as soon as possible.
+      </p>
+      <%= form_for @contact, url: profile_contact_us_path do |f| %>
+              <% if @contact.errors.any? %>
+                <div class="alert alert-danger alert-dismissable" role="alert">
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                  <h4><%= pluralize(@contact.errors.count, "error") %> prohibited this from being saved:</h4>
+
+                  <ul>
+                    <% @contact.errors.full_messages.each do |msg| %>
+                      <li><%= msg %></li>
+                    <% end %>
+                  </ul>
+                </div>
+              <% end %>
+              <div class="form-group">
+                <label>Message:</label>
+                <%= f.text_area :body, autofocus: true, class: 'form-control', placeholder: 'Your Message' %>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-blue">
+              </div>
+              <div class="form-group"><strong>Support Phone Number: 1-512-655-9688</strong></div>
+              <div class="form-group">3500 Lohman Ford Road #1 Lago Vista, TX 78645</div>
+            <% end %>
+    </div>
+  </div>
+</div>
+

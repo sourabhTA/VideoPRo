@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%= render 'head' %>
+	<body>
+		<%= render 'body_top' %>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="<%= root_path %>">
+		        <%= image_tag "logo.webp", alt: 'Videochatapro' %>
+		      </a>
+		    </div>
+		  </div>
+		</nav>
+
+	  <div class="container">
+      <%= render 'flash_messages' %>
+	  	<%= yield %>
+	  	<% content_for :js do %>
+			  <script>
+			    $(document).ready(function(){
+			      var current_fs, next_fs, previous_fs; //fieldsets
+			      var opacity;
+			      var current = 1;
+			      var steps = $("fieldset").length;
+
+			      setProgressBar(current);
+
+			      $(document).on('click','.next',function(){
+			        current_fs = $(this).parent();
+			        next_fs = $(this).parent().next();
+
+			        show_loader();
+			        var response = manual_ajax_request(
+			          "/profile/skip_step",
+			          {current_step: next_fs.attr("data-current") }
+			        );
+			        //Add Class Active
+			        //show the next fieldset
+			        //next_fs.show();
+			        //hide the current fieldset with style
+			        progressStepsTo(next_fs.attr("data-current")).then(() => {
+			          $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+			            current_fs.animate({opacity: 0}, {
+			              step: function(now) {
+			                // for making fielset appear animation
+			                opacity = 1 - now;
+
+			                current_fs.css({
+			                  'display': 'none',
+			                  'position': 'relative'
+			                });
+			                next_fs.css({'opacity': opacity});
+			                hideText( $("#progressbar li").eq($("fieldset").index(next_fs))[0].id );
+			              },
+			              duration: 500
+			            });
+			            $('.mobile-title').text( $('.fs-title').text() );
+			            setProgressBar(++current);
+
+			            // if ( next_fs[0].accessKey == "finish" ) {
+			            //   setTimeout(function () {
+			            //     window.location = "<%= edit_profile_path(current_user) if current_user %>";
+			            //   }, 2000);
+			            // }
+			        })
+			      });
+
+			      $(document).on('click','.previous',function(){
+			        current_fs = $(this).parent();
+			        previous_fs = $(this).parent().prev();
+
+			        show_loader();
+			        var response = manual_ajax_request(
+			          "/profile/skip_step",
+			          {current_step: previous_fs.attr("data-current") }
+			        );
+
+			        //Remove class active
+			        progressStepsTo(previous_fs.attr("data-current")).then(() => {
+			          $("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active")
+			          current_fs.animate({opacity: 0}, {
+			            step: function(now) {
+			                // for making fielset appear animation
+			                opacity = 1 - now;
+
+			                current_fs.css({
+			                  'display': 'none',
+			                  'position': 'relative'
+			                });
+			                previous_fs.css({'opacity': opacity});
+			                hideText( $("#progressbar li").eq($("fieldset").index(previous_fs))[0].id );
+			              },
+			              duration: 500
+			          });
+			          $('.mobile-title').text( $('.fs-title').text() );
+			          setProgressBar(--current);
+			        })
+			        //show the previous fieldset
+			        //hide the current fieldset with style
+			      });
+
+			      function setProgressBar(curStep){
+			        var percent = parseFloat(100 / steps) * curStep;
+			        percent = percent.toFixed();
+			        $(".progress-bar").css("width",percent+"%");
+			        hide_loader();
+			      }
+
+			      $(".submit").click(function(){
+			        return false;
+			      })
+
+			      function progressStepsTo(tabName){
+			        const selectedfieldset = $(`[data-current='${tabName}']`);
+			        return $.ajax("/profile/getTabData", {
+			          contentType: 'application/json',
+			          method: "GET",
+			          data: {tabName},
+			          success: function (data) {
+			            $("fieldset").hide();
+			            $("fieldset").html("");
+			            selectedfieldset.html(data);
+			            selectedfieldset.show();
+			            $('.mobile-title').text( $('.fs-title').text() );
+			          },
+			          error: function (data) {
+			            console.log('Sorry something went wrong!!!');
+			            hide_loader();
+			          }
+			        });
+			      }
+
+			      function initiateAndLoadBar(){
+			        const currentTab = '<%= current_user.present? && current_user.current_setting_step.present? ? current_user.current_setting_step : "email_confirmation" %>'
+
+			        progressStepsTo(currentTab)
+
+			        $("#progressbar").find("li").each((index, ele) => {
+			          $(ele).addClass("active");
+			          current = index+1
+			          setProgressBar(current);
+			          if($(ele).attr("id") == currentTab) {
+			            hideText(currentTab);
+			            return false;
+			          }
+
+			          // if ( currentTab == "finish" ) {
+			          //   setTimeout(function () {
+			          //     window.location = "<%= edit_profile_path(current_user) if current_user %>";
+			          //   }, 2000);
+			          // }
+			        })
+			      }
+
+			      initiateAndLoadBar();
+
+			      function manual_ajax_request(url,data,method) {
+			        var data = data || {}
+			        var method = method || 'GET'
+			        $.ajax({
+			          async: false,
+			          type: method,
+			          url: url,
+			          data: data,
+			          headers : {
+			                  'CSRFToken' : "#{form_authenticity_token}"
+			              },
+			          success: function (data) {
+			            result = data
+			          },
+			          errors:function(error) {
+			            result = error
+			            hide_loader();
+			          }
+			        })
+			        return result;
+			      }
+			    });
+
+			    function hideText(tab_id) {
+			      $('#progressbar').find('li').each((index, ele) => {
+			        if ( ele.id != tab_id ) {
+			          $(ele).find('strong').addClass('hide')
+			        } else {
+			          $(ele).find('strong').removeClass('hide')
+			        }
+			      });
+			    }
+
+			    function show_loader(argument) {
+			      $("#loader").addClass( "show-loader" );
+			      $("#loader-on").addClass( "show-loader" );
+			      $(".container").addClass( "hide-content" );
+			    }
+
+			    function hide_loader(argument) {
+			      $("#loader").removeClass( "show-loader" );
+			      $("#loader-on").removeClass( "show-loader" );
+			      $(".container").removeClass( "hide-content" );
+			    }
+
+			    $('#msform').on('submit', function(){
+			      show_loader();
+			    });
+			  </script>
+			<% end %>
+	  </div>
+
+    <div class="cd-top"><i class="fa fa-chevron-up topicon"></i></div>
+    <div>
+	    <div id="loader"></div>
+	    <div id="loader-on"></div>
+    </div>
+    <%= render 'js' %>
+	</body>
+</html>
+

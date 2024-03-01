@@ -1,0 +1,11 @@
+<% if @verify_recaptcha %>
+  <% if @claim.save %>
+    $("#claim_body").html("<%= j render '/profiles/claim_business_form' %>");
+    $('#success_message').show('slow');
+  <% else %>
+    $("#claim_body").html("<%= j render '/profiles/claim_business_form' %>");
+    $('#success_message').hide('slow');
+  <% end %>
+<% else %>
+  $("#claim_body").html("<%= j render '/profiles/claim_business_form' %>");
+<% end %>

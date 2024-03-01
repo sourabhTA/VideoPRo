@@ -1,0 +1,17 @@
+hvacs:
+  name: HVACs
+
+landscapers:
+  name: Landscapers
+
+electricians:
+  name: Electricians
+
+mechanics:
+  name: Mechanics
+
+plumbers:
+  name: Plumbers
+
+appliances:
+  name: Appliances

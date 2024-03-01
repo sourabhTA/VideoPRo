@@ -1,0 +1,49 @@
+<div class="home_page_header" id="search-criteria-form">
+  <div class="overlay1"></div>
+  <div class="search-section">
+    <div class="container">
+      <div class="search-container">
+        <div class="search-type-container">
+          <h1 class="home-header1">Video Chat to Get the Best Prices or to Learn How to DIY</h1>
+          <div class="search-callout" style="margin-top: 0px;">Click To:</div>
+          <div class="row home_layout_btn">
+            <a class="btn btn-orange" href="<%= search_diy_path %>">Do It Yourself</a>
+            <a class="btn btn-orange" href="<%= search_company_path %>">Hire Contractor</a>
+          </div>
+
+          <div class="search-callout">
+            Save time and money on <span class="current-category-name"></span>
+          </div>
+        </div>
+
+        <div class="promo-video <%= company_path? ? "hide" : "" %>">
+          <video width="100%" height="100%" controls poster="<%= search_promo_video.poster&.url %>">
+            <source src="<%= search_promo_video.video %>">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <div class="promo-video <%= company_path? ? "" : "hide" %>">
+          <video width="100%" height="100%" controls poster="<%= search_promo_video_business.poster&.url %>">
+            <source src="<%= search_promo_video_business.video %>">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js do %>
+  <script>
+    (function() {
+      var trades = <%= search_categories.map{|c| c.name.downcase.singularize}.to_json.html_safe %>;
+      $(".current-category-name").typer({
+        backspaceDelay: 3000,
+        strings: trades
+      });
+    })();
+  </script>
+<% end %>
+

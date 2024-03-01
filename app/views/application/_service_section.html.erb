@@ -1,0 +1,37 @@
+<!-- SERVICE SECTION START -->
+<section class="service-section">
+  <div class="service-inner">
+    <div class="container">
+      <%= raw(@page.why_heading.blank? ? "Why Video Chat a Pro" : @page.why_heading) %>
+      <div class="row">
+        <div class="col-md-5 col-md-offset-1 col-sm-6">
+          <div class="service-content">
+            <h3><i class="fa fa-money"></i>&nbsp;Save Money</h3>
+            <%= raw @page.save_money %>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-6">
+          <div class="service-content">
+            <h3><i class="fa fa-calendar"></i>&nbsp;Save Time</h3>
+            <%= raw @page.save_time %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-5 col-md-offset-1 col-sm-6">
+          <div class="service-content">
+            <h3><i class="fa fa-lightbulb-o"></i>&nbsp;Learn a New Skill</h3>
+            <%= raw @page.new_skill %>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-6">
+          <div class="service-content">
+            <h3><i class="fa fa-life-saver"></i>&nbsp;No Stranger in Your Home</h3>
+            <%= raw @page.no_stranger %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- SERVICE SECTION END -->

@@ -1,0 +1,16 @@
+Hey,
+<br/>
+<p>
+  <b><%= @contact.name %></b> with email <%= @contact.email %>
+  have sent you a message, please see message below.
+</p>
+
+<h4>Message:</h4>
+<div class="well">
+  <%= raw @contact.body %>
+</div>
+
+<br/>
+regards,
+<br/>
+Videochatapro.com

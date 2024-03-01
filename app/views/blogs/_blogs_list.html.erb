@@ -1,0 +1,36 @@
+<div class="col-md-9 col-sm-8">
+  <% unless @blogs.blank? %>
+    <% @blogs.each do |blog| %>
+      <div class="blog-details">
+        <% if blog.image.url %>
+          <%= link_to (image_tag blog.image.url, class: 'logo', alt: "Blog logo image"), blog_path(category_id: blog.blog_category.slug, id: blog.slug) %>
+        <% end %>
+        <br/>
+
+        <%= link_to blog.title, blog_path(category_id: blog.blog_category.slug, id: blog.slug) if blog.slug.present? %>
+
+        <p>
+          <i class="fa fa-clock-o"></i>
+          <%= blog.published_at.try(:strftime, "%B %d, %Y") %> -
+          <span>
+            <i class="fa fa-folder-o"></i>
+            <%= link_to  blog.blog_category.name,"/blogs/#{blog.blog_category.slug}" if blog.slug.present? %>
+          </span>
+        </p>
+
+        <div class="h5"><%= strip_tags(blog.content)[0,250] %>...</div>
+        <a href='<%= blog_path(category_id: blog.blog_category.slug, id: blog.slug) if blog.slug.present? %>' class="btn btn-default" >Continue Reading <i class="fa fa-angle-right"></i></a>
+      </div>
+    <% end %>
+  <% else %>
+    <div class="blog-details">
+      No Blog Found!
+    </div>
+  <% end %>
+  <div class="digg_pagination text-center">
+    <div class="page_info">
+      <%= page_entries_info @blogs %>
+    </div>
+    <%= will_paginate @blogs %>
+  </div>
+</div>

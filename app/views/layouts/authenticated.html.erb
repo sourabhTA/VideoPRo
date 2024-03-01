@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<%= render 'head' %>
+<body>
+<%= render 'body_top' %>
+<%= render 'header' %>
+<div class="admin-section">
+  <div class="container">
+    <% if current_user.role == "pro" && current_user.profile_completed? && !current_user.is_verified? %>
+      <div class="alert alert-info" role="alert">
+        Schedule a call with us to get your profile verified and fast track your account setup by clicking <%= link_to "here", "/video-chat-a-pro", target: "_blank", style: "text-decoration: underline;"  %>.
+      </div>
+    <% end %>
+    <% if (current_user.role == "business" || current_user.role == "pro") && current_user.profile_completed? %>
+      <% if current_user.bank_accounts.count == 0 %>
+        <div class="alert alert-danger" role="alert">
+          <span class="fa fa-exclamation-circle"></span>
+          You have not added your direct deposit account yet and will not be visible in searches. Please enter a direct deposit account so you can be paid by clicking <%= link_to "here", bank_accounts_path  %>.
+        </div>
+      <% else %>
+        <% begin %>
+          <% status, custom_account = custom_account_status(current_user) %>
+          <% if status == "pending" %>
+            <div class="row warning">
+              Your account hasn't been approved yet. Thank you for your patience.
+
+              <% rejection_details = custom_account.individual.verification.details %>
+              <% unless rejection_details.blank? %>
+                <br/>
+                Reason/s: <%= rejection_details %>
+                <br/>
+                <%= link_to "Update Account Information", connect_account_edit_path, class: 'btn btn-primary btn-bh btn-sm m-t-5' %>
+              <% end %>
+            </div>
+          <% end %>
+        <% rescue => e %>
+          <div class="row warning">
+            <%= e.message %>
+          </div>
+        <%end%>
+      <%end%>
+    <%end%>
+    <div class="row equal">
+      <div class="col-xs-12 col-sm-4 col-md-3">
+        <div class="admin-side-menu">
+          <ul class="side-menu-ul">
+            <% if current_user.employee? %>
+              <li><%= active_menu_link("home", "video_chats", ["index", "new"], "Send In-House Chat", video_chats_path) %></li>
+              <li><%= active_menu_link("comments", "scheduled_chats", ["index"], "Scheduled Chats", scheduled_chats_path) %></li>
+              <li><%= active_menu_link("envelope", "contact_us", ["new", "create"], "Contact Us", new_profile_contact_u_path(current_user)) %></li>
+              <li><%= active_menu_link("gear", "profiles", ["edit", "update"], "Settings", edit_profile_path(current_user)) %></li>
+            <% else %>
+              <li><%= link_to raw("<span class='fa fa-user base_color_#{load_active_class('profiles', ['show'])}'></span> Profile"), show_profile_path(current_user), class: load_active_class('profiles', ['show']) %></li>
+              <% if current_user.business? %>
+                <li><%= active_menu_link("home", "video_chats", ["index", "new"], "Send In-House Chat", video_chats_path) %></li>
+              <% end %>
+              <li><%= active_menu_link("comments", "scheduled_chats", ["index"], "Scheduled Chats", scheduled_chats_path) %></li>
+              <li><%= active_menu_link("video-camera", "subscriptions", ["index", "new"], "Video Chat Plan", subscriptions_path) %></li>
+              <li><%= active_menu_link("dollar", "bank_accounts", ["index", "new", "create", "edit"], "Direct Deposit", bank_accounts_path) %></li>
+              <li><%= active_menu_link("check", "profiles", ["availability"], "Availability", availability_profiles_path) %></li>
+              <% if current_user.business? %>
+                <li><%= active_menu_link("users", "employees", ["index", "create"], "Employees", employees_path) %></li>
+                <li><%= active_menu_link("calendar", "scheduled_services", ["index", "new", "show"], "Scheduled Services", scheduled_services_path) %></li>
+              <% end %>
+              <li><%= active_menu_link("gear", "profiles", ["edit", "update"], "Settings", edit_profile_path(current_user)) %></li>
+              <li><%= active_menu_link("envelope", "contact_us", ["new", "create"], "Contact Us", new_profile_contact_u_path(current_user)) %></li>
+              <li><%= active_menu_link("wrench", "profiles", ["tools_to_succeed"], "Tools to Succeed", tools_to_succeed_profiles_path) %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-9">
+        <%= render 'flash_messages' %>
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div id="remote_container"></div>
+
+    <div class="cd-top"><i class="fa fa-chevron-up topicon"></i></div>
+    <%= render 'js' %>
+  </body>
+</html>

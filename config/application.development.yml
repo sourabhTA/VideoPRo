@@ -1,0 +1,47 @@
+production:
+  host_name: 
+  secret_key_base: 
+  sentry_dsn: 
+  sentry_rails_dsn: 
+  SENDGRID_API_KEY:
+  opentok_api_key: 
+  opentok_api_secret: 
+  stripe_publishable_key: 
+  stripe_secret_key: 
+  stripe_event_secret:
+  google_maps_api_key: 
+  zendesk_key: 
+  recaptcha_site_key: 
+  recaptcha_secret_key: 
+  aws_access_key_id: 
+  aws_secret_access_key: 
+  aws_region: 
+  aws_directory: 
+
+development:
+  host_name: http://localhost:3000
+  sentry_dsn: ""
+  sentry_rails_dsn: ""
+  opentok_api_key: ""
+  opentok_api_secret: ""
+  stripe_publishable_key: ""
+  stripe_secret_key: ""
+  stripe_event_secret: ""
+  google_maps_api_key: ""
+  zendesk_key: ""
+  recaptcha_site_key: ""
+  recaptcha_secret_key: ""
+
+test:
+  host_name: http://localhost:3000
+  sentry_dsn: ""
+  sentry_rails_dsn: ""
+  opentok_api_key: ""
+  opentok_api_secret: ""
+  stripe_publishable_key: ""
+  stripe_secret_key: ""
+  stripe_event_secret: ""
+  google_maps_api_key: ""
+  zendesk_key: ""
+  recaptcha_site_key: ""
+  recaptcha_secret_key: ""

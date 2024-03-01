@@ -1,0 +1,47 @@
+<div class="contact-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-12">
+        <div class="row">
+          <div class="col-xs-12 col-md-12">
+          <!--<h2 class="text-center"><h3>Video Chat a Pro Blog</h3></h2>-->
+          </div>
+          <div class="col-xs-12 col-md-12 blog-details">
+            <% if @blog.image.url %>
+              <%= link_to (image_tag @blog.image.url, class: 'logo', alt: "Blog post logo"), blog_path(category_id: @blog.blog_category.slug, id: @blog.slug) %>
+            <% end %>
+            <br/>
+            <h1>
+              <%= link_to @blog.title, blog_path(category_id: @blog.blog_category.slug, id: @blog.slug) %>
+            </h1>
+            <p>
+              <i class="fa fa-clock-o"></i> <%= @blog.published_at.try(:strftime, "%B %d, %Y") %> -
+              <span><i class="fa fa-folder-o"></i> <!--%= link_to @blog.blog_category.name, blog_path(category_id: @blog.blog_category.slug, id: @blog.slug) %-->
+                <%= link_to  @blog.blog_category.name,"/blogs/#{@blog.blog_category.slug}"%></span>
+            </p>
+            <h5><%= raw @blog.content %></h5>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 text-center">
+                <h2 class="text-center"></h2>
+                <%= raw @blog.video_url %>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-12">
+            
+            <% suggestion = Blog.order(Arel.sql("RANDOM()")).limit(1).first %>
+            <div class="like-trades">
+              <h4><i class="fa fa-angle-right color-base"></i> You Might Also Like</h4>
+              <ul>
+                <li>
+                  <%= link_to suggestion.title, "/blog/#{suggestion.blog_category.slug}/#{suggestion.slug}" %>
+                </li>
+                <li><i class="fa fa-clock-o"></i> <%= suggestion.published_at.try(:strftime, "%B %d, %Y") %></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

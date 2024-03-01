@@ -1,0 +1,21 @@
+<div class="modal" tabindex="-1" role="dialog" id="add_subscription_modal">
+  <div class="modal-dialog mt-30" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="height: 55px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" style="line-height: 30px;">&times;</span>
+        </button>
+        <h4 class="modal-title">Add Subscription</h4>
+      </div>
+      <div class="modal-body" style="height: 400px;overflow: overlay;">
+        <%= render partial: "/subscriptions/new_subscription" %>
+        <strong class="modal_error warning"></strong>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .d-flex {
+    display: flex;
+  }
+</style>

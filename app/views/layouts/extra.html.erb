@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%= render 'head' %>
+
+<body>
+
+<%= render 'body_top' %>
+
+<%= render 'header' %>
+
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, class: "alert alert-#{ name == 'notice' ? "success" : "danger" } alert-dismissable", role: "alert" do %>
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <%= msg %>
+  <% end %>
+<% end %>
+
+<%= yield %>
+
+<%= render 'footer' %>
+
+<div id="remote_container">
+
+</div>
+
+<!--Back To Top Start-->
+<div class="cd-top"><i class="fa fa-chevron-up topicon"></i></div>
+<%= render 'js' %>
+</body>
+</html>

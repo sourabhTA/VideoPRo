@@ -1,0 +1,288 @@
+* {
+  margin: 0;
+  padding: 0
+}
+
+html {
+  height: 100%
+}
+
+p {
+  color: grey
+}
+
+#heading {
+  text-transform: uppercase;
+  color: #673AB7;
+  font-weight: normal;
+  padding-top: 30px;
+}
+
+#msform {
+  text-align: center;
+  position: relative;
+  margin-top: 20px
+}
+
+#msform fieldset {
+  background: white;
+  border: 0 none;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding-bottom: 20px;
+  position: relative
+}
+
+.form-card {
+  text-align: left;
+  margin: 10px;
+}
+
+#msform fieldset:not(:first-of-type) {
+  display: none
+}
+
+#msform input,
+#msform textarea {
+  padding: 8px 15px 8px 15px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+  margin-bottom: 25px;
+  margin-top: 2px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  background-color: #ECEFF1;
+  font-size: 16px;
+  letter-spacing: 1px
+}
+
+#msform input:focus,
+#msform textarea:focus {
+  -moz-box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border: 1px solid #673AB7;
+  outline-width: 0
+}
+
+#msform .action-button {
+  width: 80px;
+  background: #8259CB;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 7px;
+  cursor: pointer;
+  padding: 5px 2px;
+  margin: 10px 10px 10px 5px;
+  float: right;
+  box-shadow: 2px 2px 6px #673AB7;
+}
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+  background-color: #311B92
+}
+
+#msform .action-button-previous {
+  width: 80px;
+  background: #616161;
+  font-weight: bold;
+  color: white;
+  border: 0 none;
+  border-radius: 7px;
+  cursor: pointer;
+  padding: 5px 2px;
+  margin: 10px 5px 10px 0px;
+  float: left;
+  box-shadow: 2px 2px 6px black;
+}
+
+#msform .action-button-previous:hover,
+#msform .action-button-previous:focus {
+  background-color: #000000
+}
+
+.card {
+  z-index: 0;
+  border: none;
+  position: relative
+}
+
+.fs-title {
+  font-size: 25px;
+  color: #673AB7;
+  margin-bottom: 15px;
+  font-weight: normal;
+  text-align: left;
+  text-align: center;
+}
+
+.purple-text {
+  color: #673AB7;
+  font-weight: normal
+}
+
+.steps {
+  font-size: 25px;
+  color: gray;
+  margin-bottom: 10px;
+  font-weight: normal;
+  text-align: right
+}
+
+.fieldlabels {
+  color: gray;
+  text-align: left
+}
+
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  color: lightgrey;
+}
+
+#progressbar .active {
+  color: #673AB7
+}
+
+#progressbar li {
+  list-style-type: none;
+  font-size: 15px;
+  width: 10%;
+  float: left;
+  position: relative;
+  font-weight: 400
+}
+
+#progressbar #confirm:before {
+  font-family: FontAwesome;
+  content: "\f00c"
+}
+
+.emailConfirm:after {
+  font-family: FontAwesome;
+  content: "\f00c";
+  color: green;
+  font-size: 5rem;
+}
+
+#progressbar li:before {
+  width: 50px;
+  height: 50px;
+  line-height: 45px;
+  display: block;
+  font-size: 20px;
+  color: #ffffff;
+  background: lightgray;
+  border-radius: 50%;
+  margin: 0 auto 10px auto;
+  padding: 2px
+}
+
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: lightgray;
+  position: absolute;
+  left: 0;
+  top: 25px;
+  z-index: -1
+}
+
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #673AB7
+}
+
+.progress {
+  height: 20px
+}
+
+.progress-bar {
+  background-color: #673AB7
+}
+
+.fit-image {
+  width: 100%;
+  object-fit: cover
+}
+
+.step_submit {
+  width: fit-content !important;
+  background-color: green !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+}
+
+@media screen and (max-width: 500px) {
+  #progressbar li {
+    font-size: 10px;
+  }
+  #progressbar li:before {
+    width: 32px;
+    height: 32px;
+    line-height: 30px;
+    font-size: 18px;
+  }
+  #progressbar li:after {
+    top: 16px;
+  }
+}
+@media screen and (max-width: 991px) {
+  #progressbar strong {
+    display: none;
+  }
+  .fs-title {
+    display: none;
+  }
+  .mobile-title {
+    display: block !important;
+  }
+  #progressbar {
+    margin-bottom: 10px;
+  }
+  .progress {
+    margin-bottom: 10px;
+  }
+}
+
+.mobile-title {
+  font-size: 25px;
+  color: #673AB7;
+  margin-bottom: 15px;
+  font-weight: normal;
+  text-align: left;
+  text-align: center;
+  display: none;
+}
+
+.pb-2 {
+  padding-bottom: 20px;
+}
+
+.toast {
+  position: fixed;
+  top: 10px;
+  background-color: lightgreen;
+  right: 10px;
+  border-radius: 5px;
+  padding: 7px;
+}
+
+#phone_number {
+  margin-bottom: 6px !important;
+}
+
+#ssn {
+  margin-bottom: 6px !important;
+}
+
+#tax_id {
+  margin-bottom: 6px !important;
+}

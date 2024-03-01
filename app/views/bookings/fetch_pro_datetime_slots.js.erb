@@ -1,0 +1,13 @@
+$('#pro_datetime_slots').html("<%= j render '/bookings/pro_datetime_slots' %>");
+$('#datetimepicker').datetimepicker({
+  format: 'MM/DD/YYYY',
+  minDate: moment().subtract(1,'d'),
+  daysOfWeekDisabled: <%= disable_week_days %>
+}).on('dp.change', function (e) {
+  fetch_time_slots();
+});
+var day_number_of_today = new Date().getDay();
+var disable_week_days = <%= disable_week_days %>;
+if($.inArray(day_number_of_today, disable_week_days) > 0){
+  fetch_time_slots();
+}

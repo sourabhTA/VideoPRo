@@ -1,0 +1,16 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    <% @blogs.each_with_index do |blog, index|%>
+    {
+    "@type": "ListItem",
+    "position": <%= index + 1%>,
+    "name": "<%= blog.title %>",
+    "item": " https://videochatapro.com/blogs/<%= blog&.blog_category&.slug%>"
+  }<%if index+1 < 10%>,<% end %>
+  <% end %>
+  ]
+}
+</script>

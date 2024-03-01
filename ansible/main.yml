@@ -1,0 +1,9 @@
+---
+- import_playbook: playbooks/1-bootstrap-users.yml
+- import_playbook: playbooks/2-apt.yml
+- import_playbook: playbooks/3-postgres.yml
+- import_playbook: playbooks/4-ruby.yml
+- import_playbook: playbooks/4a-application-setup.yml
+- import_playbook: playbooks/5-tls.yml
+- import_playbook: playbooks/6-nginx.yml
+- import_playbook: playbooks/7-cron.yml

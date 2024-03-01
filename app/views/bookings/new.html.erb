@@ -1,0 +1,256 @@
+<div id="loader"></div>
+<div id="loader-on"></div>
+
+<div class="contact-section booking-new">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-12">
+        <div class="row text-center">
+          <%= link_to 'Back', :back, class: "btn btn-primary", style: "float: left;" %>
+          <div class="col-xs-12 col-md-12">
+            <%= booking_h1_tag(user).html_safe %>
+                <p class="font_18">
+                Select a Day
+                </p>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-xs-12 col-md-12">
+            <div class="date-pick-slider">
+              <% (Date.current..Date.current.advance(weeks: 3)).each_with_index do |date, index| %>
+                <% is_day_on =  user.day_on?(date.strftime('%A')) %>
+                <div <%= 'disabled' if index > 5 %> class="date-circle <%= 'today-circle active-circle' if date == Date.current && is_day_on %><%= 'unavailable-circle' unless is_day_on %> "  data-formatted-date="<%= date.strftime('%m/%d/%Y') %>" data-day="<%= date.strftime('%A') %>" data-date="<%= date.strftime('%B %d, %Y') %>">
+                  <% if date == Date.current %>
+                    <span class="day-text">-TODAY-</span>
+                  <% end %>
+                  <span><%= date.strftime('%a') %></span>
+                  <%= date.strftime('%b %d') %>
+                  <% unless is_day_on %>
+                    <span class="small-text">unavailable</span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-xs-12 col-md-12">
+            <p class="font_18">
+              Select Your Timezone
+            </p>
+            <ul class="timezone_list text-center">
+              <% ['Pacific Time', 'Mountain Time', 'Central Time', 'Eastern Time'].each do |timezone| %>
+                <div class="col-xs-12 col-md-3">
+                  <li data-abc="<%= user.time_zone %>" class="<%= 'active' if user.time_zone&.include?(timezone) %>">
+                    <%= timezone %>
+                  </li>
+                </div>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row text-center ">
+            <p class="font_18">
+              Select a Time 
+            </p>
+          <ul class="time_list text-center">
+            <%= render collection: time_slots, partial: 'time_slot' %>
+          </ul>
+        </div>
+        <div class="row text-center">
+          <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <% if user.pro? %>
+              <%= render partial: "pro_booking_page_content" %>
+            <% elsif user.business? %>
+              <%= render partial: "business_booking_page_content" %>
+            <% end %>
+
+            <%= form_for @client, url: bookings_path, remote: true do |f| %>
+              <%= f.fields_for :booking, @client.booking.nil? ? @client.build_booking : @client.booking do |booking| %>
+                <%= hidden_field_tag :cc_token %>
+                <div class="col-md-6 col-sm-6">
+                  <%= booking.hidden_field :user_id %>
+                  <%= booking.hidden_field :stripeToken %>
+                  <%= booking.hidden_field :booking_date, value: Date.current.strftime("%m/%d/%Y"), required: true %>
+                  <%= booking.hidden_field :booking_time, required: true %>
+                  <%= booking.hidden_field :time_zone, value: '', required: true %>
+                  <div class="form-group">
+                    <%= booking.text_area :issue, placeholder: 'Tell us about your problem', class: 'form-control', rows: 13, required: true %>
+                  </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                  <div class="form-group">
+                    <%= f.text_field :first_name, placeholder: 'First Name', class: 'form-control', required: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.text_field :last_name, placeholder: 'Last Name', class: 'form-control', required: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= booking.text_field :city, placeholder: 'City', class: 'form-control', required: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= booking.text_field :state, placeholder: 'State', class: 'form-control', required: true %>
+                  </div>
+                  <div class="form-group">
+                    <%= f.email_field :email, placeholder: 'Email', class: 'form-control', required: true %>
+                  </div>
+                  <% unless user.free_of_charge %>
+                    <div class="form-group">
+                      <%= select_tag 'call_time_booked', options_for_select(Booking::CALL_DURATIONS), { :include_blank => 'Select Call Time', class: 'form-control', required: true} %>
+                    </div>
+                  <% end %>
+                  <div class="form-group">
+                    <%= f.text_field :phone_number, placeholder: 'Phone Number', class: 'form-control formated_phone' %>
+                    <p class="hint">format: x-xxx-xxx-xxxx</p>
+                  </div>
+                  <div class="form-group text-left">
+                  <label>
+                    <%= booking.check_box :agree_with_terms_and_conditions, required: true %>
+                    I agree to the
+                    <%= link_to 'Terms and Conditions', terms_and_conditions_path, target: '_blank' %>
+                  </label>
+                  </div>
+
+                  <% if fake_booking? %>
+                    <div class="form-group text-left">
+                      <%= booking.check_box :is_booking_fake %>
+                      <%= booking.label :is_booking_fake, "No Charge- Verified Pro Program" %>
+                    </div>
+                  <% elsif user.free_of_charge %>
+                    <%= booking.hidden_field :is_booking_fake, value: true %>
+                  <% end %>
+
+                  <div id="booking-error"></div>
+
+                  <input name="authenticity_token"  type="hidden" value="<%= form_authenticity_token() %>"></input>
+
+                  <% if free_of_charge %>
+                    <button id="fakeDonateButton" data-disable-with="Requesting time..."  class="btn btn-primary btn-bh btn-lg">Continue</button>
+                  <% else %>
+                    <button id="donateButton" data-disable-with="Requesting time..." class="btn btn-primary btn-bh btn-lg">Continue</button>
+                  <% end %>
+
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :js do %>
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+  <script src="https://js.stripe.com/v2/"></script>
+  <script>
+    autoSelectTZ();
+    $(document).ready(function() {
+      var description = $("h1").text();
+      var handler = StripeCheckout.configure({
+        key: '<%= ENV.fetch("stripe_publishable_key") %>',
+        currency: "USD",
+        image: '<%= image_url('logo_for_stripe.png') %>',
+        locale: 'auto',
+        name: 'Video Chat A Pro',
+        description: description,
+        email: '',
+        panelLabel: 'Per Minute',
+        token: function(token) {
+            $('input#client_booking_attributes_stripeToken').val(token.id);
+            $('#new_client').submit();
+        }
+      });
+
+      $('#fakeDonateButton').on('click', function(e) {
+          $("#fakeDonateButton").attr("disabled", true);
+          var famount = $("#client_booking_attributes_amount").val();
+          famount = parseInt(famount)/15 * 100;
+          e.preventDefault();
+
+          if (input_validations(this) == true){
+            $('#booking-error').html('');
+            if(famount >0){
+                $('input#client_booking_attributes_stripeToken').val("dummy_token");
+                $('#new_client').submit();
+                booking_loader();
+            }else{
+                $('input#client_booking_attributes_stripeToken').val('');
+                $('#new_client').submit();
+                booking_loader();
+            }
+          }
+          else{
+            $("#fakeDonateButton").attr("disabled", false);
+            return false;
+          }
+      });
+
+      $('#donateButton').on('click', function(e) {
+        e.preventDefault();
+        booking_date = new Date($('#client_booking_attributes_booking_date').val()).toLocaleDateString("IND")
+        data = {
+          call_seconds: $('#call_time_booked').val(),
+          booking_time: $('#client_booking_attributes_booking_time').val(),
+          booking_date: booking_date,
+          time_zone: $('#client_booking_attributes_time_zone').val()
+        }
+
+        if (input_validations(this) == true){
+          $.ajax({
+            url: "<%= user_avalibility_path(user_id: user.id) %>",
+            data: data,
+            success: function(result){
+              if (result.error == "") {
+                $(this).attr("disabled", true);
+                $.ajax({url: "<%= stripe_checkout_bookings_path(user_id: user.id) %>"});
+              } else {
+                alert(result.error)
+              }
+            },
+            errors: function(error) {
+              alert("Error -> " + error);
+            }
+          });
+        }
+      });
+    });
+
+    function booking_loader(argument) {
+      $("#loader").addClass( "show-loader" );
+      $("#loader-on").addClass( "show-loader" );
+      $(".booking-new").addClass( "hide-content" );
+    }
+
+    function input_validations(_this) {
+      inputs = $('#new_client').find(':input');
+
+      for (var i = 0; i < inputs.length; i++) {
+        input = inputs[i];
+        if(input.hasAttribute('required') && input.value.length <= 0 || (input.type == "checkbox" && input.checked == false)){
+          message = input.placeholder || "Required "+input.id.split('_').filter(e => e !== 'attributes').join(' ');
+          $(input).focus();
+          alert(message);
+          $(_this).attr("disabled", false);
+          return false
+        }
+
+        if(i == inputs.length-1){
+          return true
+        }
+      }
+    }
+  </script>
+<% end %>
+
+<style>
+  iframe, object, embed {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  div[disabled] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+</style>

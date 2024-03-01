@@ -1,0 +1,35 @@
+<input type="button" name="next" class="next action-button" value="Skip" />
+<input type="button" name="previous" class="previous action-button-previous" value="Back" />
+<br><br><br>
+<%= form_for @user, as: :user, url: "/profiles/#{@user.slug}", html: { multipart: true, autocomplete: 'off', id: "msform", remote: true } do |f| %>
+  <%= f.hidden_field :current_setting_step, value: "other_information", class: 'form-control' %>
+  <div class="form-card">
+    <div class="row">
+      <div class="col-7">
+        <h2 class="fs-title">Other Information</h2>
+      </div>
+    </div>
+
+    <div class="col-md-12 m-b-5">
+      <%= f.label :specialties, class: 'ms-label' %><br />
+      <%= f.text_area :specialties, class: 'form-control', rows: 6 %>
+    </div>
+    <div class="col-md-12  m-b-5">
+      <%= f.label :product_knowledge, class: 'ms-label' %><br />
+      <%= f.text_area :product_knowledge, class: 'form-control', rows: 6 %>
+    </div>
+    <div class="col-md-12 m-b-5">
+      <%= f.label :video_url, class: 'ms-label' %><br/>
+      <%= f.text_field :video_url, class: 'form-control' %>
+    </div>
+    <% unless current_user.employee? %>
+      <div class="col-md-12 m-b-5">
+        <%= f.label :description, class: 'ms-label' %><br/>
+        <%= f.text_area :description, class: 'form-control', rows: 10 %>
+      </div>
+    <% end %>
+  </div>
+  <div class="white-cont clearfix">
+    <%= f.submit "Submit & Next", class: 'btn btn-primary step_submit'  %>
+  </div>
+<% end %>

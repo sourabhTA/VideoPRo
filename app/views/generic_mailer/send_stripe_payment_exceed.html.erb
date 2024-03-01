@@ -1,0 +1,44 @@
+Hello Admin,
+<br/>
+<b>
+	Stripe payment Exceed on payment paid to user.<br>
+	Amount detail below :-
+</b>
+<p>
+	Amount to be charged = <%= @amount %>
+</p>
+<p>
+  Amount charged = <%= @charged_amount %>
+</p>
+<br>
+<b> Booking details below:- </b>
+<p> Booking ID  :  <%= @booking.id %> </p>
+<p> Booking Date  :  <%= @booking.booking_date %> </p>
+<p> Booking Time  :  <%= @booking.booking_time %> </p>
+<p> Booking Rate  :  <%= @booking.rate_per_minute %> </p>
+
+<br>
+<b> <%= @user.role %> user details below:- </b>
+<p> User ID 	:	 <%= @user.id %> </p>
+<p> Name      :  <%= @user.name %> </p>
+<p> Email     :	 <%= @user.email %> </p>
+<p> Rate      :	 <%= @user.rate_per_minute %> </p>
+
+<br>
+<b> Client detail below:- </b>
+<p> Name 	:	 <%= @client&.first_name %> </p>
+<p> Email	:	 <%= @client.email %> </p>
+
+  <br>
+<p>
+  Contact us at info@videochatapro.com if you have any questions.
+</p>
+<p>
+  Thanks,
+</p>
+<p>
+  Video Chat a Pro, Inc.
+</p>
+<p>
+  <%= link_to 'Videochatapro.com', root_url %>
+</p>

@@ -1,0 +1,64 @@
+      <center class="wrapper" data-link-color="#1188E6" data-body-style="font-size:14px; font-family:arial,helvetica,sans-serif; color:#000000; background-color:#FFFFFF;">
+        <div class="webkit">
+          <table cellpadding="0" cellspacing="0" border="0" width="100%" class="wrapper" bgcolor="#FFFFFF">
+            <tr>
+              <td valign="top" bgcolor="#FFFFFF" width="100%">
+                <table width="100%" role="content-container" class="outer" align="center" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td width="100%">
+                      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td>
+                            <!--[if mso]>
+    <center>
+    <table><tr><td width="600">
+  <![endif]-->
+                                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%; max-width:600px;" align="center">
+                                      <tr>
+                                        <td role="modules-container" style="padding:0px 0px 0px 0px; color:#000000; text-align:left;" bgcolor="#FFFFFF" width="100%" align="left"><table class="module preheader preheader-hide" role="module" data-type="preheader" border="0" cellpadding="0" cellspacing="0" width="100%" style="display: none !important; mso-hide: all; visibility: hidden; opacity: 0; color: transparent; height: 0; width: 0;">
+    <tr>
+      <td role="module-content">
+        <p></p>
+      </td>
+    </tr>
+  </table><table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="eebb7352-e0b0-4815-9ac1-cd8611516e33" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
+          <div>
+            <div style="font-family: inherit; text-align: inherit">
+              Hello,
+            </div>
+        <h3 style="text-align: inherit">Please click on the button below to join the video chat at the scheduled time.</h3>
+        <% if video_chat.time_zone != video_chat.business.time_zone %>
+          <div style="font-family: inherit; text-align: inherit">The Video Chat is scheduled for <strong><%= video_chat.business_time.strftime("%m-%d-%Y %I:%M %P") %></strong>, <%= video_chat.business.time_zone %></div>
+          <div style="font-family: inherit; text-align: inherit">The recipient time is scheduled for <strong><%= video_chat.recipient_time.strftime("%m-%d-%Y %I:%M %P") %></strong>, <%= video_chat.time_zone %></div>
+        <% else %>
+          <div style="font-family: inherit; text-align: inherit">The Video Chat is scheduled for <strong><%= video_chat.recipient_time.strftime("%m-%d-%Y %I:%M %P") %></strong>, <%= video_chat.time_zone %></div>
+        <% end %>
+        <br>
+           <%= video_chat.body %>
+          </div><div></div></div></td>
+      </tr>
+    </tbody>
+  </table>
+ 
+  <table class="module" role="module" data-type="text" border="0" cellpadding="0" cellspacing="0" width="100%" style="table-layout: fixed;" data-muid="cc78912e-6655-4866-9dfb-0a24548ad19a" data-mc-module-version="2019-10-22">
+    <tbody>
+      <tr>
+        <td style="padding:18px 0px 18px 0px; line-height:22px; text-align:inherit;" height="100%" valign="top" bgcolor="" role="module-content">
+          <div>
+            <div style="font-family: inherit; text-align: inherit">
+              Thank you<%= "," if video_chat.business %>
+            </div>
+            <div style="font-family: inherit; text-align: inherit">
+              <%= video_chat.business if video_chat.business %>
+            </div>
+            <div></div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</center>
+    

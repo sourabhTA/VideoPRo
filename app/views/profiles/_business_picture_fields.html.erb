@@ -1,0 +1,16 @@
+<div class="nested-fields panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-12">
+        <%= f.label :picture, class: 'ms-label' %><br />
+        <%= image_tag f.object.picture.url(:mini_thumb), class: 'img-thumbnail', style: 'width: 75px;', alt: "Business picture mini thumb" unless f.object.picture.blank? %>
+        <%= f.file_field :picture, class: 'form-control', required: f.object.new_record? %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 text-right">
+        <%= link_to_remove_association "Remove Business Picture", f, class: 'btn btn-danger btn-bh btn-sm m-t-5' %>
+      </div>
+    </div>
+  </div>
+</div>

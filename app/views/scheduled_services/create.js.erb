@@ -1,0 +1,13 @@
+<% if @scheduled_service.errors.size > 0 %>
+  $(document).ready(function() {
+      $('#schedule_service_modal').modal('hide');
+      $('#schedule_service_div').empty().html("<%= j(render "form") %>");
+      $('#schedule_service_modal').modal('show');
+  });
+<% else %>
+  $(document).ready(function() {
+      $('#submit-schedule').attr("disabled", true);
+      $('#success_message').show('slow');
+      setTimeout(function(){$('#schedule_service_modal').modal('hide')}, 3000);
+  });
+<% end %>

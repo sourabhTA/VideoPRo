@@ -1,0 +1,34 @@
+Hello,
+<br/>
+<p>
+  Your profile login is now approved.
+</p>
+<p>
+  Please login and update your business information, by clicking button below.
+</p>
+
+<table width="100%" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="border-radius: 2px;" bgcolor="#ED2939">
+            <a href="<%= auto_login_url(@user.token) %>" target="_blank" style="padding: 8px 12px; border: 1px solid #ED2939;border-radius: 2px;font-family: Helvetica, Arial, sans-serif;font-size: 14px; color: #ffffff;text-decoration: none;font-weight:bold;display: inline-block;">
+              Auto Login & update Profile
+            </a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+<p>
+  Thanks,
+</p>
+<p>
+  Video Chat a Pro, Inc.
+</p>
+<p>
+  <%= link_to 'Videochatapro.com', root_url %>
+</p>

@@ -1,0 +1,18 @@
+<% if @error.present? %>
+	alert('<%= @error.html_safe %>');
+<% elsif @user.present?  %>
+    $('body').append("<%= escape_javascript render(:partial => '/partials/common_modal_partial' ) %>");
+    $('.common-modal').attr('id', 'user-review-modal');
+    $('#user-review-modal').find('.modal-body').html("<%= escape_javascript render(:partial => '/partials/profile_review_partial') %>");
+    $('#user-review-modal').show();
+    apply_rating();
+    $(document).click(function (e) {
+        if ($(e.target).is('#user-review-modal')) {
+            $('#user-review-modal').hide();
+        }
+    });
+    $('.common-modal').attr('id', 'user-review-modal');
+    $( ".close" ).click(function() {
+		$('#user-review-modal').hide();
+	});
+<%- end %>

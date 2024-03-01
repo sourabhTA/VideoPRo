@@ -1,0 +1,25 @@
+<h4>Hello <%= @booking.client %>,</h4>
+<br/>
+
+<% if @user.present? && @user.pro? %>
+  <p>
+    We apologize for the No-Show Technician today. We have refunded your credit card the amount paid for the block of selected time.
+  </p>
+  <p>
+    Please attempt a different technician as some of these technicians work full time jobs and may not be able to join at the time you had selected.
+  </p>
+<% else %>
+  <p>
+    We apologize for the Company No-Show today. We have refunded your credit card the amount paid for the block of selected time.
+  </p>
+  <p>
+    Please attempt to directly call the selected company as some of these contractors are still learning to use video chat with-in their businesses.
+  </p>
+<% end %>
+
+<br>
+Thank you,
+<br>
+Video Chat a Pro
+<br/>
+<%= link_to root_url, root_url %>

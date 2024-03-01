@@ -1,0 +1,29 @@
+<h4>Hello Admin,</h4>
+<br/>
+
+<p>
+  The Booking Payment has been refunded to the client as the <%= @user&.role %> user or client could not make the call.
+</p>
+
+<% if @user.present? %>
+  <h5><%= @user.role %> user detail:</h5>
+  <p>Name: <%= @user.name %></p>
+  <p>Email: <%= @user.email %></p>
+<% else %>
+  <p>User is Deleted.</p>
+<% end %>
+
+<h5>Client detail:</h5>
+<p>Email: <%= @booking.client.email %></p>
+
+<h5>Booking detail:</h5>
+<p>Id: <%= @booking.id %></p>
+<p>Booked Time in minutes: <%= @booking.payment_transactions.pluck(:call_time_booked).sum/60 %></p>
+<p>Booked Amount: <%= number_to_currency(@booking.payment_transactions.pluck(:amount_captured).sum/100) %></p>
+<p>Refund Amount: <%= number_to_currency(@booking.payment_transactions.pluck(:amount_refund).sum) %></p>
+<br>
+
+Thank you,
+<br/>
+Video Chat a Pro
+<br/>

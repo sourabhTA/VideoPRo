@@ -1,0 +1,53 @@
+<div class="contact-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+        <div class="row">
+          <div class="col-xs-12 col-md-8 col-md-offset-2">
+            <h1 class="text-center">Video Chat a Pro Application</h1>
+            <%= form_tag upload_resume_path, multipart: true do |f| %>
+              <div class="form-group">
+                <label>Full Name: *</label>
+                <%= text_field_tag :name, params[:name], class: 'form-control', placeholder: 'Full Name', required: true %>
+              </div>
+              <div class="form-group">
+                <label>Address: </label>
+                <%= text_field_tag :address, params[:address], class: 'form-control', placeholder: 'Address' %>
+              </div>
+              <div class="form-group">
+                <label>Phone: </label>
+                <%= text_field_tag :phone, params[:phone], class: 'form-control', placeholder: 'Phone' %>
+              </div>
+              <div class="form-group">
+                <label>Email: *</label>
+                <%= email_field_tag :email, params[:email], class: 'form-control', placeholder: 'Email', required: true %>
+              </div>
+              <div class="form-group">
+                <label>Date Available: *</label>
+                <%= text_field_tag :available, params[:available], class: 'form-control', placeholder: 'Date Available', required: true, id: "timings_datetimepicker" %>
+              </div>
+              <div class="form-group">
+                <label>Skills:</label>
+                <%= text_area_tag :skills, params[:skills], class: 'form-control', placeholder: 'Skills' %>
+              </div>
+              <div class="form-group">
+                <label>Job History:</label>
+                <%= text_area_tag :job_history, params[:job_history], class: 'form-control', placeholder: 'Job History' %>
+              </div>
+              <div class="form-group">
+                <label>Upload Resume:</label>
+                <%= file_field_tag :resume, required: true %>
+              </div>
+              <div class="form-group">
+                <%= recaptcha_tags %>
+              </div>
+              <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-blue">
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
